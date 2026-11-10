@@ -5,8 +5,8 @@
 // I campi corrispondono agli schemi in src/content.config.ts.
 import { config, collection, singleton, fields } from '@keystatic/core';
 
-// Repository GitHub del sito, nella forma "account/nome". Da aggiornare quando l'account ATAO esiste.
-const REPOSITORY = 'ATAO-ACCOUNT/sito-atao' as const;
+// Repository GitHub del sito, nella forma "account/nome".
+const REPOSITORY = 'segreteria-atao/sito-atao' as const;
 
 const MESI = ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic'];
 

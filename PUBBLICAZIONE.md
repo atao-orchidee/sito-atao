@@ -15,21 +15,14 @@ Il sito e la configurazione sono già pronti: servono solo gli account e qualche
 
 ## 1. Creare l'account GitHub dell'associazione
 
-1. Vai su <https://github.com/signup> e crea un account con l'email della segreteria. Consiglio un nome come `atao-orchidee`.
-2. Attiva l'autenticazione a due fattori (Settings → Password and authentication): l'account custodisce il sito.
+Fatto: l'account è `segreteria-atao`.
+
+1. Attiva l'autenticazione a due fattori (Settings → Password and authentication): l'account custodisce il sito.
 
 ## 2. Caricare il sito su GitHub
 
-1. Su GitHub crea un repository nuovo (pulsante **New**), chiamato `sito-atao`. Può essere **privato**. Non aggiungere README né altri file.
-2. In `keystatic.config.ts` sostituisci `ATAO-ACCOUNT/sito-atao` con il nome vero, per esempio `atao-orchidee/sito-atao`.
-3. Dalla cartella del progetto:
-
-   ```sh
-   git add keystatic.config.ts
-   git commit -m "Collega il CMS al repository GitHub dell'associazione"
-   git remote add origin https://github.com/atao-orchidee/sito-atao.git
-   git push -u origin main
-   ```
+Fatto: il codice è nel repository privato `segreteria-atao/sito-atao` e `keystatic.config.ts` punta già lì.
+Per inviare le modifiche fatte in locale: `git push`.
 
 ## 3. Creare l'app GitHub del CMS (una volta sola)
 
