@@ -5,6 +5,8 @@ sommario: "Esposizione sociale dell'ATAO in occasione del “Mercatino dell'Anti
 foto:
   - immagine: "../../assets/cronache/gazebo-piazzola.jpg"
     didascalia: "Particolare dell'esposizione nel gazebo"
+  - immagine: "../../assets/cronache/plect-bronzo.jpg"
+    didascalia: "Plectrelminthus caudatus medagliato"
   - immagine: "../../assets/cronache/rhynch-bronzo.jpg"
     didascalia: "Rhynchostylis coelestis medagliata"
   - immagine: "../../assets/cronache/dracula.jpg"

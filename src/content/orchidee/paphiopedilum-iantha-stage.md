@@ -5,6 +5,8 @@ collezione: "Bruna T."
 foto:
   - immagine: "../../assets/orchidee/paphio-iantha-stage-01.jpg"
     didascalia: "Paphiopedilum Iantha Stage"
+  - immagine: "../../assets/orchidee/paphio-iantha-stage-02.jpg"
+    didascalia: "Paphiopedilum Iantha Stage"
 ---
 
 Il Paphiopedilum Iantha Stage è l'ibrido tra il P. sukhakulii e il P. Rothschildianum.

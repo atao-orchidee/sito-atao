@@ -5,6 +5,12 @@ collezione: "Bruna T."
 foto:
   - immagine: "../../assets/orchidee/dendr-superbum-alba.jpg"
     didascalia: "Dendrobium superbum var. alba"
+  - immagine: "../../assets/orchidee/dendr-superbum-alba-bt01.jpg"
+    didascalia: "Dendrobium superbum var. alba"
+  - immagine: "../../assets/orchidee/dendr-superbum-alba-bt02.jpg"
+    didascalia: "Dendrobium superbum var. alba"
+  - immagine: "../../assets/orchidee/dendr-superbum-alba-bt03.jpg"
+    didascalia: "Dendrobium superbum var. alba"
 ---
 
 E' una pianta robusta di dimensioni generose con pseudobulbi che arrivano al metro di lunghezza.

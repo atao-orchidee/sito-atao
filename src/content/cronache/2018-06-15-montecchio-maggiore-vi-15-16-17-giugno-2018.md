@@ -2,6 +2,13 @@
 titolo: "Montecchio Maggiore (Vi), 15-16-17 giugno 2018"
 data: "2018-06-15"
 sommario: "Mostra ATAO di Primavera"
+foto:
+  - immagine: "../../assets/cronache/montecchio-2018-01.jpg"
+    didascalia: "Mostra di alianti"
+  - immagine: "../../assets/cronache/montecchio-2018-02.jpg"
+    didascalia: "L’angolo prezioso"
+  - immagine: "../../assets/cronache/montecchio-2018-03.jpg"
+    didascalia: "Ció che non si vede mai"
 ---
 
 Mostra ATAO di Primavera

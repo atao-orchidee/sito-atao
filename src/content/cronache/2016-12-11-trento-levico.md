@@ -2,6 +2,19 @@
 titolo: "Trento – Levico"
 data: "2016-12-11"
 sommario: "Pranzo con gita di fine anno"
+foto:
+  - immagine: "../../assets/cronache/nataole01.jpg"
+    didascalia: "Belle queste margherite"
+  - immagine: "../../assets/cronache/nataole02.jpg"
+    didascalia: "mah…"
+  - immagine: "../../assets/cronache/nataole03.jpg"
+    didascalia: "L’importante é che si mangi"
+  - immagine: "../../assets/cronache/nataole04.jpg"
+    didascalia: "Vince il numero….."
+  - immagine: "../../assets/cronache/nataole05.jpg"
+    didascalia: "MIO!"
+  - immagine: "../../assets/cronache/nataole06.jpg"
+    didascalia: "BUON NATALE! (…tanto alla prima piena lo troveremo a Rosolina Mare)"
 ---
 
 Pranzo con gita di fine anno

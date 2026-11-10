@@ -2,6 +2,19 @@
 titolo: "Trento e Faedo (TN) 08 Dicembre 2019"
 data: "2019-12-08"
 sommario: "Incontro di Natale 2019"
+foto:
+  - immagine: "../../assets/cronache/natale2019-foresta.jpg"
+    didascalia: "Una parte della serra del vivaio del signor Piazzera"
+  - immagine: "../../assets/cronache/natale2019-pranzo.jpg"
+    didascalia: "Un momento del pranzo di Natale 2019...quanta gente matta per le orchidee!"
+  - immagine: "../../assets/cronache/natale2019-a-faedo.jpg"
+    didascalia: "La porta d’ingresso a Faedo"
+  - immagine: "../../assets/cronache/natale2019-faedo.jpg"
+    didascalia: "Una delle suggestive viette della cittadina"
+  - immagine: "../../assets/cronache/natale2019-presepe.jpg"
+    didascalia: "Il manifesto che ricorda come Faedo sia il “Paese del Presepio”"
+  - immagine: "../../assets/cronache/natale2019-chiesa.jpg"
+    didascalia: "L’interno della chiesetta merdioevale"
 ---
 
 Incontro di Natale 2019

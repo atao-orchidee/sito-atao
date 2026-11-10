@@ -2,6 +2,11 @@
 titolo: "Breda di Piave, ottobre 2016"
 data: "2016-10-30"
 sommario: "Nicaragua – Terra di parchi, riserve naturali e …. orchidee. Incontro di approfondimento in merito alle tematiche di coltivazioni legate a fattori ambientali e climatici con la Dott.ssa ADEYDA de LOURDES AYERDIS MORALES ESPERTA E COLTIVATRI"
+foto:
+  - immagine: "../../assets/cronache/conferenza-nicaragua.jpg"
+    didascalia: "Un momento della conferenza"
+  - immagine: "../../assets/cronache/consegna-attestato.jpg"
+    didascalia: "La consegna dell’attestato"
 ---
 
 Nicaragua – Terra di parchi, riserve naturali e …. orchidee.

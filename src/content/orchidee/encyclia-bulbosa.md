@@ -2,6 +2,11 @@
 nome: "Encyclia bulbosa"
 genere: "Encyclia"
 collezione: "Giuliana C."
+foto:
+  - immagine: "../../assets/orchidee/enc-bulbosa-00.jpg"
+    didascalia: "Encyclia bulbosa"
+  - immagine: "../../assets/orchidee/enc-bulbosa-01.jpg"
+    didascalia: "Encyclia bulbosa"
 ---
 
 Anche se passata nel genere Anacheilium, per me è rimane sempre Encyclia

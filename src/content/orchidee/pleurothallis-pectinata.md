@@ -2,6 +2,15 @@
 nome: "Pleurothallis pectinata"
 genere: "Pleurothallis"
 collezione: "Ermanno A."
+foto:
+  - immagine: "../../assets/orchidee/pleurothallis-pectinata.jpg"
+    didascalia: "Pleurothallis pectinata"
+  - immagine: "../../assets/orchidee/pleurothallis-pectinata-01.jpg"
+    didascalia: "Pleurothallis pectinata"
+  - immagine: "../../assets/orchidee/pleurothallis-pectinata-02.jpg"
+    didascalia: "Pleurothallis pectinata"
+  - immagine: "../../assets/orchidee/pleurothallis-pectinata-03.jpg"
+    didascalia: "Pleurothallis pectinata"
 ---
 
 Altra Pleurothallis dal portamento particolare. La pianta è originaria della Bolivia e della zona attorno a Rio de Janeiro in Brasile.

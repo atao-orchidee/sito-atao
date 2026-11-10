@@ -5,6 +5,8 @@ collezione: "Bruna T."
 foto:
   - immagine: "../../assets/orchidee/rhynchovanda-01.jpg"
     didascalia: "Rhynchostylis gigantea x Vanda tessellata"
+  - immagine: "../../assets/orchidee/rhynchovanda-02.jpg"
+    didascalia: "Rhynchostylis gigantea x Vanda tessellata"
 ---
 
 Nel 2007, un'amica, di ritorno dal viaggio di nozze a Bali, mi regalò una beuta senza etichetta.

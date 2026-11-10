@@ -2,6 +2,13 @@
 titolo: "Vicenza, 10 settembre 2018"
 data: "2018-09-10"
 sommario: "L’ATAO al Teatro Olimpico di Vicenza"
+foto:
+  - immagine: "../../assets/cronache/teatro-olimpico-atao.jpg"
+    didascalia: "ATAO in scena!"
+  - immagine: "../../assets/cronache/teatro-olimpico.jpg"
+    didascalia: "Il piú bel teatro coperto del mondo"
+  - immagine: "../../assets/cronache/teatro-olimpico-miltonia.jpg"
+    didascalia: "E luce fu"
 ---
 
 L’ATAO al Teatro Olimpico di Vicenza

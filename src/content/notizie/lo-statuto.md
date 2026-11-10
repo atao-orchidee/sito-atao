@@ -1,6 +1,7 @@
 ---
 titolo: "Lo statuto"
 ordine: 2
+copertina: "../../assets/notizie/statuto-frontespizio.jpg"
 ---
 
 Al fine di legittimare la nascita dell'Associazione si è provveduto, nel marzo del 1988, alla stesura dello STATUTO sociale.
@@ -8,5 +9,7 @@ Al fine di legittimare la nascita dell'Associazione si è provveduto, nel marzo 
 Lo stesso, nel 2016, è stato rivisto, aggiornato ed integrato al fine di renderlo aderente alle recenti normative italiane.
 
 I soci sono pregati di prendere visione dello stesso
+
+![Lo statuto](../../assets/notizie/statuto-frontespizio.jpg)
 
 - [STATUTO_ATAO completo](/documenti/STATUTO_ATAO.pdf)

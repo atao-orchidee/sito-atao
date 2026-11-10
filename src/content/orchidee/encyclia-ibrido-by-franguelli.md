@@ -5,6 +5,10 @@ collezione: "Giuliana C."
 foto:
   - immagine: "../../assets/orchidee/encyclia-hybr-fr.jpg"
     didascalia: "Encyclia ibrido (by Franguelli)"
+  - immagine: "../../assets/orchidee/encyclia-hybr-fr-01.jpg"
+    didascalia: "Encyclia ibrido (by Franguelli)"
+  - immagine: "../../assets/orchidee/encyclia-hybr-fr-02.jpg"
+    didascalia: "Encyclia ibrido (by Franguelli)"
 ---
 
 Questa orchidea arriva nella mia serra da un acquisto nel gennaio 2004 in occasione del mercatino speciale "orchidee della sig.ra Franguelli" a seguito della dismissione della famosa serra.

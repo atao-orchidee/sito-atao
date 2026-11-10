@@ -2,6 +2,19 @@
 titolo: "Laguna di Venezia"
 data: "2016-09-04"
 sommario: "A caccia di orchidee di mare"
+foto:
+  - immagine: "../../assets/cronache/cattedrale-di-s-maria-assunta.jpg"
+    didascalia: "Cattedrale di S.Maria Assunta"
+  - immagine: "../../assets/cronache/passeggiata-a-burano.jpg"
+    didascalia: "Passeggiata a Burano"
+  - immagine: "../../assets/cronache/murano.jpg"
+    didascalia: "Murano"
+  - immagine: "../../assets/cronache/murano-al-forno.jpg"
+    didascalia: "Murano al forno"
+  - immagine: "../../assets/cronache/colori-di-burano.jpg"
+    didascalia: "Colori di Burano"
+  - immagine: "../../assets/cronache/torcello-ponte-del-diavolo.jpg"
+    didascalia: "Torcello ponte del diavolo"
 ---
 
 A caccia di orchidee di mare

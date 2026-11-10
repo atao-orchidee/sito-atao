@@ -2,6 +2,19 @@
 nome: "Pleurothallis dilemma"
 genere: "Pleurothallis"
 collezione: "Ermanno A."
+foto:
+  - immagine: "../../assets/orchidee/pleurothallis-dilemma.jpg"
+    didascalia: "Pleurothallis dilemma"
+  - immagine: "../../assets/orchidee/pleurothallis-dilemma-01.jpg"
+    didascalia: "Pleurothallis dilemma"
+  - immagine: "../../assets/orchidee/pleurothallis-dilemma-02.jpg"
+    didascalia: "Pleurothallis dilemma"
+  - immagine: "../../assets/orchidee/pleurothallis-dilemma-03.jpg"
+    didascalia: "Pleurothallis dilemma"
+  - immagine: "../../assets/orchidee/pleurothallis-dilemma-04.jpg"
+    didascalia: "Pleurothallis dilemma"
+  - immagine: "../../assets/orchidee/pleurothallis-dilemma-05.jpg"
+    didascalia: "Pleurothallis dilemma"
 ---
 
 Piccola orchidea delle alture dell'Equador, forma dei piccoli cespugli di “strane“ foglie.
