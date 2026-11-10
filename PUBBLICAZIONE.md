@@ -12,7 +12,7 @@ Il sito e la configurazione sono già pronti: servono solo gli account e qualche
 | App GitHub del CMS "segreteria-atao Keystatic" (chiavi nel file `.env` locale) | creata, **non installata** |
 | Sito su Netlify: <https://sito-atao.netlify.app> (progetto `sito-atao`, team `segreteria-atao`) | **online** |
 | CMS online | in attesa: GitHub ha segnalato l'account e blocca le app esterne |
-| Dominio `orchidee-atao.it` | **online su Netlify**, HTTPS attivo; correggere su TOL il CNAME di `www` in `sito-atao.netlify.app` (oggi `atao.netlify.app`) |
+| Dominio `orchidee-atao.it` | **online su Netlify**, HTTPS attivo, `www` → `sito-atao.netlify.app` |
 
 **Per sbloccare GitHub:** con l'account `segreteria-atao` aprire <https://support.github.com/contact/reinstatement>, fare la verifica via SMS e chiedere di rivedere la segnalazione. Dopo lo sblocco restano i passi 3 (installare l'app), 4.3 (chiavi su Netlify), 5 e il collegamento automatico del repository a Netlify.
 
