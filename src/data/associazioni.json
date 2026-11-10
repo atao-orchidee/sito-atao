@@ -1,0 +1,60 @@
+{
+  "voci": [
+    {
+      "nome": "Associazione Italiana Orchidologia",
+      "sigla": "A.I.O.",
+      "referente": "Guido Diana",
+      "sito": "http://www.associazioneitalianaorchidologia.it/Home.html",
+      "email": "segreteriaaio@gmail.com"
+    },
+    {
+      "nome": "Associazione Emiliano Romagnola Amatori Orchidee",
+      "sigla": "A.E.R.A.D.O.",
+      "referente": "Alessandro Cavazza",
+      "sito": "http://www.aerado.it/",
+      "email": "aerado.bologna@libero.it"
+    },
+    {
+      "nome": "Associazione Laziale Orchidee",
+      "sigla": "A.L.O.",
+      "referente": "",
+      "sito": "http://www.alorchidee.it/",
+      "email": "info@alorchidee.it"
+    },
+    {
+      "nome": "Associazione Meridionale Amatori Orchidee",
+      "sigla": "A.M.A.O.",
+      "referente": "Emilia Esposito",
+      "sito": "http://www.amaoorchidee.it/",
+      "email": "segretario@amaoorchidee.it"
+    },
+    {
+      "nome": "Orchidando",
+      "sigla": "",
+      "referente": "",
+      "sito": "http://www.orchidando.net/",
+      "email": ""
+    },
+    {
+      "nome": "Le nostre amiche orchidee",
+      "sigla": "",
+      "referente": "",
+      "sito": "http://www.elicriso.it/it/orchidee/",
+      "email": ""
+    },
+    {
+      "nome": "Internet Orchid Species Photo Encyclopedia",
+      "sigla": "",
+      "referente": "",
+      "sito": "http://www.orchidspecies.com/",
+      "email": ""
+    },
+    {
+      "nome": "The Endeavour Botanical Illustrations (Illustrazioni botaniche dell'Endeavour)",
+      "sigla": "",
+      "referente": "",
+      "sito": "http://www.nhm.ac.uk/jdsml/nature-online/endeavour-botanical/indexadv.dsml",
+      "email": ""
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+/* varianti "wght": 122 KB contro i 279 KB delle varianti con asse ottico */
+@import '@fontsource-variable/newsreader/wght.css';
+@import '@fontsource-variable/newsreader/wght-italic.css';
+@import '@fontsource-variable/hanken-grotesk/index.css';
+
+/* ---------- token ---------- */
+:root {
+  --velo: #eef1ea;        /* sfondo: vetro di serra appannato */
+  --velo-2: #e3e8de;      /* superfici leggermente più dense */
+  --carta: #f8faf5;       /* etichette */
+  --sfagno: #24392d;      /* testo */
+  --sfagno-2: #4f6356;    /* testo secondario */
+  --labello: #8b2a63;     /* accento: labello di Cattleya */
+  --labello-2: #6f1f4e;
+  --foglia: #9db07f;
+  --radice: #c8cfbf;      /* filetti */
+  --fuoco: #8b2a63;
+
+  --serif: 'Newsreader Variable', 'Iowan Old Style', Georgia, serif;
+  --sans: 'Hanken Grotesk Variable', system-ui, sans-serif;
+
+  /* scala tipografica */
+  --t-xs: 0.8rem;
+  --t-s: 0.9rem;
+  --t-m: 1.125rem;
+  --t-l: 1.4rem;
+  --t-xl: 1.75rem;
+  --t-2xl: clamp(2rem, 1.4rem + 2.4vw, 2.75rem);
+  --t-3xl: clamp(2.5rem, 1.6rem + 4vw, 4.25rem);
+
+  --misura: 38rem;        /* ~70 caratteri */
+  --largo: 76rem;
+  --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem);
+  --spazio: clamp(3rem, 2rem + 4vw, 6rem);
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --velo: #142019;
+    --velo-2: #1b2a21;
+    --carta: #1f3026;
+    --sfagno: #e4ebe0;
+    --sfagno-2: #a9b8ad;
+    --labello: #e48ac0;
+    --labello-2: #f0a9d2;
+    --foglia: #7f9563;
+    --radice: #34473b;
+    --fuoco: #f0a9d2;
+    color-scheme: dark;
+  }
+}
+:root[data-theme='dark'] {
+  --velo: #142019;
+  --velo-2: #1b2a21;
+  --carta: #1f3026;
+  --sfagno: #e4ebe0;
+  --sfagno-2: #a9b8ad;
+  --labello: #e48ac0;
+  --labello-2: #f0a9d2;
+  --foglia: #7f9563;
+  --radice: #34473b;
+  --fuoco: #f0a9d2;
+  color-scheme: dark;
+}
+
+/* ---------- base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--velo);
+  color: var(--sfagno);
+  font-family: var(--serif);
+  font-size: var(--t-m);
+  line-height: 1.6;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
+}
+img { max-width: 100%; height: auto; display: block; }
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+h1 { font-size: var(--t-3xl); font-weight: 400; letter-spacing: -0.02em; }
+h2 { font-size: var(--t-2xl); }
+h3 { font-size: var(--t-xl); }
+p { margin: 0 0 1em; text-wrap: pretty; }
+a { color: var(--labello); text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+a:hover { color: var(--labello-2); text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--fuoco); outline-offset: 3px; border-radius: 2px; }
+::selection { background: var(--labello); color: var(--carta); }
+
+.sans { font-family: var(--sans); }
+.piccolo { font-family: var(--sans); font-size: var(--t-s); color: var(--sfagno-2); line-height: 1.5; }
+.misura { max-width: var(--misura); }
+.contenitore { width: min(100% - 2 * var(--gutter), var(--largo)); margin-inline: auto; }
+.sezione { padding-block: var(--spazio); }
+.solo-lettori {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+}
+
+/* testi lunghi da Markdown */
+.prosa { max-width: var(--misura); line-height: 1.7; }
+.prosa h2 { font-size: var(--t-xl); margin-top: 2.2em; }
+.prosa h3 { font-size: var(--t-l); margin-top: 1.8em; }
+.prosa img { margin: 1.5em 0; border-radius: 4px; }
+.prosa ul { padding-left: 1.2em; }
+.prosa li { margin-bottom: 0.4em; }
+.prosa blockquote { margin: 1.5em 0; padding-left: 1em; border-left: 2px solid var(--foglia); font-style: italic; }
+
+/* pulsanti */
+.bottone {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  font-family: var(--sans); font-size: var(--t-s); font-weight: 600;
+  padding: 0.75em 1.25em; border-radius: 999px;
+  background: var(--labello); color: var(--carta); text-decoration: none;
+  border: 1px solid var(--labello);
+  transition: background-color 0.15s ease;
+}
+.bottone:hover { background: var(--labello-2); color: var(--carta); }
+.bottone.secondario { background: transparent; color: var(--sfagno); border-color: var(--radice); }
+.bottone.secondario:hover { border-color: var(--sfagno); color: var(--sfagno); }
+
+/* transizioni tra pagine: native del browser, senza JavaScript */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.22s; }
+/* la foto di un'orchidea o di una cronaca passa dall'elenco alla sua pagina */
+::view-transition-group(*.foto) { animation-duration: 0.42s; animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1); }
+::view-transition-old(*.foto), ::view-transition-new(*.foto) { animation-duration: 0.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}

@@ -1,0 +1,43 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import TestataPagina from '../../components/TestataPagina.astro';
+import Galleria from '../../components/Galleria.astro';
+import { formattaData, estratto } from '../../lib/formato';
+
+export async function getStaticPaths() {
+  const cronache = (await getCollection('cronache')).sort((a, b) => b.data.data.getTime() - a.data.data.getTime());
+  return cronache.map((cronaca, i) => ({
+    params: { id: cronaca.id },
+    props: { cronaca, piuRecente: cronache[i - 1], menoRecente: cronache[i + 1] },
+  }));
+}
+interface Props { cronaca: CollectionEntry<'cronache'>; piuRecente?: CollectionEntry<'cronache'>; menoRecente?: CollectionEntry<'cronache'> }
+const { cronaca, piuRecente, menoRecente } = Astro.props;
+const { Content } = await render(cronaca);
+---
+<Base titolo={cronaca.data.titolo} descrizione={cronaca.data.sommario ?? estratto(cronaca.body, 155)}>
+  <TestataPagina titolo={cronaca.data.titolo} briciole={[{ href: `/cronache/#anno-${cronaca.data.data.getFullYear()}`, testo: 'Cronache' }]}>
+    <p class="piccolo"><time datetime={cronaca.data.data.toISOString().slice(0, 10)}>{formattaData(cronaca.data.data)}</time></p>
+  </TestataPagina>
+
+  <div class="contenitore">
+    <div class="prosa"><Content /></div>
+    {cronaca.data.foto.length > 0 && (
+      <section class="foto" aria-label="Foto">
+        <Galleria foto={cronaca.data.foto} alt={cronaca.data.titolo} rapporto="4 / 3" transizionePrima={`cronaca-${cronaca.id}`} />
+      </section>
+    )}
+    <nav class="scorri sans" aria-label="Altre cronache">
+      {menoRecente ? <a href={`/cronache/${menoRecente.id}/`} rel="prev"><span class="piccolo">Precedente</span>{menoRecente.data.titolo}</a> : <span></span>}
+      {piuRecente && <a href={`/cronache/${piuRecente.id}/`} rel="next" class="dopo"><span class="piccolo">Successiva</span>{piuRecente.data.titolo}</a>}
+    </nav>
+  </div>
+</Base>
+
+<style>
+  .foto { margin-top: 2.5rem; }
+  .scorri { display: flex; justify-content: space-between; gap: 1.5rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--radice); }
+  .scorri a { display: grid; gap: 0.15rem; max-width: 22rem; text-decoration: none; font-size: var(--t-s); font-weight: 600; }
+  .scorri .dopo { text-align: right; }
+</style>

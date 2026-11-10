@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import TestataPagina from '../components/TestataPagina.astro';
+import sito from '../data/sito.json';
+---
+<Base titolo="Privacy" descrizione="Informativa sulla privacy del sito dell'Associazione Triveneta Amatori Orchidee.">
+  <TestataPagina titolo="Privacy" sommario="Cosa succede ai tuoi dati quando visiti questo sito." />
+  <article class="contenitore prosa">
+    <h2>Niente cookie, niente tracciamento</h2>
+    <p>Questo sito non usa cookie, né strumenti di statistica o di profilazione, e non incorpora contenuti di terze parti che possano tracciarti (video, mappe o pulsanti social). I caratteri tipografici sono ospitati sul sito stesso. Per questo non ti chiediamo alcun consenso.</p>
+    <h2>Dati tecnici</h2>
+    <p>Come ogni sito web, il servizio di hosting registra per motivi tecnici e di sicurezza alcuni dati della richiesta, come l’indirizzo IP e il tipo di browser. Questi dati non vengono usati per identificarti.</p>
+    <h2>Se ci scrivi</h2>
+    <p>Se ci contatti via email, useremo il tuo indirizzo e quello che ci scrivi solo per risponderti o per gestire la tua iscrizione all’associazione.</p>
+    <h2>Titolare</h2>
+    <p>{sito.nome}. Per qualsiasi domanda sui tuoi dati scrivi a <a href={`mailto:${sito.email}`}>{sito.email}</a>.</p>
+  </article>
+</Base>

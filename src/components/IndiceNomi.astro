@@ -1,0 +1,64 @@
+---
+// Indice di tutti i nomi delle orchidee dei soci, come l'indice in fondo a un libro di botanica.
+// Con il mouse, accanto al nome compare la foto della pianta.
+import type { CollectionEntry } from 'astro:content';
+import { getImage } from 'astro:assets';
+import NomeBotanico from './NomeBotanico.astro';
+
+interface Props { orchidee: CollectionEntry<'orchidee'>[] }
+const orchidee = [...Astro.props.orchidee].sort((a, b) => a.data.nome.localeCompare(b.data.nome, 'it'));
+const anteprime = await Promise.all(
+  orchidee.map(async (o) => {
+    const f = o.data.foto[0]?.immagine;
+    return f ? (await getImage({ src: f, width: Math.min(f.width, 360), format: 'webp' })).src : null;
+  }),
+);
+---
+<section class="indice" aria-labelledby="titolo-indice">
+  <div class="contenitore">
+    <h2 id="titolo-indice">Indice dei nomi</h2>
+    <ul class="nomi" role="list">
+      {orchidee.map((o, i) => (
+        <li><a href={`/orchidee/${o.id}/`} data-anteprima={anteprime[i] ?? undefined}><NomeBotanico nome={o.data.nome} /></a></li>
+      ))}
+    </ul>
+  </div>
+  <img class="anteprima" alt="" aria-hidden="true" hidden />
+</section>
+
+<script>
+  // Anteprima della foto accanto al puntatore, solo con mouse e se la foto esiste.
+  const img = document.querySelector<HTMLImageElement>('.indice .anteprima');
+  const nomi = document.querySelector('.indice .nomi');
+  if (img && nomi && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    nomi.addEventListener('pointerover', (e) => {
+      const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[data-anteprima]');
+      if (!a) return;
+      img.src = a.dataset.anteprima!;
+      img.hidden = false;
+    });
+    nomi.addEventListener('pointerout', (e) => {
+      if ((e.target as HTMLElement).closest('a[data-anteprima]')) img.hidden = true;
+    });
+    nomi.addEventListener('pointermove', (e) => {
+      const ev = e as PointerEvent;
+      const x = Math.min(ev.clientX + 24, innerWidth - 260);
+      const y = Math.min(ev.clientY + 24, innerHeight - 300);
+      img.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  }
+</script>
+
+<style>
+  .indice { border-top: 1px solid var(--radice); background: var(--carta); padding-block: clamp(3rem, 2rem + 4vw, 5.5rem); margin-top: var(--spazio); }
+  h2 { margin-bottom: 1.5rem; }
+  .nomi { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.1em 0.9em; font-size: clamp(1.15rem, 1rem + 0.8vw, 1.6rem); line-height: 1.4; }
+  .nomi a { color: var(--sfagno); text-decoration: none; transition: color 0.15s ease; }
+  .nomi a:hover, .nomi a:focus-visible { color: var(--labello); }
+  .nomi:hover a:not(:hover):not(:focus-visible) { color: color-mix(in oklab, var(--sfagno) 45%, var(--carta)); }
+  .anteprima {
+    position: fixed; left: 0; top: 0; z-index: 20; pointer-events: none;
+    width: 236px; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 4px;
+    border: 4px solid var(--carta); box-shadow: 0 12px 32px rgb(20 32 25 / 0.25);
+  }
+</style>

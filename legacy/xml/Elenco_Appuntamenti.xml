@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<elenco_appuntamenti xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:/Altri_lavori/Atao_New/Schemi/Schema_appuntamenti.xsd">
+	<appuntamento>
+		<titolo>Appuntamento mensile</titolo>
+		<testo>Gli appuntamenti mensili calendarizzati si svolgono: presso la sede principale (a Breda di Piave, Tv ) l’ultima domenica del mese; il primo sabato del mese a Zanè (Vi); il secondo sabato del mese a Limena (Pd); i soci riceveranno comunicazioni per eventuali modifiche.&lt;br /&gt;La presenza dei soci (e non) è sempre bene accetta per creare un bel momento di convivialità, per scambiare informazioni su tutto quanto riguarda le nostre beneamate piante e molto altro.</testo>
+		<foto1>&lt;a href="Pagine_ingrandimenti/sala_tv.html" target="_blank"&gt;&lt;img src="Immagini/Appuntamenti_miniature/sala_tv.jpg" border="5"/&gt;&lt;/a&gt;</foto1>
+		<foto2>&lt;a href="Pagine_ingrandimenti/spiegazione.html" target="_blank"&gt;&lt;img src="Immagini/Appuntamenti_miniature/spiegazione.jpg" border="5"/&gt;&lt;/a&gt;</foto2>
+		<foto3>&lt;a href="Pagine_ingrandimenti/collezione-di-affamati.html" target="_blank"&gt;&lt;img src="Immagini/Appuntamenti_miniature/collezione-di-affamati.jpg" border="5"/&gt;&lt;/a&gt;</foto3>
+	</appuntamento>
+	<appuntamento>
+		<foto1>&lt;a href="Pagine_ingrandimenti/27-10-2012_01.html" target="_blank"&gt;&lt;img src="Immagini/Appuntamenti_miniature/27-10-2012_01.jpg" border="5"/&gt;&lt;/a&gt;</foto1>
+		<foto2>&lt;a href="Pagine_ingrandimenti/27-10-2012_02.html" target="_blank"&gt;&lt;img src="Immagini/Appuntamenti_miniature/27-10-2012_02.jpg" border="5"/&gt;&lt;/a&gt;</foto2>
+	</appuntamento>
+	<appuntamento />
+	<appuntamento />
+	<appuntamento />
+	<appuntamento />
+	<appuntamento />
+	<appuntamento />
+</elenco_appuntamenti>

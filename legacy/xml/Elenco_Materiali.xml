@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<elenco_materiali xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:/Altri_lavori/Atao_New/Schemi/Schema_materiali.xsd">
+	<materiale>
+		<titolo>Materiale a diposizione dei soci</titolo>
+		<testo>In questa sezione, i soci possono trovare materiali scelti e adatti alla coltivazione delle orchidee, pubblicazioni dell'ATAO, piante che i soci stessi rendono disponibili allo scambio e quant'altro sia ritenuto un valido aiuto per il mostro hobby.&lt;br /&gt;Qualsiasi richiesta va inoltrata alla segreteria (sezione “CONTATTI”) specificando tipologia e quantità di materiale richiesto.</testo>
+	</materiale>
+	<materiale>
+		<titolo>Cestelli</titolo>
+		<testo>Probabilmente sono il “contenitore principe” per la coltivazione delle orchidee permettendo la libera circolazione dell'aria e lo sgrondo immediato dell'acqua mantenendo nel contempo un elevato grado di umidità alle radici.&lt;br /&gt;Altre indicazioni sono visibili direttamente nella foto allegata.</testo>
+		<foto1>&lt;a href="Pagine_ingrandimenti/cestelli.html" target="_blank"&gt;&lt;img src="Immagini/Materiali_miniature/cestelli.jpg" border="5"/&gt;&lt;/a&gt;</foto1>
+	</materiale>
+	<materiale>
+		<titolo>Concime</titolo>
+		<testo>Sono disponibili i seguenti titoli di concime con microelementi:&lt;br /&gt;20-20-20 (Disponibilità n° 70)&lt;br /&gt;10-52-10 (Disponibilità n° 10)&lt;br /&gt;30-10-10 (Esaurito)&lt;br /&gt;10-30-20 (Disponibilità n° 83)&lt;br /&gt;15-11-29 (Disponibilità n° 15)&lt;br /&gt;I barattoli sono da gr. 250</testo>
+		<foto1>&lt;a href="Pagine_ingrandimenti/barattoli.html" target="_blank"&gt;&lt;img src="Immagini/Materiali_miniature/barattoli.jpg" border="5"/&gt;&lt;/a&gt;</foto1>
+	</materiale>
+	<materiale>
+		<titolo>Sfagno e corteccia</titolo>
+		<testo>Sfagno bianco di torbiera a fibra lunga in pacchi da:&lt;br /&gt;150gr./7,5lt. (Disponibilità n°)&lt;br /&gt;1kg/50lt. (Disponibilità n°)&lt;br /&gt;Corteccia di pino sugherosa specifica per la coltivazione delle orchidee in sacchi da 12kg./80lt. Disponibile in 2 pezzature: &lt;br /&gt;fine (Disponibilità n°)&lt;br /&gt;media (Disponibilità n°)</testo>
+		<foto1>&lt;a href="Pagine_ingrandimenti/sfagno_e_corteccia.html" target="_blank"&gt;&lt;img src="Immagini/Materiali_miniature/sfagno_e_corteccia.jpg" border="5"/&gt;&lt;/a&gt;</foto1>
+	</materiale>
+	<materiale>
+		<titolo>Canestri</titolo>
+		<testo>Per le più delicate piccole piante si possono utilizzare questi comodi cestelli in ferro zincato , diametro 8, 10, 12 cm, da riempire col composto preferito.&lt;br /&gt;Dispongono di attacchi per poterli appendere.</testo>
+		<foto1>&lt;a href="Pagine_ingrandimenti/nidorchi-00.html" target="_blank"&gt;&lt;img src="Immagini/Materiali_miniature/nidorchi-00.jpg" border="5"/&gt;&lt;/a&gt;</foto1>
+		<foto2>&lt;a href="Pagine_ingrandimenti/nidorchi-01.html" target="_blank"&gt;&lt;img src="Immagini/Materiali_miniature/nidorchi-01.jpg" border="5"/&gt;&lt;/a&gt;</foto2>
+	</materiale>
+</elenco_materiali>

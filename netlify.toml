@@ -1,0 +1,20 @@
+# Pubblicazione su Netlify: a ogni modifica su GitHub (anche dal CMS) il sito si ricostruisce da solo.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+# Le foto e i font hanno nomi con impronta (cambiano se cambia il file): si possono tenere in cache a lungo.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"

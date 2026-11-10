@@ -1,0 +1,110 @@
+---
+// Griglia di foto; un clic apre la foto grande in un <dialog> nativo
+// (frecce per scorrere, Esc per chiudere). Senza JavaScript i link aprono l'immagine.
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Foto from './Foto.astro';
+
+interface Props {
+  foto: { immagine: ImageMetadata; didascalia?: string }[];
+  alt: string;
+  rapporto?: string;
+  /** nome di transizione per la prima foto (la stessa che compare nell'elenco) */
+  transizionePrima?: string;
+}
+const { foto, alt, rapporto = '1 / 1', transizionePrima } = Astro.props;
+const voci = await Promise.all(
+  foto.map(async (f) => ({
+    ...f,
+    grande: (await getImage({ src: f.immagine, width: Math.min(f.immagine.width, 1600), format: 'webp' })).src,
+  })),
+);
+---
+{voci.length > 0 && (
+  <div class="galleria">
+    <ul class="griglia" role="list">
+      {voci.map((f, i) => (
+        <li>
+          <a href={f.grande} data-indice={i} data-didascalia={f.didascalia ?? ''} data-larghezza={f.immagine.width < 400 ? Math.round(f.immagine.width * 1.5) : undefined}>
+            <Foto immagine={f.immagine} alt={f.didascalia || alt} rapporto={rapporto} sizes="(min-width: 60rem) 20vw, 50vw" larghezze={[240, 360, 480, 720]} transizione={i === 0 ? transizionePrima : undefined} />
+          </a>
+          {f.didascalia && <p class="piccolo didascalia">{f.didascalia}</p>}
+        </li>
+      ))}
+    </ul>
+    <dialog class="lightbox" aria-label="Foto ingrandita">
+      <form method="dialog"><button class="chiudi sans" aria-label="Chiudi">Chiudi</button></form>
+      <figure>
+        <img alt="" />
+        <figcaption class="piccolo"></figcaption>
+      </figure>
+      <div class="frecce sans">
+        <button type="button" data-passo="-1" aria-label="Foto precedente">Precedente</button>
+        <span data-contatore></span>
+        <button type="button" data-passo="1" aria-label="Foto successiva">Successiva</button>
+      </div>
+    </dialog>
+  </div>
+)}
+
+<script>
+  for (const g of document.querySelectorAll<HTMLElement>('.galleria')) {
+    const link = [...g.querySelectorAll<HTMLAnchorElement>('a[data-indice]')];
+    const dialog = g.querySelector('dialog')!;
+    const img = dialog.querySelector('img')!;
+    const cap = dialog.querySelector('figcaption')!;
+    const contatore = dialog.querySelector<HTMLElement>('[data-contatore]')!;
+    let corrente = 0;
+    const mostra = (i: number) => {
+      corrente = (i + link.length) % link.length;
+      const a = link[corrente];
+      img.src = a.href;
+      // le miniature del vecchio sito non vanno allargate oltre 1,5 volte, si sgranerebbero
+      img.style.width = a.dataset.larghezza ? `${a.dataset.larghezza}px` : '';
+      img.alt = a.querySelector('img')?.alt ?? '';
+      cap.textContent = a.dataset.didascalia ?? '';
+      contatore.textContent = `${corrente + 1} di ${link.length}`;
+    };
+    link.forEach((a, i) => a.addEventListener('click', (e) => { e.preventDefault(); mostra(i); dialog.showModal(); }));
+    dialog.querySelectorAll<HTMLButtonElement>('[data-passo]').forEach((b) => b.addEventListener('click', () => mostra(corrente + Number(b.dataset.passo))));
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') mostra(corrente + 1);
+      if (e.key === 'ArrowLeft') mostra(corrente - 1);
+    });
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+    if (link.length < 2) dialog.querySelector<HTMLElement>('.frecce')!.hidden = true;
+  }
+</script>
+
+<style>
+  .griglia { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 11rem), 1fr)); }
+  .griglia a { display: block; border-radius: 4px; }
+  .griglia a:hover :global(.foto) { filter: brightness(1.05); }
+  .didascalia { margin: 0.4rem 0 0; }
+
+  .lightbox { border: 0; padding: 0; max-width: min(96vw, 80rem); max-height: 94vh; background: var(--carta); color: var(--sfagno); border-radius: 6px; }
+  .lightbox::backdrop { background: rgb(20 32 25 / 0.85); }
+
+  /* apertura e chiusura in dissolvenza (sui browser che non lo supportano si apre e basta) */
+  .lightbox, .lightbox::backdrop {
+    transition: opacity 0.22s ease-out, transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), overlay 0.22s allow-discrete, display 0.22s allow-discrete;
+    opacity: 0;
+  }
+  .lightbox { transform: scale(0.97); }
+  .lightbox[open], .lightbox[open]::backdrop { opacity: 1; }
+  .lightbox[open] { transform: none; }
+  @starting-style {
+    .lightbox[open], .lightbox[open]::backdrop { opacity: 0; }
+    .lightbox[open] { transform: scale(0.97); }
+  }
+  .lightbox figure { margin: 0; padding: 0 1rem; }
+  .lightbox img { max-height: 72vh; width: auto; margin-inline: auto; border-radius: 3px; }
+  .lightbox figcaption { text-align: center; padding-top: 0.6rem; min-height: 1.5em; }
+  .chiudi { display: block; margin: 0.6rem 0.6rem 0.6rem auto; }
+  .frecce { display: flex; justify-content: center; align-items: center; gap: 1.25rem; padding: 0.6rem 1rem 1rem; font-size: var(--t-s); }
+  .lightbox button {
+    font: inherit; font-family: var(--sans); font-size: var(--t-s); font-weight: 600; cursor: pointer;
+    background: transparent; color: var(--sfagno); border: 1px solid var(--radice); border-radius: 999px; padding: 0.45rem 0.9rem;
+  }
+  .lightbox button:hover { border-color: var(--sfagno); }
+</style>

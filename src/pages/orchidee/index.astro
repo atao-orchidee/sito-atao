@@ -1,0 +1,161 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import TestataPagina from '../../components/TestataPagina.astro';
+import Scheda from '../../components/Scheda.astro';
+import IndiceNomi from '../../components/IndiceNomi.astro';
+import { TEMPERATURE, LUCI } from '../../content.config';
+
+const orchidee = (await getCollection('orchidee')).sort((a, b) => a.data.nome.localeCompare(b.data.nome, 'it'));
+const conta = (valori: (string | undefined)[]) =>
+  [...valori.reduce((m, v) => (v ? m.set(v, (m.get(v) ?? 0) + 1) : m), new Map<string, number>())].sort((a, b) => a[0].localeCompare(b[0], 'it'));
+const generi = conta(orchidee.map((o) => o.data.genere));
+const collezioni = conta(orchidee.map((o) => o.data.collezione));
+const conTemperatura = orchidee.some((o) => o.data.temperatura);
+const conLuce = orchidee.some((o) => o.data.luce);
+---
+<Base titolo="Orchidee dei soci" descrizione={`Il catalogo delle ${orchidee.length} orchidee coltivate dai soci ATAO: foto, provenienza e consigli di coltivazione di chi le cura ogni giorno.`}>
+  <TestataPagina
+    titolo="Orchidee dei soci"
+    sommario={`${orchidee.length} piante dalle collezioni dei soci, ognuna con le foto e il racconto di come viene coltivata.`}
+  />
+
+  <section class="contenitore catalogo" aria-label="Catalogo">
+    <form class="filtri sans" role="search" aria-label="Filtra le orchidee">
+      <label class="campo cerca">
+        <span>Cerca un nome</span>
+        <input type="search" name="q" placeholder="Es. Dendrobium, nodosa" autocomplete="off" />
+      </label>
+      <label class="campo">
+        <span>Genere</span>
+        <select name="genere">
+          <option value="">Tutti i generi ({generi.length})</option>
+          {generi.map(([g, n]) => <option value={g}>{g} ({n})</option>)}
+        </select>
+      </label>
+      <label class="campo">
+        <span>Collezione</span>
+        <select name="collezione">
+          <option value="">Tutte le collezioni</option>
+          {collezioni.map(([c, n]) => <option value={c}>{c} ({n})</option>)}
+        </select>
+      </label>
+      {conTemperatura && (
+        <label class="campo">
+          <span>Temperatura</span>
+          <select name="temperatura">
+            <option value="">Qualsiasi</option>
+            {TEMPERATURE.map((t) => <option value={t}>{t}</option>)}
+          </select>
+        </label>
+      )}
+      {conLuce && (
+        <label class="campo">
+          <span>Luce</span>
+          <select name="luce">
+            <option value="">Qualsiasi</option>
+            {LUCI.map((l) => <option value={l}>{l}</option>)}
+          </select>
+        </label>
+      )}
+      <p class="esito piccolo" aria-live="polite" data-esito>{orchidee.length} orchidee</p>
+    </form>
+
+    <ul class="griglia" role="list" data-griglia>
+      {orchidee.map((o, i) => (
+        <li
+          data-nome={o.data.nome.toLowerCase()}
+          data-genere={o.data.genere}
+          data-collezione={o.data.collezione ?? ''}
+          data-temperatura={o.data.temperatura ?? ''}
+          data-luce={o.data.luce ?? ''}
+        >
+          <Scheda orchidea={o} priorita={i < 4} />
+        </li>
+      ))}
+    </ul>
+    <div class="vuoto" data-vuoto hidden>
+      <p>Nessuna orchidea corrisponde a questa ricerca.</p>
+      <button type="button" class="bottone secondario" data-azzera>Mostra tutte le orchidee</button>
+    </div>
+  </section>
+
+  <IndiceNomi orchidee={orchidee} />
+</Base>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('form.filtri')!;
+  const voci = [...document.querySelectorAll<HTMLLIElement>('[data-griglia] > li')];
+  const esito = document.querySelector<HTMLElement>('[data-esito]')!;
+  const vuoto = document.querySelector<HTMLElement>('[data-vuoto]')!;
+  const campi = ['genere', 'collezione', 'temperatura', 'luce'] as const;
+
+  const normalizza = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+
+  function applica(aggiornaUrl = true) {
+    const dati = new FormData(form);
+    const q = normalizza(String(dati.get('q') ?? ''));
+    const filtri = campi.map((c) => [c, String(dati.get(c) ?? '')] as const).filter(([, v]) => v);
+    let visibili = 0;
+    for (const li of voci) {
+      const ok = (!q || normalizza(li.dataset.nome ?? '').includes(q)) && filtri.every(([c, v]) => li.dataset[c] === v);
+      li.hidden = !ok;
+      if (ok) visibili++;
+    }
+    esito.textContent = visibili === voci.length ? `${voci.length} orchidee` : `${visibili} di ${voci.length} orchidee`;
+    vuoto.hidden = visibili > 0;
+    if (aggiornaUrl) {
+      const params = new URLSearchParams();
+      if (q) params.set('q', String(dati.get('q')));
+      filtri.forEach(([c, v]) => params.set(c, v));
+      history.replaceState(null, '', params.size ? `?${params}` : location.pathname);
+    }
+  }
+
+  // ripristina i filtri dall'indirizzo (es. /orchidee/?genere=Dendrobium)
+  const iniziali = new URLSearchParams(location.search);
+  for (const [k, v] of iniziali) {
+    const el = form.elements.namedItem(k) as HTMLInputElement | HTMLSelectElement | null;
+    if (el) el.value = v;
+  }
+  if (iniziali.size) applica(false);
+
+  // Le schede si riordinano scorrendo al loro nuovo posto, dove il browser lo permette.
+  const fermo = matchMedia('(prefers-reduced-motion: reduce)');
+  function applicaAnimato() {
+    if (!document.startViewTransition || fermo.matches) return applica();
+    voci.forEach((li, i) => { li.style.viewTransitionName = `scheda-${i}`; });
+    const t = document.startViewTransition(() => applica());
+    t.finished.finally(() => voci.forEach((li) => { li.style.viewTransitionName = ''; }));
+  }
+
+  form.addEventListener('input', () => applicaAnimato());
+  form.addEventListener('submit', (e) => e.preventDefault());
+  document.querySelector('[data-azzera]')!.addEventListener('click', () => { form.reset(); applicaAnimato(); });
+</script>
+
+<style>
+  .filtri {
+    display: grid; gap: 1rem; align-items: end;
+    grid-template-columns: minmax(14rem, 2fr) repeat(auto-fit, minmax(11rem, 1fr));
+    padding: 1.25rem; margin-bottom: 2rem;
+    background: var(--carta); border: 1px solid var(--radice); border-radius: 6px;
+    position: sticky; top: 0.5rem; z-index: 5;
+  }
+  .campo { display: grid; gap: 0.3rem; font-size: var(--t-s); font-weight: 600; }
+  input, select {
+    font: inherit; font-weight: 400; font-size: 1rem; color: var(--sfagno);
+    background: var(--velo); border: 1px solid var(--radice); border-radius: 4px;
+    padding: 0.6rem 0.75rem; width: 100%; min-height: 2.75rem;
+  }
+  input:focus-visible, select:focus-visible { outline: 2px solid var(--fuoco); outline-offset: 1px; }
+  .esito { margin: 0; grid-column: 1 / -1; }
+  .griglia { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(1rem, 2vw, 1.75rem); grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
+  .griglia > li[hidden] { display: none; }
+  .vuoto { padding: 3rem 0; }
+
+  @media (max-width: 40rem) {
+    .filtri { position: static; grid-template-columns: 1fr; }
+    .griglia { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>

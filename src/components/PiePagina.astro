@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+import sito from '../data/sito.json';
+import logo from '../assets/logo/logo-atao.png';
+import { regolaInParole } from '../lib/incontri';
+const anno = new Date().getFullYear();
+---
+<footer class="piede">
+  <div class="contenitore griglia">
+    <div>
+      <div class="firma">
+        <Image src={logo} alt="" width={88} height={88} densities={[1, 2]} class="logo" />
+        <p class="sigla">{sito.sigla}</p>
+      </div>
+      <p class="piccolo">{sito.nome}. Appassionati di orchidee del Veneto, del Friuli Venezia Giulia e del Trentino-Alto Adige, dal {sito.fondazione}.</p>
+      <p class="piccolo">Il logo riprende il <i>Cypripedium calceolus</i> così come è raffigurato nell’opera di John Gerard pubblicata nel 1597: <a href="/notizie/il-nostro-logo/">la sua storia</a>.</p>
+    </div>
+    <div>
+      <h2 class="titoletto sans">Dove ci incontriamo</h2>
+      <ul class="piccolo">
+        {sito.incontri.map((i) => <li>{i.luogo} ({i.provincia}), {regolaInParole(i.regola)}</li>)}
+      </ul>
+    </div>
+    <div>
+      <h2 class="titoletto sans">Contatti</h2>
+      {sito.sede && <address class="piccolo">Sede: {sito.sede}</address>}
+      <p class="piccolo"><a href={`mailto:${sito.email}`}>{sito.email}</a></p>
+      <p class="piccolo"><a href="/associazione/#diventa-socio">Come diventare socio</a></p>
+    </div>
+  </div>
+  <div class="contenitore fondo piccolo">
+    <p>© {anno} {sito.sigla}. Le foto delle orchidee appartengono ai soci che le hanno scattate.</p>
+    <p><a href="/privacy/">Privacy</a></p>
+  </div>
+</footer>
+
+<style>
+  .piede { border-top: 1px solid var(--radice); margin-top: var(--spazio); padding-block: 3rem 1.5rem; background: var(--velo-2); }
+  .griglia { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+  address { font-style: normal; margin: 0 0 1em; }
+  .firma { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 0.75rem; }
+  .logo { width: 5.5rem; height: 5.5rem; flex: none; }
+  .firma .sigla { margin: 0; }
+  .sigla { font-style: italic; font-size: 2rem; color: var(--labello); margin: 0 0 0.25rem; line-height: 1; }
+  .titoletto { font-size: var(--t-s); font-weight: 600; margin: 0 0 0.5rem; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { margin-bottom: 0.35rem; }
+  .fondo { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 2rem; border-top: 1px solid var(--radice); margin-top: 2.5rem; padding-top: 1.25rem; }
+  .fondo p { margin: 0; }
+</style>

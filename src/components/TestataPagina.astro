@@ -1,0 +1,22 @@
+---
+interface Props { titolo: string; sommario?: string; briciole?: { href: string; testo: string }[] }
+const { titolo, sommario, briciole = [] } = Astro.props;
+---
+<header class="testata-pagina contenitore">
+  {briciole.length > 0 && (
+    <nav aria-label="Percorso" class="briciole piccolo">
+      {briciole.map((b) => <><a href={b.href}>{b.testo}</a><span aria-hidden="true"> / </span></>)}
+    </nav>
+  )}
+  <h1><slot name="titolo">{titolo}</slot></h1>
+  {sommario && <p class="sommario misura">{sommario}</p>}
+  <slot />
+</header>
+
+<style>
+  .testata-pagina { padding-block: clamp(2.5rem, 2rem + 3vw, 4.5rem) clamp(1.5rem, 1rem + 2vw, 2.5rem); }
+  .briciole { margin-bottom: 1rem; }
+  .briciole a { color: var(--sfagno-2); }
+  h1 { margin-bottom: 0.4em; }
+  .sommario { font-size: var(--t-l); line-height: 1.45; color: var(--sfagno-2); margin: 0; }
+</style>

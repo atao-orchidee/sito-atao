@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<consigli xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:/Altri_lavori/Atao_New/Schemi/Schema_consigli.xsd">
+	<link>
+		<nome_link>&lt;a href="Pagina_Coltivazione.html"&gt;La  Coltivazione&lt;/a&gt;</nome_link>
+		<descrizione>I suggerimenti che troverete qui di seguito, molto divulgativi e generici, sono dedicati a chi si avvicina per la prima volta al mondo delle orchidee e che si limitano alle piante più rustiche e resistenti.&lt;br /&gt;&lt;br /&gt;Chi sarà contagiato dalla passione e vorrà allargare le proprie conoscenze sappia fin d’ora che non c’è limite all’imparare, ogni singola specie se non ogni singola pianta richiedono cure e attenzioni appropriate. Questi suggerimenti perciò possono essere d’aiuto all’inizio e servire da stimolo ad approfondimenti successivi. &lt;br /&gt;&lt;br /&gt;Tramite queste pagine potrete avere lo scambio di nozioni, notizie ed esperienze che avvengono tra i soci esperti e non..!</descrizione>
+		<foto1>&lt;a href="Pagine_ingrandimenti/arcimboldo-flora.html" target="_blank"&gt;&lt;img src="Immagini/Consigli_miniature/arcimboldo-flora.jpg" border="5"/&gt;&lt;/a&gt;</foto1>
+	</link>
+	<link>
+		<nome_link>&lt;a href="Pagina_Parassiti.html"&gt;I Parassiti&lt;/a&gt;</nome_link>
+		<descrizione>Anche le orchidee, come tutte le piante, sono soggette ad attacchi parassitari e ad avversità di altro tipo.&lt;br /&gt;Vediamo allora quali sono i più comuni “ospiti indesiderati”.</descrizione>
+		<foto1>&lt;a href="Pagine_ingrandimenti/bug.html" target="_blank"&gt;&lt;img src="Immagini/Consigli_miniature/bug.jpg" border="5"/&gt;&lt;/a&gt;</foto1>
+	</link>
+	<link>
+		<nome_link>&lt;a href="Pagina_Esperienze_coltivazione.html"&gt;Esperienze Di Coltivazione&lt;/a&gt;</nome_link>
+		<descrizione>Il bagaglio di esperienze che ogni persona crea nella propria vita è unico e irriproducibile, ciò non toglie che dei consigli mirati diano delle linee guida utili al miglioramento di ciascuno di noi.&lt;br /&gt;In questa sezione ogni socio è libero di mostrare quanto finora ottenuto in anni di prove, errori e successi senza per questo ergersi a guida definitiva e incontestabile.</descrizione>
+	</link>
+</consigli>

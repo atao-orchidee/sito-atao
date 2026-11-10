@@ -1,0 +1,19 @@
+# Vecchi indirizzi del sito (Adobe Spry) -> nuove pagine. Formato Cloudflare Pages / Netlify.
+/index.html                            /                        301
+/Pagina_present_Atao.html              /associazione/           301
+/Pagina_Notizie.html                   /notizie/                301
+/Pagina_Appuntamenti.html              /incontri/               301
+/Pagina_Cronache.html                  /cronache/               301
+/Pagina_Generi_e_specie.html           /generi/                 301
+/Pagina_foto_orchidee_*                /orchidee/               301
+/Pagina_Consigli.html                  /guide/                  301
+/Pagina_Coltivazione.html              /guide/coltivazione/     301
+/Pagina_Parassiti.html                 /guide/parassiti/        301
+/Pagina_Esperienze_coltivazione.html   /guide/#esperienze       301
+/Pagina_Materiali.html                 /guide/materiali/        301
+/Pagina_Contatti.html                  /contatti/               301
+/Pagina_Links.html                     /associazione/           301
+/Pagina_Cookie.html                    /privacy/                301
+/File_scaricabili/*                    /documenti/:splat        301
+/wp-admin/*                            /                        301
+/wp-login.php                          /                        301

@@ -1,0 +1,91 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import NomeBotanico from '../../components/NomeBotanico.astro';
+import Foto from '../../components/Foto.astro';
+import Galleria from '../../components/Galleria.astro';
+import Scheda from '../../components/Scheda.astro';
+import { estratto } from '../../lib/formato';
+
+export async function getStaticPaths() {
+  const orchidee = await getCollection('orchidee');
+  return orchidee.map((orchidea) => ({ params: { id: orchidea.id }, props: { orchidea } }));
+}
+
+interface Props { orchidea: CollectionEntry<'orchidee'> }
+const { orchidea } = Astro.props;
+const { nome, genere, collezione, foto, temperatura, luce, fioritura, origine } = orchidea.data;
+const { Content } = await render(orchidea);
+
+const tutte = await getCollection('orchidee');
+const stessoGenere = tutte.filter((o) => o.data.genere === genere && o.id !== orchidea.id).slice(0, 4);
+const generi = await getCollection('generi');
+const schedaGenere = generi.find((g) => g.data.nome.toLowerCase() === genere.toLowerCase());
+const dati = [
+  ['Genere', genere],
+  ['Collezione', collezione],
+  ['Origine', origine],
+  ['Temperatura', temperatura],
+  ['Luce', luce],
+  ['Fioritura', fioritura.length ? fioritura.join(', ') : undefined],
+].filter(([, v]) => v) as [string, string][];
+---
+<Base titolo={nome} descrizione={estratto(orchidea.body, 155) || `${nome}, dalla collezione di ${collezione} (ATAO).`}>
+  <article class="contenitore scheda-pagina">
+    <nav aria-label="Percorso" class="briciole piccolo"><a href="/orchidee/">Orchidee dei soci</a> <span aria-hidden="true">/</span> <a href={`/orchidee/?genere=${encodeURIComponent(genere)}`}>{genere}</a></nav>
+
+    <div class="impaginato">
+      <div class="immagini">
+        <Foto immagine={foto[0]?.immagine} rapporto="libero" alt={foto[0]?.didascalia ?? nome} sizes="(min-width: 60rem) 50vw, 100vw" larghezze={[480, 720, 960, 1280]} priorita transizione={`foto-${orchidea.id}`} />
+        {foto.length > 1 && <Galleria foto={foto.slice(1)} alt={nome} />}
+      </div>
+
+      <div class="testo">
+        <h1><NomeBotanico nome={nome} /></h1>
+        <dl class="cartellino sans">
+          {dati.map(([k, v]) => (
+            <div>
+              <dt>{k}</dt>
+              <dd>
+                {k === 'Genere' && schedaGenere ? <a href={`/generi/${schedaGenere.id}/`}><i>{v}</i></a> :
+                 k === 'Genere' ? <i>{v}</i> : v}
+              </dd>
+            </div>
+          ))}
+        </dl>
+        <div class="prosa"><Content /></div>
+      </div>
+    </div>
+  </article>
+
+  {stessoGenere.length > 0 && (
+    <section class="contenitore sezione correlate" aria-labelledby="titolo-correlate">
+      <h2 id="titolo-correlate">Altre <i>{genere}</i> dei soci</h2>
+      <ul role="list">
+        {stessoGenere.map((o) => <li><Scheda orchidea={o} /></li>)}
+      </ul>
+    </section>
+  )}
+</Base>
+
+<style>
+  .scheda-pagina { padding-top: clamp(2rem, 1.5rem + 2vw, 3.5rem); }
+  .briciole { margin-bottom: 1.5rem; }
+  .briciole a { color: var(--sfagno-2); }
+  .impaginato { display: grid; gap: clamp(2rem, 5vw, 4.5rem); grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); align-items: start; }
+  .immagini { display: grid; gap: 1rem; position: sticky; top: 1.5rem; }
+  h1 { font-size: clamp(2.1rem, 1.5rem + 2.6vw, 3.4rem); }
+  .cartellino {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 0.75rem 1.5rem;
+    margin: 0 0 2rem; padding: 1rem 1.25rem; background: var(--carta);
+    border: 1px solid var(--radice); border-left: 3px solid var(--foglia); border-radius: 2px 6px 6px 2px;
+  }
+  dt { font-size: var(--t-xs); color: var(--sfagno-2); }
+  dd { margin: 0; font-size: var(--t-s); font-weight: 600; }
+  dd i { font-family: var(--serif); font-weight: 400; font-size: 1.05rem; }
+  .correlate ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
+  @media (max-width: 52rem) {
+    .impaginato { grid-template-columns: 1fr; }
+    .immagini { position: static; }
+  }
+</style>

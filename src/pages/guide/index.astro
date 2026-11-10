@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import TestataPagina from '../../components/TestataPagina.astro';
+
+const tutte = (await getCollection('guide')).sort((a, b) => a.data.ordine - b.data.ordine);
+const guide = tutte.filter((g) => g.data.categoria === 'guida');
+const esperienze = tutte.filter((g) => g.data.categoria === 'esperienza');
+---
+<Base titolo="Coltivare le orchidee" descrizione="Guide di coltivazione delle orchidee scritte dai soci ATAO: temperatura, luce, umidità, parassiti, materiali ed esperienze dirette.">
+  <TestataPagina titolo="Coltivare le orchidee" sommario="Le basi per chi comincia, e quello che i soci hanno imparato in anni di serre, davanzali e inverni." />
+
+  <section class="contenitore" aria-labelledby="titolo-guide">
+    <h2 id="titolo-guide" class="solo-lettori">Guide</h2>
+    <ul class="guide" role="list">
+      {guide.map((g) => (
+        <li>
+          <a href={`/guide/${g.id}/`}>
+            <h3>{g.data.titolo}</h3>
+            <p>{g.data.sommario}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="contenitore sezione" id="esperienze" aria-labelledby="titolo-esperienze">
+    <h2 id="titolo-esperienze">Esperienze dei soci</h2>
+    <p class="misura piccolo intro">Racconti in prima persona: un orchidario costruito in casa, una serra fredda per l’inverno, la semina, la luce artificiale.</p>
+    <ul class="esperienze" role="list">
+      {esperienze.map((g) => (
+        <li>
+          <a href={`/guide/${g.id}/`}>
+            <h3>{g.data.titolo}</h3>
+            {g.data.autore && <p class="piccolo autore">di {g.data.autore}</p>}
+            <p class="piccolo">{g.data.sommario}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .guide { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
+  .guide a {
+    display: block; height: 100%; padding: 1.5rem; color: inherit; text-decoration: none;
+    background: var(--carta); border: 1px solid var(--radice); border-top: 3px solid var(--labello); border-radius: 2px 2px 6px 6px;
+  }
+  .guide h3 { font-size: var(--t-xl); margin-bottom: 0.4rem; }
+  .guide p { margin: 0; color: var(--sfagno-2); }
+  .guide a:hover h3 { color: var(--labello); }
+  .intro { margin-bottom: 1.5rem; }
+  .esperienze { list-style: none; margin: 0; padding: 0; columns: 2 22rem; column-gap: 3rem; }
+  .esperienze li { break-inside: avoid; border-top: 1px solid var(--radice); }
+  .esperienze a { display: block; padding: 1rem 0 1.25rem; color: inherit; text-decoration: none; }
+  .esperienze h3 { font-size: var(--t-l); margin: 0 0 0.2rem; }
+  .esperienze p { margin: 0; }
+  .esperienze .autore { color: var(--labello); margin-bottom: 0.35rem; }
+  .esperienze a:hover h3 { color: var(--labello); }
+</style>

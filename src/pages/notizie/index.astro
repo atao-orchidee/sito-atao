@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import TestataPagina from '../../components/TestataPagina.astro';
+import { formattaData, estratto } from '../../lib/formato';
+
+const notizie = (await getCollection('notizie')).sort(
+  (a, b) => (b.data.data?.getTime() ?? 0) - (a.data.data?.getTime() ?? 0) || a.data.ordine - b.data.ordine,
+);
+---
+<Base titolo="Notizie" descrizione="Notizie, documenti e pubblicazioni dell'Associazione Triveneta Amatori Orchidee.">
+  <TestataPagina titolo="Notizie" sommario="Novità, documenti e articoli pubblicati dall’associazione." />
+  <section class="contenitore">
+    <ul class="elenco" role="list">
+      {notizie.map((n) => (
+        <li>
+          <a href={`/notizie/${n.id}/`}>
+            {n.data.data && <time class="piccolo" datetime={n.data.data.toISOString().slice(0, 10)}>{formattaData(n.data.data)}</time>}
+            <h2>{n.data.titolo}</h2>
+            <p class="piccolo">{n.data.sommario ?? estratto(n.body)}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .elenco { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--radice); }
+  .elenco li { border-bottom: 1px solid var(--radice); }
+  .elenco a { display: block; padding: 1.25rem 0; color: inherit; text-decoration: none; }
+  h2 { font-size: var(--t-xl); margin: 0.1rem 0 0.3rem; }
+  .elenco p { margin: 0; max-width: 42rem; }
+  .elenco a:hover h2 { color: var(--labello); }
+</style>

@@ -1,0 +1,113 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import TestataPagina from '../components/TestataPagina.astro';
+import Foto from '../components/Foto.astro';
+import sito from '../data/sito.json';
+import { prossimaData, regolaInParole, dataLunga } from '../lib/incontri';
+import { formattaData } from '../lib/formato';
+
+const sedi = sito.incontri.map((i) => ({ ...i, data: prossimaData(i.regola) }));
+const oggi = new Date();
+const eventi = await Promise.all(
+  (await getCollection('eventi'))
+    .filter((e) => (e.data.dataFine ?? e.data.data) >= oggi)
+    .sort((a, b) => a.data.data.getTime() - b.data.data.getTime())
+    .map(async (e) => ({ ...e, Content: (await render(e)).Content })),
+);
+// Le mostre in programma come eventi schema.org: Google può mostrarle con data e luogo.
+const datiEventi = eventi.map((e) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: e.data.titolo,
+  startDate: e.data.data.toISOString().slice(0, 10),
+  ...(e.data.dataFine ? { endDate: e.data.dataFine.toISOString().slice(0, 10) } : {}),
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  location: { '@type': 'Place', name: e.data.luogo, address: e.data.indirizzo ?? e.data.luogo },
+  ...(e.data.sommario ? { description: e.data.sommario } : {}),
+}));
+const mappa = (s: (typeof sedi)[number]) =>
+  `https://www.openstreetmap.org/search?query=${encodeURIComponent([s.indirizzo, s.luogo, s.provincia].filter(Boolean).join(', '))}`;
+---
+<Base titolo="Incontri e mostre" descrizione={`Gli incontri mensili dell'ATAO a ${new Intl.ListFormat('it', { type: 'conjunction' }).format(sito.incontri.map((i) => i.luogo))}, aperti a soci e simpatizzanti, e le prossime mostre di orchidee.`}>
+  {datiEventi.length > 0 && <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(datiEventi)} />}
+  <TestataPagina
+    titolo="Incontri e mostre"
+    sommario="Ci troviamo ogni mese in tre sedi del Triveneto. Gli incontri sono aperti a soci e non soci: si portano piante, domande ed esperienze."
+  />
+
+  <section class="contenitore" aria-labelledby="titolo-sedi">
+    <h2 id="titolo-sedi">Incontri mensili</h2>
+    <ul class="sedi" role="list">
+      {sedi.map((s) => (
+        <li data-regola={s.regola}>
+          <h3>{s.luogo} <span class="prov">({s.provincia})</span></h3>
+          {s.nota && <p class="piccolo nota">{s.nota}</p>}
+          <p class="regola">Ogni mese, {regolaInParole(s.regola)}{s.orario && <>, {s.orario}</>}</p>
+          {s.data && (
+            <p class="prossima piccolo">Prossimo incontro: <time data-prossima datetime={s.data.toISOString().slice(0, 10)}>{dataLunga(s.data)}</time></p>
+          )}
+          {s.indirizzo && <p class="piccolo">{s.indirizzo}</p>}
+          <a class="sans mappa" href={mappa(s)} rel="noopener" target="_blank">Apri la mappa<span class="solo-lettori"> di {s.luogo} (si apre in una nuova scheda)</span></a>
+        </li>
+      ))}
+    </ul>
+    <p class="piccolo avviso misura">Le date possono cambiare: i soci ricevono una comunicazione in caso di variazioni. Prima di partire puoi <a href={`mailto:${sito.email}`}>scrivere alla segreteria</a> per conferma.</p>
+  </section>
+
+  <section class="contenitore sezione" id="mostre" aria-labelledby="titolo-mostre">
+    <h2 id="titolo-mostre">Mostre ed eventi</h2>
+    {eventi.length === 0 ? (
+      <div class="vuoto">
+        <p>Non ci sono mostre in calendario in questo momento. Le prossime date verranno pubblicate qui.</p>
+        <p><a href="/cronache/">Guarda le cronache delle mostre passate</a></p>
+      </div>
+    ) : (
+      <ul class="eventi" role="list">
+        {eventi.map((e) => (
+          <li>
+            <Foto immagine={e.data.locandina} alt={`Locandina: ${e.data.titolo}`} rapporto="3 / 4" sizes="(min-width: 50rem) 14rem, 40vw" larghezze={[240, 360, 480]} />
+            <div>
+              <p class="piccolo">
+                <time datetime={e.data.data.toISOString().slice(0, 10)}>{formattaData(e.data.data)}</time>
+                {e.data.dataFine && <> – <time datetime={e.data.dataFine.toISOString().slice(0, 10)}>{formattaData(e.data.dataFine)}</time></>}
+                {e.data.orario && <>, {e.data.orario}</>}
+              </p>
+              <h3>{e.data.titolo}</h3>
+              <p>{e.data.luogo}{e.data.indirizzo && <>, {e.data.indirizzo}</>}</p>
+              <div class="prosa"><e.Content /></div>
+              {e.data.link && <a class="sans" href={e.data.link}>Sito dell’evento</a>}
+            </div>
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+</Base>
+
+<script>
+  import { prossimaData, dataLunga } from '../lib/incontri';
+  for (const li of document.querySelectorAll<HTMLElement>('.sedi [data-regola]')) {
+    const d = prossimaData(li.dataset.regola!);
+    const t = li.querySelector<HTMLTimeElement>('[data-prossima]');
+    if (d && t) { t.dateTime = d.toISOString().slice(0, 10); t.textContent = dataLunga(d); }
+  }
+</script>
+
+<style>
+  .sedi { list-style: none; margin: 1.25rem 0 0; padding: 0; display: grid; gap: 1.25rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); }
+  .sedi li { background: var(--carta); border: 1px solid var(--radice); border-left: 3px solid var(--foglia); padding: 1.25rem 1.5rem; border-radius: 2px 6px 6px 2px; }
+  .sedi h3 { margin-bottom: 0.2rem; }
+  .prov { color: var(--sfagno-2); font-weight: 400; }
+  .sedi p { margin: 0 0 0.35rem; }
+  .sedi .nota { color: var(--labello); }
+  .regola { font-size: var(--t-m); }
+  .sedi .prossima { color: var(--sfagno); font-weight: 600; }
+  .mappa { display: inline-block; margin-top: 0.5rem; font-size: var(--t-s); }
+  .avviso { margin-top: 1.25rem; }
+  .vuoto { padding: 1.5rem; border: 1px dashed var(--radice); border-radius: 6px; max-width: 40rem; }
+  .vuoto p:last-child { margin: 0; }
+  .eventi { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem; }
+  .eventi li { display: grid; grid-template-columns: clamp(8rem, 22vw, 14rem) minmax(0, 1fr); gap: clamp(1rem, 3vw, 2rem); padding-top: 2rem; border-top: 1px solid var(--radice); }
+</style>

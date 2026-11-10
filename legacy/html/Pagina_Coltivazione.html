@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html xmlns:spry="http://ns.adobe.com/spry">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>ATAO - Coltivazione</title>
+        <link href="Css/Stili_base.css" rel="stylesheet" type="text/css">
+        <script src="SpryAssets/xpath.js" type="text/javascript"></script>
+        <script src="SpryAssets/SpryData.js" type="text/javascript"></script>
+        <link href="SpryAssets/SpryStackedContainersNotizie.css" rel="stylesheet" type="text/css">
+    
+        <script type="text/javascript">
+			var info = new Spry.Data.XMLDataSet("Xml_da_importare/Coltivazione.xml", "coltivazione/info", {distinctOnLoad: true, useCache: false});
+info.setColumnType("descrizione", "html");
+info.setColumnType("foto1", "html");
+info.setColumnType("foto2", "html");
+info.setColumnType("foto3", "html");
+var notizie = new Spry.Data.XMLDataSet("Xml_da_importare/Notizie_pagina.xml", "notizie_home/notizia", {sortOnLoad: "notizia", sortOrderOnLoad: "ascending", distinctOnLoad: true, useCache: false});
+			</script>
+    <link href="SpryAssets/SpryStackedContainersColtivazione.css" rel="stylesheet" type="text/css">
+</head>
+    <body>
+        <script type="text/javascript">
+            var url = Math.random();
+            XMLHTTP.open("GET", url, true);
+            XMLHTTP.send(null);
+            document.write(url)
+        </script>
+    
+    	<div id="pagina">
+            <div id="area_scorr">
+                <div spry:region="notizie" class="StackedContainersNotizie">
+                    <div spry:repeat="notizie" class="RowContainereNotizie">
+                        <div class="RowColumnNotizie">
+                            <marquee>
+                                <font size="+2">
+                                	{notizia}
+                                </font>
+                            </marquee>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="area_sx">
+                <img class="logo_atao" src="Immagini/HomePage/logo_03.gif" alt="ATAO">
+                <div id="menu">
+                    <a href="index.html">Home</a>
+                    <a href="Pagina_present_Atao.html">Cos'&eacute; l'ATAO</a>
+                    <a href="Pagina_Notizie.html">Notizie</a>
+                    <a href="Pagina_Appuntamenti.html">Appuntamenti</a>
+                    <a href="Pagina_Cronache.html">Cronache</a>
+                    <a href="Pagina_Generi_e_specie.html">Generi e specie</a>
+                    <a href="Pagina_foto_orchidee_A-B.html">Orchidee dei Soci</a>
+                    <a href="Pagina_Consigli.html">Consigli ed esperienze</a>
+                    <a href="Pagina_Materiali.html">Materiali di scambio</a>
+                    <a href="Pagina_Contatti.html">Contatti</a>
+                    <a href="Pagina_Links.html">Links</a>
+                </div>
+                <div id="msgCookie">
+                    Questo sito usa i cookie per fornirti un'esperienza migliore. Se usi questo sito acconsenti all'utilizzo dei cookie. <a class="btCookie" href="Pagina_Cookie.html">Privacy e Cookie Policy</a>
+                </div>
+            </div>
+            <div id="contenuti">
+            <div class="sottomenu">
+                   <font color="#FF0000">Coltivazione</font> | <a href="Pagina_Parassiti.html">Parassiti</a> | <a href="Pagina_Esperienze_coltivazione.html">Esperienze coltivazione</a>
+			</div>
+           <div spry:region="info" class="StackedContainersInfo">
+              <div spry:repeat="info" class="RowContainerInfo">
+                <div class="RowColumn1">{titolo}</div>
+                <table width="80%" cellspacing="20" class="tabFoto">
+                	<tr>
+                    	<td width="33.3%" align="center">{foto1}</td><td width="33.3%" align="center">{foto2}</td><td width="33.3%" align="center">{foto3}</td>
+                    </tr>
+                </table>
+                <div class="RowColumn2">{descrizione}</div>
+              </div>
+            </div>
+
+               
+        </div>
+            <div id="linea_sup" /> <!--Crea la linea-->
+		</div> 
+    </body>
+</html>

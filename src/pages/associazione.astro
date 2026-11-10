@@ -1,0 +1,69 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import TestataPagina from '../components/TestataPagina.astro';
+import sito from '../data/sito.json';
+import associazioni from '../data/associazioni.json';
+import { regolaInParole } from '../lib/incontri';
+
+const pagina = (await getEntry('pagine', 'associazione'))!;
+const { Content } = await render(pagina);
+const notizie = (await getCollection('notizie')).sort((a, b) => a.data.ordine - b.data.ordine);
+const oggetto = encodeURIComponent('Vorrei diventare socio ATAO');
+---
+<Base titolo="L'associazione" descrizione={pagina.data.sommario}>
+  <TestataPagina titolo={pagina.data.titolo} sommario={pagina.data.sommario} />
+
+  <div class="contenitore impaginato">
+    <article class="prosa"><Content /></article>
+    <aside class="lato">
+      <section class="riquadro" id="diventa-socio" aria-labelledby="titolo-socio">
+        <h2 id="titolo-socio">Diventa socio</h2>
+        <p>Il modo più semplice è venire a uno degli incontri mensili e presentarti: troverai qualcuno del direttivo che ti spiega come iscriverti.</p>
+        <ul class="piccolo">
+          {sito.incontri.map((i) => <li>{i.luogo} ({i.provincia}), {regolaInParole(i.regola)}</li>)}
+        </ul>
+        <p>Oppure scrivi alla segreteria:</p>
+        <a class="bottone" href={`mailto:${sito.email}?subject=${oggetto}`}>Scrivi alla segreteria</a>
+      </section>
+    </aside>
+  </div>
+
+  {notizie.length > 0 && (
+    <section class="contenitore sezione" aria-labelledby="titolo-notizie">
+      <h2 id="titolo-notizie">Storia e documenti</h2>
+      <ul class="notizie" role="list">
+        {notizie.map((n) => <li><a href={`/notizie/${n.id}/`}>{n.data.titolo}</a></li>)}
+      </ul>
+    </section>
+  )}
+
+  <section class="contenitore sezione" id="altre-associazioni" aria-labelledby="titolo-amici">
+    <h2 id="titolo-amici">Altre associazioni e siti utili</h2>
+    <ul class="amici" role="list">
+      {associazioni.voci.map((a) => (
+        <li>
+          <h3>{a.sito ? <a href={a.sito} rel="noopener">{a.nome}</a> : a.nome}</h3>
+          {a.sigla && <p class="piccolo">{a.sigla}</p>}
+          {a.referente && <p class="piccolo">Referente: {a.referente}</p>}
+          {a.email && <p class="piccolo"><a href={`mailto:${a.email}`}>{a.email}</a></p>}
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .impaginato { display: grid; gap: clamp(2rem, 5vw, 5rem); grid-template-columns: minmax(0, 1.5fr) minmax(16rem, 1fr); align-items: start; }
+  .riquadro { background: var(--carta); border: 1px solid var(--radice); border-top: 3px solid var(--labello); padding: 1.5rem; border-radius: 2px 2px 6px 6px; scroll-margin-top: 1.5rem; }
+  .riquadro h2 { font-size: var(--t-xl); }
+  .riquadro ul { padding-left: 1.1rem; margin: 0 0 1rem; }
+  .notizie { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .notizie a { display: inline-block; padding: 0.6rem 1.1rem; border: 1px solid var(--radice); border-radius: 999px; text-decoration: none; color: var(--sfagno); }
+  .notizie a:hover { border-color: var(--labello); color: var(--labello); }
+  .amici { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.5rem 2.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); }
+  .amici li { border-top: 1px solid var(--radice); padding-top: 1rem; }
+  .amici h3 { font-size: var(--t-l); margin-bottom: 0.3rem; }
+  .amici p { margin: 0 0 0.2rem; }
+  @media (max-width: 52rem) { .impaginato { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,16 @@
+---
+import Base from '../layouts/Base.astro';
+import TestataPagina from '../components/TestataPagina.astro';
+---
+<Base titolo="Pagina non trovata">
+  <TestataPagina titolo="Questa pagina non c’è" sommario="Forse è una pagina del vecchio sito, oppure l’indirizzo contiene un errore.">
+    <p class="azioni">
+      <a class="bottone" href="/orchidee/">Sfoglia le orchidee dei soci</a>
+      <a class="bottone secondario" href="/">Torna alla pagina iniziale</a>
+    </p>
+  </TestataPagina>
+</Base>
+
+<style>
+  .azioni { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+</style>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<elenco_contatti xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:/Altri_lavori/Atao_New/Schemi/Schema_contatti.xsd">
+	<contatto>
+		<provincia>Presidenza e Segreteria ATAO</provincia>
+		<e_mail>Indirizzo E-mail: &lt;a href="mailto:segreteria.atao@gmail.com"&gt;Lascia un messaggio in segreteria!&lt;/a&gt;</e_mail>
+	</contatto>
+	<contatto />
+	<contatto />
+	<contatto />
+</elenco_contatti>

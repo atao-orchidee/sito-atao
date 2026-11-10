@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+import Intestazione from '../components/Intestazione.astro';
+import PiePagina from '../components/PiePagina.astro';
+import sito from '../data/sito.json';
+
+interface Props {
+  titolo?: string;
+  descrizione?: string;
+  immagine?: string;
+}
+const { titolo, descrizione = `${sito.nome}: orchidee coltivate dai soci, guide di coltivazione, incontri mensili e mostre nel Triveneto.`, immagine } = Astro.props;
+const titoloPagina = titolo ? `${titolo} | ${sito.sigla}` : `${sito.sigla}, ${sito.nome}`;
+const canonico = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titoloPagina}</title>
+    <meta name="description" content={descrizione} />
+    <link rel="canonical" href={canonico} />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#eef1ea" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#142019" media="(prefers-color-scheme: dark)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content={sito.nome} />
+    <meta property="og:title" content={titolo ?? sito.nome} />
+    <meta property="og:description" content={descrizione} />
+    <meta property="og:url" content={canonico} />
+    {/* senza una foto specifica, l'anteprima sui social mostra il logo dell'associazione */}
+    <meta property="og:image" content={new URL(immagine ?? '/og-atao.jpg', Astro.site)} />
+    <meta name="generator" content={Astro.generator} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="salta sans" href="#contenuto">Vai al contenuto</a>
+    <Intestazione />
+    <main id="contenuto">
+      <slot />
+    </main>
+    <PiePagina />
+  </body>
+</html>
+
+<style>
+  .salta {
+    position: absolute; left: 1rem; top: -4rem; z-index: 100;
+    background: var(--sfagno); color: var(--velo); padding: 0.6rem 1rem; border-radius: 4px;
+  }
+  .salta:focus { top: 1rem; }
+</style>

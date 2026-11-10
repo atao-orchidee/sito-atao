@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import TestataPagina from '../components/TestataPagina.astro';
+import ProssimoIncontro from '../components/ProssimoIncontro.astro';
+import sito from '../data/sito.json';
+---
+<Base titolo="Contatti" descrizione="Come contattare l'Associazione Triveneta Amatori Orchidee: email della segreteria e incontri mensili.">
+  <TestataPagina titolo="Contatti" sommario="Per informazioni sull’associazione, sulle iscrizioni o sulle mostre, scrivi alla presidenza e segreteria." />
+  <div class="contenitore impaginato">
+    <section aria-labelledby="titolo-email">
+      <h2 id="titolo-email" class="solo-lettori">Email</h2>
+      <p class="email"><a href={`mailto:${sito.email}`}>{sito.email}</a></p>
+      <p class="piccolo misura">Se hai una domanda su una pianta, allega una foto: aiuta a capire il problema.</p>
+      {sito.sede && (
+        <>
+          <h2 class="titoletto sans">Sede dell’associazione</h2>
+          <address>
+            {sito.sede}<br />
+            <a class="piccolo" href={`https://www.openstreetmap.org/search?query=${encodeURIComponent(sito.sede)}`}>Vedi sulla mappa</a>
+          </address>
+        </>
+      )}
+    </section>
+    <ProssimoIncontro />
+  </div>
+</Base>
+
+<style>
+  .impaginato { display: grid; gap: clamp(2rem, 5vw, 4rem); grid-template-columns: minmax(0, 1.4fr) minmax(16rem, 1fr); align-items: start; }
+  .titoletto { font-size: var(--t-s); font-weight: 600; margin: 2.5rem 0 0.5rem; }
+  address { font-style: normal; }
+  .email { font-size: clamp(1.5rem, 1rem + 2.2vw, 2.4rem); margin-bottom: 0.75rem; }
+  @media (max-width: 52rem) { .impaginato { grid-template-columns: 1fr; } }
+</style>

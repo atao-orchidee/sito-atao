@@ -1,0 +1,62 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import TestataPagina from '../../components/TestataPagina.astro';
+import Foto from '../../components/Foto.astro';
+import { formattaData, estratto } from '../../lib/formato';
+
+const cronache = (await getCollection('cronache')).sort((a, b) => b.data.data.getTime() - a.data.data.getTime());
+const perAnno = new Map<number, typeof cronache>();
+for (const c of cronache) {
+  const a = c.data.data.getFullYear();
+  perAnno.set(a, [...(perAnno.get(a) ?? []), c]);
+}
+const anni = [...perAnno.keys()];
+---
+<Base titolo="Cronache" descrizione={`Mostre, esposizioni e uscite dell'ATAO raccontate dai soci: ${cronache.length} cronache con foto, dal ${anni.at(-1)} al ${anni[0]}.`}>
+  <TestataPagina titolo="Cronache" sommario={`Mostre, esposizioni e gite raccontate dai soci, dal ${anni.at(-1)} a oggi.`}>
+    <nav class="anni sans" aria-label="Vai all'anno">
+      {anni.map((a) => <a href={`#anno-${a}`}>{a}</a>)}
+    </nav>
+  </TestataPagina>
+
+  <div class="contenitore">
+    {anni.map((anno) => (
+      <section class="anno" id={`anno-${anno}`} aria-labelledby={`titolo-${anno}`}>
+        <h2 id={`titolo-${anno}`}>{anno}</h2>
+        <ul role="list">
+          {perAnno.get(anno)!.map((c) => (
+            <li>
+              <a href={`/cronache/${c.id}/`}>
+                <Foto immagine={c.data.foto[0]?.immagine} alt={c.data.foto[0]?.didascalia ?? c.data.titolo} rapporto="3 / 2" sizes="(min-width: 50rem) 14rem, 35vw" larghezze={[240, 360, 480]} transizione={`cronaca-${c.id}`} />
+                <div>
+                  <time class="piccolo" datetime={c.data.data.toISOString().slice(0, 10)}>{formattaData(c.data.data)}</time>
+                  <h3>{c.data.titolo}</h3>
+                  <p class="piccolo">{c.data.sommario ?? estratto(c.body)}</p>
+                  {c.data.foto.length > 1 && <p class="piccolo">{c.data.foto.length} foto</p>}
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .anni { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.5rem; }
+  .anni a { font-size: var(--t-s); padding: 0.3rem 0.75rem; border: 1px solid var(--radice); border-radius: 999px; text-decoration: none; color: var(--sfagno); }
+  .anni a:hover { border-color: var(--labello); color: var(--labello); }
+  .anno { display: grid; grid-template-columns: 8rem minmax(0, 1fr); gap: 1rem 2rem; padding-block: 2rem; border-top: 1px solid var(--radice); scroll-margin-top: 1rem; }
+  .anno h2 { font-size: var(--t-2xl); color: var(--foglia); font-weight: 400; position: sticky; top: 1rem; align-self: start; }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; }
+  li a { display: grid; grid-template-columns: clamp(7rem, 20vw, 13rem) minmax(0, 1fr); gap: clamp(1rem, 3vw, 1.75rem); color: inherit; text-decoration: none; }
+  h3 { font-size: var(--t-l); margin: 0.15rem 0 0.3rem; }
+  li p { margin: 0 0 0.25rem; max-width: 40rem; }
+  li a:hover h3 { color: var(--labello); }
+  @media (max-width: 44rem) {
+    .anno { grid-template-columns: 1fr; }
+    .anno h2 { position: static; }
+  }
+</style>

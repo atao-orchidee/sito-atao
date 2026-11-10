@@ -1,0 +1,38 @@
+{
+  "nome": "Associazione Triveneta Amatori Orchidee",
+  "sigla": "ATAO",
+  "fondazione": 1988,
+  "email": "segreteria.atao@gmail.com",
+  "sede": "Contrà Angelini 2, Schio (VI)",
+  "annuncio": {
+    "attivo": false,
+    "testo": "",
+    "link": ""
+  },
+  "incontri": [
+    {
+      "luogo": "Nervesa della Battaglia",
+      "provincia": "TV",
+      "indirizzo": "",
+      "regola": "ultima-domenica",
+      "orario": "10:00 – 12:00",
+      "nota": ""
+    },
+    {
+      "luogo": "Zanè",
+      "provincia": "VI",
+      "indirizzo": "Centro Socio Culturale, aula 7, piazza Aldo Moro",
+      "regola": "primo-sabato",
+      "orario": "15:00 – 17:30",
+      "nota": ""
+    },
+    {
+      "luogo": "Limena",
+      "provincia": "PD",
+      "indirizzo": "Sede del Comune",
+      "regola": "secondo-sabato",
+      "orario": "15:00 – 17:30",
+      "nota": ""
+    }
+  ]
+}

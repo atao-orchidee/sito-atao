@@ -1,0 +1,93 @@
+---
+// Foto ottimizzata (formati moderni, dimensioni responsive) oppure un segnaposto
+// quando l'immagine non è ancora disponibile.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  immagine?: ImageMetadata;
+  alt: string;
+  sizes?: string;
+  larghezze?: number[];
+  rapporto?: string; // es. "4 / 5", oppure "libero" per seguire le proporzioni della foto
+  class?: string;
+  priorita?: boolean;
+  /** nome condiviso con la stessa foto in un'altra pagina: il browser la anima da una pagina all'altra */
+  transizione?: string;
+}
+const { immagine, alt, sizes = '(min-width: 60rem) 33vw, 100vw', larghezze = [320, 480, 720, 960, 1280], rapporto = '4 / 5', class: classe, priorita = false, transizione } = Astro.props;
+const vt = transizione ? `; view-transition-name: ${transizione}; view-transition-class: foto` : '';
+const utili = immagine ? larghezze.filter((w) => w <= immagine.width) : [];
+
+// Le foto importate dal vecchio sito sono miniature (~160 px). Ritagliarle e allargarle
+// a tutta colonna le sgrana: sotto questa soglia la foto resta intera, ingrandita al massimo
+// di INGRANDIMENTO_MAX volte, su un passe-partout color carta. Una foto più grande caricata
+// dal CMS torna automaticamente alla resa normale.
+const SOGLIA_PICCOLA = 400;
+const libero = rapporto === 'libero';
+// in un riquadro libero (pagine di dettaglio) la foto è sola: si concede un po' più di ingrandimento
+const INGRANDIMENTO_MAX = libero ? 2 : 1.5;
+const piccola = !!immagine && immagine.width < SOGLIA_PICCOLA;
+const proporzioni = libero ? '' : `aspect-ratio: ${rapporto}`;
+// Si limita il lato che tocca per primo il riquadro, così l'ombra segue la foto e non
+// disegna bande vuote attorno a una foto verticale in un riquadro orizzontale (e viceversa).
+const [rw, rh] = libero ? [0, 1] : rapporto.split('/').map((n) => Number(n.trim()));
+const limitaAltezza = !libero && !!immagine && immagine.width / immagine.height < rw / rh;
+const misuraStampa = !immagine
+  ? ''
+  : limitaAltezza
+    ? `height: min(100%, ${Math.round(immagine.height * INGRANDIMENTO_MAX)}px); width: auto`
+    : `width: min(100%, ${Math.round(immagine.width * INGRANDIMENTO_MAX)}px); height: auto`;
+---
+{immagine && piccola ? (
+  <span class:list={['foto', 'passepartout', { libero }, classe]} style={proporzioni + vt}>
+    <Image
+      src={immagine}
+      alt={alt}
+      widths={[immagine.width]}
+      sizes={`${Math.round(immagine.width * INGRANDIMENTO_MAX)}px`}
+      class="stampa"
+      style={misuraStampa}
+      loading={priorita ? 'eager' : 'lazy'}
+      fetchpriority={priorita ? 'high' : 'auto'}
+    />
+  </span>
+) : immagine ? (
+  <Image
+    src={immagine}
+    alt={alt}
+    widths={utili.length ? utili : [immagine.width]}
+    sizes={sizes}
+    class:list={['foto', classe]}
+    style={proporzioni + vt}
+    loading={priorita ? 'eager' : 'lazy'}
+    fetchpriority={priorita ? 'high' : 'auto'}
+  />
+) : (
+  <div class:list={['foto', 'segnaposto', classe]} style={`aspect-ratio: ${libero ? '4 / 5' : rapporto}${vt}`} role="img" aria-label={alt}>
+    <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+      <path d="M32 30c-3-9-11-15-19-13 2 8 9 13 19 13Zm0 0c3-9 11-15 19-13-2 8-9 13-19 13Zm0 0c-6-6-6-16 0-22 6 6 6 16 0 22Zm0 0c-4 4-6 10-4 16 5-1 8-6 8-11 0-2-2-4-4-5Zm0 0v26" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+)}
+
+<style>
+  .foto { width: 100%; height: auto; object-fit: cover; background: var(--velo-2); border-radius: 4px; }
+  .passepartout {
+    display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: center;
+    padding: 9%; background: var(--carta); border: 1px solid var(--radice);
+  }
+  .passepartout.libero { padding: clamp(1.25rem, 7%, 2.5rem); }
+  .stampa {
+    max-width: 100%; max-height: 100%; object-fit: contain;
+    border-radius: 2px; box-shadow: 0 1px 2px rgb(20 32 25 / 0.18), 0 4px 12px rgb(20 32 25 / 0.1);
+    transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  /* dentro un link, la stampa si solleva appena dal foglio */
+  :global(a:hover) .stampa, :global(a:focus-visible) .stampa {
+    transform: translateY(-3px);
+    box-shadow: 0 3px 6px rgb(20 32 25 / 0.14), 0 12px 24px rgb(20 32 25 / 0.14);
+  }
+  .segnaposto { display: grid; place-items: center; color: var(--foglia); }
+  .segnaposto svg { width: min(30%, 5rem); height: auto; }
+</style>

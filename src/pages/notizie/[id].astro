@@ -1,0 +1,19 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import TestataPagina from '../../components/TestataPagina.astro';
+import { formattaData, estratto } from '../../lib/formato';
+
+export async function getStaticPaths() {
+  return (await getCollection('notizie')).map((notizia) => ({ params: { id: notizia.id }, props: { notizia } }));
+}
+interface Props { notizia: CollectionEntry<'notizie'> }
+const { notizia } = Astro.props;
+const { Content } = await render(notizia);
+---
+<Base titolo={notizia.data.titolo} descrizione={notizia.data.sommario ?? estratto(notizia.body, 155)}>
+  <TestataPagina titolo={notizia.data.titolo} briciole={[{ href: '/notizie/', testo: 'Notizie' }]}>
+    {notizia.data.data && <p class="piccolo"><time datetime={notizia.data.data.toISOString().slice(0, 10)}>{formattaData(notizia.data.data)}</time></p>}
+  </TestataPagina>
+  <article class="contenitore"><div class="prosa"><Content /></div></article>
+</Base>

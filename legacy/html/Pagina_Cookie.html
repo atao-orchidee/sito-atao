@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html xmlns:spry="http://ns.adobe.com/spry">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>ATAO - Cookie</title>
+        <link href="Css/Stili_base.css" rel="stylesheet" type="text/css">
+        <script src="SpryAssets/xpath.js" type="text/javascript"></script>
+        <script src="SpryAssets/SpryData.js" type="text/javascript"></script>
+        <link href="SpryAssets/SpryStackedContainersNotizie.css" rel="stylesheet" type="text/css">
+    
+        <script type="text/javascript">
+			var consigli = new Spry.Data.XMLDataSet("Xml_da_importare/Consigli.xml", "consigli/link", {distinctOnLoad: true, useCache: false});
+consigli.setColumnType("nome_link", "html");
+consigli.setColumnType("descrizione", "html");
+consigli.setColumnType("foto1", "html");
+consigli.setColumnType("foto2", "html");
+consigli.setColumnType("foto3", "html");
+var notizie = new Spry.Data.XMLDataSet("Xml_da_importare/Notizie_pagina.xml", "notizie_home/notizia", {sortOnLoad: "notizia", sortOrderOnLoad: "ascending", distinctOnLoad: true, useCache: false});
+			</script>
+    <link href="SpryAssets/SpryStackedContainersConsigli.css" rel="stylesheet" type="text/css">
+</head>
+    <body>
+        <script type="text/javascript">
+            var url = Math.random();
+            XMLHTTP.open("GET", url, true);
+            XMLHTTP.send(null);
+            document.write(url)
+        </script>
+    
+    	<div id="pagina">
+            <div id="area_scorr">
+                <div spry:region="notizie" class="StackedContainersNotizie">
+                    <div spry:repeat="notizie" class="RowContainereNotizie">
+                        <div class="RowColumnNotizie">
+                            <marquee>
+                                <font size="+2">
+                                	{notizia}
+                                </font>
+                            </marquee>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="area_sx">
+                <img class="logo_atao" src="Immagini/HomePage/logo_03.gif" alt="ATAO">
+                <div id="menu">
+                    <a href="index.html">Home</a>
+                    <a href="Pagina_present_Atao.html">Cos'&eacute; l'ATAO</a>
+                    <a href="Pagina_Notizie.html">Notizie</a>
+                    <a href="Pagina_Appuntamenti.html">Appuntamenti</a>
+                    <a href="Pagina_Cronache.html">Cronache</a>
+                    <a href="Pagina_Generi_e_specie.html">Generi e specie</a>
+                    <a href="Pagina_foto_orchidee_A-B.html">Orchidee dei Soci</a>
+                    <a href="Pagina_Consigli.html">Consigli ed esperienze</a>
+                    <a href="Pagina_Materiali.html">Materiali di scambio</a>
+                    <a href="Pagina_Contatti.html">Contatti</a>
+                    <a href="Pagina_Links.html">Links</a>
+                </div>
+                <div id="msgCookie">
+                    Questo sito usa i cookie per fornirti un'esperienza migliore. Se usi questo sito acconsenti all'utilizzo dei cookie. <a class="btCookie" href="Pagina_Cookie.html">Privacy e Cookie Policy</a>
+                </div>
+            </div>
+            <div id="contenuti">
+                <p><h2>Privacy e Cookie Policy</h2></p>
+            </b>
+        </br>
+        In questa pagina si descrivono le modalità di gestione del sito in riferimento al trattamento dei dati personali degli utenti che lo consultano.</br>
+        Si tratta di un’informativa che è resa anche ai sensi dell’art. 13 del d.lg. n. 196/2003 – Codice in materia di protezione dei dati personali a coloro che interagiscono con i servizi web del Garante per la protezione dei dati personali, accessibili per via telematica a partire dall’indirizzo:</br></br>
+        www.orchidee-atao.it</br></br>
+        corrispondente alla pagina iniziale del sito ufficiale dell’Autorità. L’informativa è resa solo per il sito del Garante e non anche per altri siti web eventualmente consultati dall’utente tramite link.</br>
+        L’informativa si ispira anche alla Raccomandazione n. 2/2001 che le autorità europee per la protezione dei dati personali, riunite nel Gruppo istituito dall’art. 29 della direttiva n. 95/46/CE, hanno adottato il 17 maggio 2001 per individuare alcuni requisiti minimi per la raccolta di dati personali on-line, e, in particolare, le modalità, i tempi e la natura delle informazioni che i titolari del trattamento devono fornire agli utenti quando questi si collegano a pagine web, indipendentemente dagli scopi del collegamento. La Raccomandazione e una descrizione di sintesi delle sue finalità sono riportate in altre pagine di questo sito.</br></br>
+        <h2>Titolare del trattamento</h2></br>
+        Titolare del trattamento è Ermanno Astori, via Massimo d’Azeglio, 12 - 35036 Montegrotto Terme (PD)</br>
+        I diritti di cui all’art. 7 D.lg. n. 196/03.</br>
+        Ricordiamo che l’interessato ha diritto di ottenere l’indicazione dell’origine dei dati personali; delle finalità e modalità del trattamento; della logica applicata in caso di trattamento effettuato con l’ausilio di strumenti elettronici; degli estremi identificativi del titolare, dei responsabili e dei soggetti o delle categorie di soggetti ai quali i dati personali possono essere comunicati o che possono venirne a conoscenza in qualità di responsabili o incaricati.</br>
+        L’interessato ha diritto di ottenere l’aggiornamento, la rettificazione ovvero, quando vi ha interesse, l’integrazione dei dati; la cancellazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge, compresi quelli di cui non è necessaria la conservazione in relazione agli scopi per i quali i dati sono stati raccolti o successivamente trattati; l’attestazione che le operazioni di cui sopra sono state portate a conoscenza, anche per quanto riguarda il loro contenuto, di coloro ai quali i dati sono stati comunicati o diffusi, eccettuato il caso in cui tale adempimento si rivela impossibile o comporta un impiego di mezzi manifestamente sproporzionato rispetto al diritto tutelato.</br>
+        L’interessato ha diritto di opporsi, in tutto o in parte: per motivi legittimi al trattamento dei dati personali che lo riguardano, ancorché pertinenti allo scopo della raccolta; al trattamento di dati personali che lo riguardano a fini di marketing. Il diritto di opposizione dell’interessato al trattamento dei dati per le finalità di marketing effettuato con modalità automatizzate di contatto si estende a quelle tradizionali, restando salva per l’interessato la possibilità di esercitare tale diritto in tutto o in parte, ossia opponendosi, ad esempio, al solo invio di comunicazioni promozionali effettuato tramite strumenti automatizzati.</br>
+        Per l’esercizio di questi diritti l’interessato può rivolgersi gratuitamente (salvo che non risulti confermata l’esistenza di dati riferiti all’interessato) scrivendo a:</br></br>
+        serastori@virgilio.it</br></br>
+        <h2>Tipi di dati trattati</h2></br>
+        <b>DATI DI NAVIGAZIONE</b></br></br>
+        I sistemi informatici e le procedure software preposte al funzionamento di questo sito web acquisiscono, nel corso del loro normale esercizio, alcuni dati personali la cui trasmissione è implicita nell’uso dei protocolli di comunicazione di Internet.</br>
+        Si tratta di informazioni che non sono raccolte per essere associate a interessati identificati, ma che per loro stessa natura potrebbero, attraverso elaborazioni ed associazioni con dati detenuti da terzi, permettere di identificare gli utenti.</br>
+        In questa categoria di dati rientrano gli indirizzi IP o i nomi a dominio dei computer utilizzati dagli utenti che si connettono al sito, gli indirizzi in notazione URI (Uniform Resource Identifier) delle risorse richieste, l’orario della richiesta, il metodo utilizzato nel sottoporre la richiesta al server, la dimensione del file ottenuto in risposta, il codice numerico indicante lo stato della risposta data dal server (buon fine, errore, ecc.) ed altri parametri relativi al sistema operativo e all’ambiente informatico dell’utente.</br>
+        Questi dati vengono utilizzati al solo fine di ricavare informazioni statistiche anonime sull’uso del sito e per controllarne il corretto funzionamento e vengono cancellati immediatamente dopo l’elaborazione. I dati potrebbero essere utilizzati per l’accertamento di responsabilità in caso di ipotetici reati informatici ai danni del sito: salva questa eventualità, allo stato i dati sui contatti web non persistono per più di sette giorni.</br></br>
+        <b>DATI FORNITI VOLONTARIAMENTE DALL’UTENTE</b></br></br>
+        L’invio facoltativo, esplicito e volontario di posta elettronica agli indirizzi indicati su questo sito comporta la successiva acquisizione dell’indirizzo del mittente, necessario per rispondere alle richieste, nonché degli eventuali altri dati personali inseriti nella missiva. Specifiche informative di sintesi verranno progressivamente riportate o visualizzate nelle pagine del sito predisposte per particolari servizi a richiesta.</br></br>
+        <b>CHE COSA SONO I COOKIE</b></br></br>
+        Il cookie è un piccolo file di testo contenente una certa quantità di informazioni scambiato tra un sito internet ed il tuo terminale (solitamente il browser) ed è normalmente utilizzato dal gestore del sito internet per memorizzare le informazioni necessarie a migliorare la navigazione all’interno del sito ovvero per inviare messaggi pubblicitari in linea con le preferenze manifestate dall’utente nell’ambito della navigazione in rete. Quando si visita di nuovo lo stesso sito o qualunque altro sito il dispositivo dell’utente verifica la presenza di un cookie riconosciuto, in modo da potere leggere le informazioni in esso contenute. I diversi cookie contengono informazioni diverse e sono utilizzati per scopi differenti (navigazione efficente nelle pagine di un medesimo sito, profilazione al fine di inviare messaggi promozionali mirati, analisi sul numero delle visite al sito).</br>
+        Nel corso della navigazione l’utente può ricevere sul suo terminale anche cookie inviati da siti o da web server diversi (c.d. terze parti), sui quali possono risiedere alcuni elementi (ad es. immagini, mappe, suoni, specifici link a pagine di altri domini) presenti sul sito che l’utente sta visitando.</br>
+        Più in generale, alcuni cookie (definiti cookie di sessione) sono assegnati al dispositivo dell’utente soltanto per la durata dell’accesso al sito e scadono automaticamente alla chiusura del browser. Altri cookie (definiti persistenti) restano nel dispositivo per un periodo di tempo prolungato.</br>
+        Le specifiche finalità delle diverse tipologie di cookie installati in questo sito sono di seguito descritte. Puoi disattivare i cookie seguendo le informazioni di seguito riportate.</br></br>
+        <b>CARATTERISTICHE E FINALITÀ DEI COOKIE INSTALLATI DAL SITO</b></br></br>
+        Cookie tecnici: Si tratta di cookie utilizzati specificamente per permettere il corretto funzionamento e la fruizione dei nostri siti. I cookie tecnici vengono ad esempio utilizzati per la funzionalità di login dell’utente. Sono erogati principalmente dai server dell’hosting o, nel caso dell’integrazione di servizi esterni come i social network, da terze parti.</br></br>
+        Cookie di profilazione: Si tratta di cookie utilizzati al fine di inviare messaggi pubblicitari in linea con le preferenze manifestate dall’utente nell’ambito della navigazione in rete. Possono essere erogati da nostri server oppure tramite il nostro sito da terze parti. Le aziende che offrono o pubblicizzano i propri prodotti tramite questo sito potrebbero assegnare cookie ai terminali degli utenti. Le categorie di cookie utilizzate e il tipo di trattamento di dati personali da parte di queste aziende sono regolati in conformità all’informativa rese da queste aziende.</br>
+        Per accettare o negare questi cookie erogati da nostri server effettua la seguente scelta:</br></br>
+        Cookie analitici: Si tratta di cookie utilizzati per analisi statistiche, per migliorare il sito e semplificarne l’utilizzo oltre che per monitorarne il corretto funzionamento. Questo tipo di cookie raccoglie informazioni in forma anonima sull’attività degli utenti nel sito. Questo tipo di cookie viene erogato esclusivamente da terze parti.</br>
+        Per le informative e per disattivare i cookie analitici di terze parti vai sul sito: www.youronlinechoices.com/it</br></br>
+        <b>COME PRESTARE O REVOCARE IL CONSENSO</b></br></br>
+        Il consenso all’utilizzo dei cookie viene prestato inizialmente cliccando sul tasto “ok” posizionato all’interno dell’informativa breve / banner iniziale (puoi vedere come funziona cliccando qui, e può essere revocato in ogni momento secondo quanto sopra indicato.</br></br>
+        <b>OPZIONI CIRCA L’USO DEI COOKIE DA PARTE DEL SITO MEDIANTE LE IMPOSTAZIONE DEL BROWSER</b></br></br>
+        L’erogazione di tutti i cookie, sia di prime che di terze parti, è disattivabile intervenendo sulle impostazioni del browser in uso; è bene notare però che questo potrebbe rendere inutilizzabili i siti qualora si bloccassero i cookie indispensabili per l’erogazione delle funzionalità. Ogni browser dispone di impostazioni diverse per la disattivazione dei cookie; di seguito proponiamo i collegamenti alle istruzioni per i browser più comuni:</br>
+        - Firefox (Mozilla : https://support.mozilla.org/it/kb/Attivare%20e%20disattivare%20i%20cookie</br>
+        - Chrome (Google): http://www.google.com/policies/technologies/managing/</br>
+        - Internet Explorer (Microsoft): http://windows.microsoft.com/it-it/internet-explorer/delete-manage-cookies</br>
+        - Safari (Apple : https://support.apple.com/it-it/HT201265</br>
+        - Opera : http://help.opera.com/Mac/12.10/it/cookies.html</br></br>
+        <b>SITI DI TERZE PARTI</b></br></br>
+        I siti di terze parti a cui è possibile accedere tramite questo sito web non sono coperti dalla presente informativa. Ermanno Astori declinano ogni responsabilità in merito ad essi. Le categorie di cookie utilizzate e il tipo di trattamento di dati personali da parte di queste aziende sono regolati in conformità all’informativa rese da queste aziende. Ulteriori Informazioni sui trattamenti di dati personali effettuati sul sito.</br>
+        Per le ulteriori informazioni sui trattamenti di dati personali raccolti nel presente sito effettuati da Ermanno Astori consultare l’informativa resa ai sensi dell’art. 13 Codice Privacy e la Privacy Policy.</br></br>
+        <h2>Diritti degli interessati</h2></br>
+        I soggetti cui si riferiscono i dati personali hanno il diritto in qualunque momento di ottenere la conferma dell’esistenza o meno dei medesimi dati e di conoscerne il contenuto e l’origine, verificarne l’esattezza o chiederne l’integrazione o l’aggiornamento, oppure la rettificazione (articolo 7 del Codice in materia di protezione dei dati personali).</br>
+        Ai sensi del medesimo articolo si ha il diritto di chiedere la cancellazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge, nonché di opporsi in ogni caso, per motivi legittimi, al loro trattamento.
+        Le richieste vanno rivolte:</br>
+        – via e-mail, all’indirizzo: serastori@virgilio.it</br>
+        – oppure via posta a: Ermanno Astori, via Massimo d’Azeglio, 12 - 35036 Montegrotto Terme (PD)</br></br>
+        <h2>Copyright, marchi e altri diritti di proprietà intellettuale</h2></br>
+        ll contenuto di questo sito inclusi, fra l’altro, loghi, marchi, testi, immagini, grafica, animazioni è di proprietà di Ermanno Astori ed è soggetto alla protezione della proprietà intellettuale. Sono vietati la riproduzione, la copia, il trasferimento, la pubblicazione, la distribuzione, la modifica, la ritrasmissione via email o la collocazione in altri siti Web o documenti senza preventiva autorizzazione scritta. Tutti i diritti di proprietà intellettuale contenuti nel sito, ivi compresi copyright, marchi di fabbrica, segreti commerciali e diritti di brevetto, sono riservati ed il loro uso senza la preventiva autorizzazione scritta del proprietario è severamente vietato. Nulla di quanto contenuto nel sito può essere considerato concessione di licenza esplicita o implicita o diritto all’uso della proprietà intellettuale.
+               
+        </div>
+            <div id="linea_sup" /> <!--Crea la linea-->
+		</div> 
+    </body>
+</html>

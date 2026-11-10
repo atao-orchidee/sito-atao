@@ -1,0 +1,53 @@
+---
+// Il prossimo incontro mensile, calcolato dalle regole in src/data/sito.json.
+// La data viene calcolata alla build e ricalcolata nel browser, così resta giusta
+// anche se il sito non viene ripubblicato.
+import sito from '../data/sito.json';
+import { prossimiIncontri, dataLunga } from '../lib/incontri';
+
+const [primo] = prossimiIncontri(sito.incontri);
+---
+{primo && (
+  <div class="prossimo" data-incontri={JSON.stringify(sito.incontri)}>
+    <p class="intestazione sans">Prossimo incontro</p>
+    <p class="quando"><time data-quando datetime={primo.data.toISOString().slice(0, 10)}>{dataLunga(primo.data)}</time></p>
+    <p class="dove" data-dove>
+      {primo.luogo} ({primo.provincia}){primo.orario && <>, {primo.orario}</>}
+    </p>
+    <p class="indirizzo piccolo" data-indirizzo>{primo.indirizzo}</p>
+    <a class="sans tutti" href="/incontri/">Tutte le sedi e gli orari</a>
+  </div>
+)}
+
+<script>
+  import { prossimiIncontri, dataLunga, type Incontro } from '../lib/incontri';
+
+  for (const box of document.querySelectorAll<HTMLElement>('.prossimo[data-incontri]')) {
+    const [primo] = prossimiIncontri(JSON.parse(box.dataset.incontri ?? '[]') as Incontro[]);
+    if (!primo) continue;
+    const quando = box.querySelector<HTMLTimeElement>('[data-quando]');
+    if (quando) {
+      quando.dateTime = primo.data.toISOString().slice(0, 10);
+      quando.textContent = dataLunga(primo.data);
+    }
+    const dove = box.querySelector('[data-dove]');
+    if (dove) dove.textContent = `${primo.luogo} (${primo.provincia})${primo.orario ? `, ${primo.orario}` : ''}`;
+    const indirizzo = box.querySelector('[data-indirizzo]');
+    if (indirizzo) indirizzo.textContent = primo.indirizzo ?? '';
+  }
+</script>
+
+<style>
+  .prossimo {
+    background: var(--carta);
+    border: 1px solid var(--radice);
+    padding: 1.25rem 1.5rem;
+    border-radius: 6px;
+  }
+  .intestazione { font-size: var(--t-s); font-weight: 600; color: var(--labello); margin: 0 0 0.25rem; }
+  .quando { font-size: var(--t-xl); line-height: 1.2; margin: 0 0 0.25rem; }
+  .quando time::first-letter { text-transform: uppercase; }
+  .dove { margin: 0; }
+  .indirizzo { margin: 0.25rem 0 0.75rem; }
+  .tutti { font-size: var(--t-s); }
+</style>

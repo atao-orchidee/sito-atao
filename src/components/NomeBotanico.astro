@@ -1,0 +1,9 @@
+---
+// Scrive un nome di orchidea con le convenzioni botaniche (corsivo per genere ed epiteto).
+import { partiNome } from '../lib/botanica';
+
+interface Props { nome: string; class?: string }
+const { nome, class: classe } = Astro.props;
+const parti = partiNome(nome);
+---
+<span class:list={['botanico', classe]}>{parti.map((p) => (p.corsivo ? <i>{p.testo}</i> : <span>{p.testo}</span>))}</span>

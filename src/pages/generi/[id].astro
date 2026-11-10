@@ -1,0 +1,39 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import TestataPagina from '../../components/TestataPagina.astro';
+import Foto from '../../components/Foto.astro';
+import Scheda from '../../components/Scheda.astro';
+import { estratto } from '../../lib/formato';
+
+export async function getStaticPaths() {
+  return (await getCollection('generi')).map((genere) => ({ params: { id: genere.id }, props: { genere } }));
+}
+interface Props { genere: CollectionEntry<'generi'> }
+const { genere } = Astro.props;
+const { Content } = await render(genere);
+const orchidee = (await getCollection('orchidee'))
+  .filter((o) => o.data.genere.toLowerCase() === genere.data.nome.toLowerCase())
+  .sort((a, b) => a.data.nome.localeCompare(b.data.nome, 'it'));
+---
+<Base titolo={genere.data.nome} descrizione={estratto(genere.body, 155)}>
+  <TestataPagina titolo={genere.data.nome} briciole={[{ href: '/generi/', testo: 'Generi e specie' }]}>
+    <i slot="titolo">{genere.data.nome}</i>
+  </TestataPagina>
+  <div class="contenitore impaginato">
+    <div class="prosa"><Content /></div>
+    <Foto immagine={genere.data.foto} rapporto="libero" alt={genere.data.nome} sizes="(min-width: 52rem) 30vw, 100vw" larghezze={[360, 480, 720]} />
+  </div>
+  {orchidee.length > 0 && (
+    <section class="contenitore sezione">
+      <h2>Le <i>{genere.data.nome}</i> dei soci</h2>
+      <ul class="griglia" role="list">{orchidee.map((o) => <li><Scheda orchidea={o} /></li>)}</ul>
+    </section>
+  )}
+</Base>
+
+<style>
+  .impaginato { display: grid; gap: clamp(2rem, 5vw, 4rem); grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); align-items: start; }
+  .griglia { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); }
+  @media (max-width: 52rem) { .impaginato { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,97 @@
+---
+import { Image } from 'astro:assets';
+import sito from '../data/sito.json';
+import logo from '../assets/logo/logo-atao.png';
+
+const voci = [
+  { href: '/orchidee/', testo: 'Orchidee dei soci' },
+  { href: '/guide/', testo: 'Coltivare' },
+  { href: '/incontri/', testo: 'Incontri e mostre' },
+  { href: '/cronache/', testo: 'Cronache' },
+  { href: '/associazione/', testo: 'Associazione' },
+];
+const percorso = Astro.url.pathname;
+const attiva = (href: string) => percorso === href || (href !== '/' && percorso.startsWith(href));
+---
+{sito.annuncio.attivo && sito.annuncio.testo && (
+  <div class="annuncio sans">
+    <p class="contenitore">
+      {sito.annuncio.testo}
+      {sito.annuncio.link && <> <a href={sito.annuncio.link}>Dettagli</a></>}
+    </p>
+  </div>
+)}
+<header class="testata">
+  <div class="contenitore riga">
+    <a class="marchio" href="/" aria-label={`${sito.nome}, pagina iniziale`}>
+      <Image src={logo} alt="" width={56} height={56} densities={[1, 2]} class="logo" loading="eager" />
+      <span class="sigla">{sito.sigla}</span>
+      <span class="esteso sans">Associazione Triveneta<br />Amatori Orchidee</span>
+    </a>
+
+    <nav aria-label="Principale" class="nav-larga sans">
+      <ul>
+        {voci.map((v) => (
+          <li><a href={v.href} aria-current={attiva(v.href) ? 'page' : undefined}>{v.testo}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <details class="nav-stretta sans">
+      <summary>Menu</summary>
+      <nav aria-label="Principale (mobile)">
+        <ul>
+          {voci.map((v) => (
+            <li><a href={v.href} aria-current={attiva(v.href) ? 'page' : undefined}>{v.testo}</a></li>
+          ))}
+          <li><a href="/contatti/">Contatti</a></li>
+        </ul>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<style>
+  .annuncio { background: var(--labello); color: var(--carta); font-size: var(--t-s); }
+  .annuncio p { margin: 0 auto; padding-block: 0.6rem; }
+  .annuncio a { color: inherit; font-weight: 600; }
+
+  .testata { border-bottom: 1px solid var(--radice); background: var(--velo); position: relative; z-index: 10; }
+  .riga { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding-block: 1rem; }
+
+  .marchio { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: var(--sfagno); }
+  .logo { width: 3.5rem; height: 3.5rem; flex: none; }
+  @media (max-width: 30rem) {
+    .logo { width: 3rem; height: 3rem; }
+    .esteso { display: none; }
+  }
+  .sigla { font-family: var(--serif); font-style: italic; font-size: 2rem; line-height: 1; letter-spacing: -0.02em; color: var(--labello); }
+  .esteso { font-size: var(--t-xs); line-height: 1.25; color: var(--sfagno-2); border-left: 1px solid var(--radice); padding-left: 0.75rem; }
+
+  ul { list-style: none; margin: 0; padding: 0; }
+  .nav-larga ul { display: flex; gap: clamp(0.75rem, 2vw, 1.75rem); }
+  nav a { color: var(--sfagno); text-decoration: none; font-size: var(--t-s); font-weight: 500; padding-block: 0.5rem; }
+  nav a:hover { color: var(--labello); }
+  nav a[aria-current='page'] { color: var(--labello); box-shadow: inset 0 -2px 0 var(--labello); }
+
+  .nav-stretta { display: none; }
+  .nav-stretta summary {
+    list-style: none; cursor: pointer; font-size: var(--t-s); font-weight: 600;
+    padding: 0.55rem 1rem; border: 1px solid var(--radice); border-radius: 999px;
+  }
+  .nav-stretta summary::-webkit-details-marker { display: none; }
+  .nav-stretta[open] summary { border-color: var(--sfagno); }
+  .nav-stretta nav {
+    position: absolute; left: 0; right: 0; top: 100%;
+    background: var(--velo); border-bottom: 1px solid var(--radice);
+    padding: 0.5rem var(--gutter) 1.25rem;
+  }
+  .nav-stretta li { border-top: 1px solid var(--radice); }
+  .nav-stretta a { display: block; padding: 0.85rem 0; font-size: var(--t-m); }
+  .nav-stretta a[aria-current='page'] { box-shadow: none; }
+
+  @media (max-width: 62rem) {
+    .nav-larga { display: none; }
+    .nav-stretta { display: block; }
+  }
+</style>

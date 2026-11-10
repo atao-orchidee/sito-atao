@@ -1,0 +1,98 @@
+# Mettere online il sito ATAO
+
+Guida passo passo per pubblicare il sito su Netlify e permettere ai volontari di aggiornarlo dal CMS.
+Il sito e la configurazione sono già pronti: servono solo gli account e qualche clic.
+
+**Tempo stimato:** un'ora circa, più l'attesa del cambio di dominio (da pochi minuti a un giorno).
+
+**Cosa serve:**
+
+- un account GitHub dell'associazione (gratuito);
+- un account Netlify (gratuito; si può entrare direttamente con l'account GitHub);
+- l'accesso al pannello di chi gestisce oggi il dominio `orchidee-atao.it` (il "registrar").
+
+---
+
+## 1. Creare l'account GitHub dell'associazione
+
+1. Vai su <https://github.com/signup> e crea un account con l'email della segreteria. Consiglio un nome come `atao-orchidee`.
+2. Attiva l'autenticazione a due fattori (Settings → Password and authentication): l'account custodisce il sito.
+
+## 2. Caricare il sito su GitHub
+
+1. Su GitHub crea un repository nuovo (pulsante **New**), chiamato `sito-atao`. Può essere **privato**. Non aggiungere README né altri file.
+2. In `keystatic.config.ts` sostituisci `ATAO-ACCOUNT/sito-atao` con il nome vero, per esempio `atao-orchidee/sito-atao`.
+3. Dalla cartella del progetto:
+
+   ```sh
+   git add keystatic.config.ts
+   git commit -m "Collega il CMS al repository GitHub dell'associazione"
+   git remote add origin https://github.com/atao-orchidee/sito-atao.git
+   git push -u origin main
+   ```
+
+## 3. Creare l'app GitHub del CMS (una volta sola)
+
+Il CMS online fa entrare i volontari con il loro account GitHub. Per farlo serve una piccola "app GitHub", che Keystatic crea da solo.
+
+1. Crea nella cartella del progetto un file `.env` con questa riga:
+
+   ```
+   PUBLIC_CMS_GITHUB=si
+   ```
+
+2. Avvia il sito in locale con `npm run dev` e apri <http://127.0.0.1:4321/keystatic>.
+3. Keystatic propone di creare l'app GitHub: segui le istruzioni e installala sull'account dell'associazione, scegliendo il repository `sito-atao`.
+4. Alla fine Keystatic scrive nel file `.env` quattro chiavi: `KEYSTATIC_GITHUB_CLIENT_ID`, `KEYSTATIC_GITHUB_CLIENT_SECRET`, `KEYSTATIC_SECRET`, `PUBLIC_KEYSTATIC_GITHUB_APP_SLUG`. **Tienile da parte e non condividerle**: servono al passo 4.
+5. Togli la riga `PUBLIC_CMS_GITHUB=si` dal file `.env`: in locale il CMS torna a salvare sui file del computer.
+
+Il file `.env` non viene mai caricato su GitHub (è escluso in `.gitignore`).
+
+## 4. Pubblicare su Netlify
+
+1. Vai su <https://app.netlify.com>, entra con l'account GitHub dell'associazione e scegli **Add new site → Import an existing project → GitHub → sito-atao**.
+2. Le impostazioni di build sono già nel file `netlify.toml`: non cambiare nulla.
+3. Prima di pubblicare, in **Site configuration → Environment variables** aggiungi le quattro chiavi del passo 3, con gli stessi nomi e valori.
+4. Avvia la pubblicazione. Dopo qualche minuto il sito è visibile a un indirizzo provvisorio, tipo `https://sito-atao.netlify.app`.
+5. Controlla il sito a quell'indirizzo prima di toccare il dominio.
+
+## 5. Autorizzare il CMS sull'indirizzo online
+
+L'app GitHub creata al passo 3 conosce solo l'indirizzo locale. Su GitHub apri **Settings → Developer settings → GitHub Apps → (l'app del CMS) → General** e in **Callback URL** aggiungi:
+
+```
+https://sito-atao.netlify.app/api/keystatic/github/oauth/callback
+https://www.orchidee-atao.it/api/keystatic/github/oauth/callback
+```
+
+(usa l'indirizzo provvisorio vero che ti ha dato Netlify). Ora `https://sito-atao.netlify.app/keystatic` chiede di entrare con GitHub.
+
+## 6. Collegare il dominio orchidee-atao.it
+
+1. Su Netlify: **Domain management → Add a domain** e scrivi `www.orchidee-atao.it`. Netlify aggiunge anche `orchidee-atao.it` e indica quali record DNS impostare.
+2. Nel pannello del registrar imposta i record che Netlify ti mostra. Di solito sono:
+   - `www` → record **CNAME** verso l'indirizzo provvisorio (es. `sito-atao.netlify.app`);
+   - dominio senza `www` → record **A** verso l'indirizzo IP indicato da Netlify.
+3. **Non toccare i record MX** (la posta) né altri record che non riguardano il sito.
+4. Quando il dominio risponde, Netlify attiva da solo il certificato HTTPS.
+
+Gli indirizzi del vecchio sito (`Pagina_….html`) vengono reindirizzati alle pagine nuove dal file `public/_redirects`: i link già sparsi in giro e su Google continuano a funzionare.
+
+## 7. Aggiungere i volontari
+
+Ogni volontario che deve aggiornare il sito:
+
+1. si crea un account GitHub gratuito;
+2. viene aggiunto come collaboratore del repository `sito-atao` (su GitHub: **Settings → Collaborators → Add people**);
+3. entra da `https://www.orchidee-atao.it/keystatic` con GitHub.
+
+Ogni salvataggio dal CMS diventa una modifica su GitHub e Netlify ripubblica il sito da solo in un paio di minuti. Lo storico di GitHub conserva tutte le versioni: un errore si può sempre annullare.
+
+---
+
+## Se qualcosa non va
+
+- **Il CMS online dice che non trova il repository:** controlla il nome in `keystatic.config.ts` (passo 2) e che l'app GitHub sia installata su quel repository (passo 3).
+- **"Redirect URI mismatch" quando si entra nel CMS:** manca l'indirizzo nella Callback URL dell'app GitHub (passo 5).
+- **La pubblicazione su Netlify fallisce:** in **Deploys** si apre il registro dell'errore; spesso manca una delle quattro chiavi del passo 3.
+- **Le foto caricate dal CMS non compaiono subito:** è normale, il sito si ricostruisce in un paio di minuti.

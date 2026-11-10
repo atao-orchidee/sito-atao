@@ -1,0 +1,237 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import ProssimoIncontro from '../components/ProssimoIncontro.astro';
+import Scheda from '../components/Scheda.astro';
+import Foto from '../components/Foto.astro';
+import sito from '../data/sito.json';
+import logo from '../assets/logo/logo-atao.png';
+import { regolaInParole } from '../lib/incontri';
+import { formattaData, estratto } from '../lib/formato';
+
+const orchidee = (await getCollection('orchidee')).sort((a, b) => a.data.nome.localeCompare(b.data.nome, 'it'));
+
+// Sei orchidee per la home: quelle segnate "in evidenza" dal CMS; se non ce ne sono abbastanza,
+// si completa con piante di generi diversi, prese a intervalli regolari lungo l'alfabeto.
+const conFoto = orchidee.filter((o) => o.data.foto.length > 0);
+const scelte = conFoto.filter((o) => o.data.inEvidenza).slice(0, 6);
+const passo = Math.max(1, Math.floor(conFoto.length / 6));
+for (let i = 0; scelte.length < 6 && i < conFoto.length; i += passo) {
+  const o = conFoto[i];
+  if (!scelte.includes(o) && !scelte.some((s) => s.data.genere === o.data.genere)) scelte.push(o);
+}
+
+const guide = await getCollection('guide');
+const esperienze = guide.filter((g) => g.data.categoria === 'esperienza').length;
+
+const cronache = (await getCollection('cronache')).sort((a, b) => b.data.data.getTime() - a.data.data.getTime());
+const cronacheConFoto = cronache.filter((c) => c.data.foto.length > 0).slice(0, 3);
+const primoAnno = cronache.at(-1)?.data.data.getFullYear();
+
+const oggi = new Date();
+const eventi = (await getCollection('eventi'))
+  .filter((e) => (e.data.dataFine ?? e.data.data) >= oggi)
+  .sort((a, b) => a.data.data.getTime() - b.data.data.getTime());
+
+// Scheda dell'associazione per i motori di ricerca (schema.org), invisibile sulla pagina.
+const organizzazione = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: sito.nome,
+  alternateName: sito.sigla,
+  url: Astro.site?.href,
+  logo: new URL(logo.src, Astro.site).href,
+  email: sito.email,
+  foundingDate: String(sito.fondazione),
+  ...(sito.sede ? { address: sito.sede } : {}),
+  areaServed: ['Veneto', 'Friuli Venezia Giulia', 'Trentino-Alto Adige'],
+};
+
+const comuni = new Intl.ListFormat('it', { type: 'conjunction' }).format(sito.incontri.map((i) => i.luogo));
+---
+<Base descrizione={`${sito.nome}: dal ${sito.fondazione} favoriamo la conoscenza, lo studio e la conservazione delle orchidee. Incontri mensili, mostre e guide di coltivazione nel Triveneto.`}>
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(organizzazione)} />
+  <section class="frontespizio" aria-labelledby="titolo-associazione">
+    <div class="contenitore pagina">
+      <Image src={logo} alt="Logo dell'ATAO: un Cypripedium calceolus dentro un anello con la sigla" width={208} height={208} densities={[1, 2]} class="emblema" loading="eager" fetchpriority="high" />
+      <h1 id="titolo-associazione">{sito.nome}</h1>
+      <hr />
+      <p class="motto">
+        Dal {sito.fondazione} favoriamo la conoscenza, lo studio e la conservazione delle orchidee,
+        e la divulgazione delle tecniche per coltivarle.
+      </p>
+      <div class="azioni">
+        <a class="bottone" href="/associazione/">Chi siamo</a>
+        <a class="bottone secondario" href="/incontri/">Vieni a un incontro</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sezione contenitore attivita" aria-labelledby="titolo-attivita">
+    <h2 id="titolo-attivita">Cosa facciamo</h2>
+    <ul role="list">
+      <li>
+        <h3><a href="/incontri/">Incontri mensili</a></h3>
+        <p>Ogni mese a {comuni}. Si portano le piante in fiore e quelle che preoccupano, si fanno domande, si scambiano esperienze. Sono aperti anche ai non soci.</p>
+      </li>
+      <li>
+        <h3><a href="/cronache/">Mostre</a></h3>
+        <p>Allestiamo mostre di orchidee e partecipiamo a quelle di tutto il Triveneto. Le raccontiamo nelle cronache: {cronache.length} dal {primoAnno}.</p>
+      </li>
+      <li>
+        <h3><a href="/guide/">Coltivazione</a></h3>
+        <p>Guide scritte dai soci per chi comincia, su coltivazione, parassiti e materiali, e {esperienze} racconti di chi coltiva da anni.</p>
+      </li>
+      <li>
+        <h3><a href="/associazione/">Studio e conservazione</a></h3>
+        <p>L'associazione è nata per studiare e conservare le orchidee e per sperimentare nuove tecniche di coltivazione, mettendo in comune ciò che ciascuno impara.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section class="sezione incontri" aria-labelledby="titolo-incontri">
+    <div class="contenitore impaginato">
+      <div>
+        <h2 id="titolo-incontri">Dove ci incontriamo</h2>
+        <ul class="sedi" role="list">
+          {sito.incontri.map((i) => (
+            <li>
+              <strong>{i.luogo} ({i.provincia})</strong>
+              <span class="piccolo">{regolaInParole(i.regola)}{i.orario && <>, {i.orario}</>}</span>
+            </li>
+          ))}
+        </ul>
+        {sito.sede && <p class="piccolo sede">La sede dell'associazione è in {sito.sede}.</p>}
+      </div>
+      <div class="lato">
+        <ProssimoIncontro />
+        {eventi[0] && (
+          <a class="evento" href="/incontri/#mostre">
+            <span class="piccolo">Prossima mostra</span>
+            <strong>{eventi[0].data.titolo}</strong>
+            <span class="piccolo">{formattaData(eventi[0].data.data)}, {eventi[0].data.luogo}</span>
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+
+  {cronacheConFoto.length > 0 && (
+    <section class="sezione contenitore" aria-labelledby="titolo-cronache">
+      <div class="testa-riga">
+        <h2 id="titolo-cronache">Dalle nostre mostre</h2>
+        <a class="sans" href="/cronache/">Tutte le cronache</a>
+      </div>
+      <ul class="cronache" role="list">
+        {cronacheConFoto.map((c) => (
+          <li>
+            <a href={`/cronache/${c.id}/`}>
+              <Foto immagine={c.data.foto[0]?.immagine} alt={c.data.foto[0]?.didascalia ?? c.data.titolo} rapporto="3 / 2" sizes="(min-width: 60rem) 33vw, 100vw" transizione={`cronaca-${c.id}`} />
+              <time class="piccolo" datetime={c.data.data.toISOString().slice(0, 10)}>{formattaData(c.data.data)}</time>
+              <h3>{c.data.titolo}</h3>
+              <p class="piccolo">{c.data.sommario ?? estratto(c.body)}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <section class="sezione orchidee" aria-labelledby="titolo-orchidee">
+    <div class="contenitore">
+      <div class="testa-riga">
+        <h2 id="titolo-orchidee">Le orchidee dei soci</h2>
+        <a class="sans" href="/orchidee/">Vedi tutte le {orchidee.length}</a>
+      </div>
+      <ul class="griglia" role="list">
+        {scelte.map((o) => <li><Scheda orchidea={o} /></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="sezione contenitore invito" aria-labelledby="titolo-invito">
+    <h2 id="titolo-invito">Diventa socio</h2>
+    <p class="misura">
+      Non serve essere esperti. Agli incontri sono benvenuti soci e non soci: è il modo migliore per conoscerci
+      prima di iscriversi.
+    </p>
+    <div class="azioni">
+      <a class="bottone" href="/associazione/#diventa-socio">Come iscriversi</a>
+      <a class="bottone secondario" href={`mailto:${sito.email}`}>Scrivi alla segreteria</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ---------- frontespizio: composto come la prima pagina di un trattato di botanica ---------- */
+  .frontespizio { background: var(--carta); border-bottom: 1px solid var(--radice); }
+  .pagina {
+    display: grid; justify-items: center; text-align: center;
+    padding-block: clamp(2.5rem, 1.5rem + 3.5vw, 4.5rem) clamp(3rem, 2rem + 3.5vw, 5rem);
+  }
+  .emblema { width: clamp(8rem, 6rem + 6vw, 11rem); height: auto; margin-bottom: clamp(1.25rem, 1rem + 1.5vw, 2rem); }
+  .frontespizio h1 {
+    font-size: clamp(2.2rem, 1.3rem + 3vw, 3.75rem); line-height: 1.08; letter-spacing: -0.015em;
+    max-width: 22ch; margin: 0;
+  }
+  .frontespizio hr { width: 4.5rem; border: 0; border-top: 1px solid var(--foglia); margin: clamp(1.25rem, 1rem + 1vw, 1.75rem) auto; }
+  .motto { font-size: var(--t-l); line-height: 1.5; font-style: italic; color: var(--sfagno-2); max-width: 34rem; margin: 0; }
+  .azioni { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+
+  /* l'unico momento animato della home: l'emblema emerge, il filetto si traccia, il motto segue.
+     Il titolo resta fermo e visibile da subito. */
+  @media (prefers-reduced-motion: no-preference) {
+    .emblema { animation: emergi 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .frontespizio hr { animation: traccia 0.55s cubic-bezier(0.65, 0, 0.35, 1) 0.3s both; }
+    .motto { animation: compari 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both; }
+    .frontespizio .azioni { animation: compari 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.6s both; }
+  }
+  @keyframes emergi { from { opacity: 0; transform: scale(0.94); filter: blur(6px); } }
+  @keyframes traccia { from { transform: scaleX(0); } }
+  @keyframes compari { from { opacity: 0; transform: translateY(6px); } }
+  .frontespizio .azioni { justify-content: center; }
+
+  /* ---------- cosa facciamo ---------- */
+  .attivita h2 { margin-bottom: 2rem; }
+  .attivita ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem clamp(2rem, 4vw, 3.5rem); grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
+  .attivita li { border-top: 1px solid var(--radice); padding-top: 1.1rem; }
+  .attivita h3 { font-size: var(--t-xl); margin: 0 0 0.5rem; }
+  .attivita h3 a { color: var(--sfagno); text-decoration: none; }
+  .attivita h3 a:hover { color: var(--labello); text-decoration: underline; text-decoration-thickness: 1px; }
+  .attivita p { margin: 0; font-size: 1.05rem; line-height: 1.6; }
+
+  /* ---------- incontri ---------- */
+  .incontri { background: var(--velo-2); }
+  .impaginato { display: grid; gap: clamp(2rem, 5vw, 5rem); grid-template-columns: minmax(0, 1.4fr) minmax(16rem, 1fr); align-items: start; }
+  .sedi { list-style: none; margin: 1.5rem 0 0; padding: 0; border-top: 1px solid var(--radice); }
+  .sedi li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 1.5rem; padding: 0.9rem 0; border-bottom: 1px solid var(--radice); }
+  .sedi strong { font-weight: 500; font-size: var(--t-l); }
+  .sedi .piccolo { align-self: center; }
+  .sede { margin-top: 1.25rem; }
+  .lato { display: grid; gap: 1rem; }
+  .evento { display: grid; gap: 0.15rem; padding: 1rem 1.5rem; border: 1px solid var(--radice); border-radius: 6px; color: inherit; text-decoration: none; background: var(--carta); }
+  .evento strong { font-weight: 500; font-size: var(--t-l); }
+  .evento:hover strong { color: var(--labello); }
+
+  /* ---------- cronache e orchidee ---------- */
+  .testa-riga { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 2rem; margin-bottom: 1.75rem; }
+  .testa-riga h2 { margin: 0; }
+  .testa-riga a { font-size: var(--t-s); }
+  .cronache { list-style: none; padding: 0; margin: 0; display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); }
+  .cronache a { color: inherit; text-decoration: none; display: grid; gap: 0.5rem; }
+  .cronache h3 { font-size: var(--t-l); margin: 0; }
+  .cronache p { margin: 0; }
+  .cronache time { margin-top: 0.4rem; }
+  .cronache a:hover h3 { color: var(--labello); }
+
+  .orchidee { background: var(--carta); border-block: 1px solid var(--radice); }
+  /* sei schede: 6, 3 o 2 colonne, mai una rimasta sola in fondo */
+  .griglia { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  @media (max-width: 75rem) { .griglia { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 40rem) { .griglia { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; } }
+
+  @media (max-width: 52rem) {
+    .impaginato { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,59 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import TestataPagina from '../../components/TestataPagina.astro';
+
+export async function getStaticPaths() {
+  return (await getCollection('guide')).map((guida) => ({ params: { id: guida.id }, props: { guida } }));
+}
+interface Props { guida: CollectionEntry<'guide'> }
+const { guida } = Astro.props;
+const { Content, headings } = await render(guida);
+const indice = headings.filter((h) => h.depth === 2);
+const altre = (await getCollection('guide'))
+  .filter((g) => g.data.categoria === guida.data.categoria && g.id !== guida.id)
+  .sort((a, b) => a.data.ordine - b.data.ordine)
+  .slice(0, 5);
+---
+<Base titolo={guida.data.titolo} descrizione={guida.data.sommario}>
+  <TestataPagina titolo={guida.data.titolo} briciole={[{ href: guida.data.categoria === 'guida' ? '/guide/' : '/guide/#esperienze', testo: guida.data.categoria === 'guida' ? 'Coltivare' : 'Esperienze dei soci' }]}>
+    {guida.data.autore && <p class="piccolo autore">di {guida.data.autore}</p>}
+  </TestataPagina>
+
+  <div class="contenitore impaginato">
+    {indice.length > 2 && (
+      <nav class="indice sans" aria-label="In questa pagina">
+        <p class="titoletto">In questa pagina</p>
+        <ol>{indice.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+      </nav>
+    )}
+    <article class="prosa"><Content /></article>
+  </div>
+
+  {altre.length > 0 && (
+    <aside class="contenitore sezione altre" aria-labelledby="titolo-altre">
+      <h2 id="titolo-altre">{guida.data.categoria === 'guida' ? 'Altre guide' : 'Altre esperienze dei soci'}</h2>
+      <ul role="list">
+        {altre.map((g) => <li><a href={`/guide/${g.id}/`}>{g.data.titolo}</a>{g.data.autore && <span class="piccolo">, {g.data.autore}</span>}</li>)}
+      </ul>
+    </aside>
+  )}
+</Base>
+
+<style>
+  .autore { color: var(--labello); font-size: var(--t-m); margin: 0; }
+  .impaginato { display: grid; gap: clamp(2rem, 5vw, 5rem); grid-template-columns: 15rem minmax(0, 1fr); align-items: start; }
+  .impaginato:not(:has(.indice)) { grid-template-columns: minmax(0, 1fr); }
+  .indice { position: sticky; top: 1.5rem; font-size: var(--t-s); }
+  .titoletto { font-weight: 600; color: var(--sfagno-2); margin-bottom: 0.5rem; }
+  .indice ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--radice); }
+  .indice a { display: block; padding: 0.3rem 0 0.3rem 0.9rem; color: var(--sfagno-2); text-decoration: none; line-height: 1.35; }
+  .indice a:hover { color: var(--labello); }
+  .prosa :global(h2) { scroll-margin-top: 1.5rem; }
+  .altre ul { list-style: none; padding: 0; margin: 0; }
+  .altre li { padding: 0.6rem 0; border-top: 1px solid var(--radice); }
+  @media (max-width: 56rem) {
+    .impaginato { grid-template-columns: 1fr; }
+    .indice { position: static; }
+  }
+</style>

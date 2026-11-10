@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<elenco_links xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:/Altri_lavori/Atao_New/Schemi/Schema_links.xsd">
+	<link>
+		<denominazione>A.I.O.&lt;font size="3px"&gt;Associazione Italiana Orchidologia&lt;/font&gt;</denominazione>
+		<referente>Referente: Guido Diana</referente>
+		<web>Indirizzo Web: &lt;a href="http://www.associazioneitalianaorchidologia.it/Home.html"&gt;www.associazioneitalianaorchidologia.it&lt;/a&gt;</web>
+		<e_mail>Indirizzo E-mail: &lt;a href="mailto:segreteriaaio"&gt;segreteriaaio@gmail.com&lt;/a&gt;</e_mail>
+	</link>
+	<link>
+		<denominazione>A.E.R.A.D.O.&lt;font size="3px"&gt;Associazione Emiliano Romagnola Amatori Orchidee&lt;/font&gt;</denominazione>
+		<referente>Referente: Alessandro Cavazza</referente>
+		<web>Indirizzo Web: &lt;a href="http://www.aerado.it/"&gt;www.aerado.it/&lt;/a&gt;</web>
+		<e_mail>Indirizzo E-mail: &lt;a href="mailto:aerado.bologna@libero.it"&gt;aerado.bologna@libero.it&lt;/a&gt;</e_mail>
+	</link>
+	<link>
+		<denominazione>A.L.O.&lt;font size="3px"&gt;Associazione Laziale Orchidee&lt;/font&gt;</denominazione>
+		<web>Indirizzo Web: &lt;a href="http://www.alorchidee.it/"&gt;www.alorchidee.it/&lt;/a&gt;</web>
+		<e_mail>Indirizzo E-mail: &lt;a href="mailto:info@alorchidee.it"&gt;info@alorchidee.it&lt;/a&gt;</e_mail>
+	</link>
+	<link>
+		<denominazione>A.M.A.O.&lt;font size="3px"&gt;Associazione Meridionale Amatori Orchidee&lt;/font&gt;</denominazione>
+		<referente>Referente: Emilia Esposito</referente>
+		<web>Indirizzo Web: &lt;a href="http://www.amaoorchidee.it/"&gt;www.amaoorchidee.it/&lt;/a&gt;</web>
+		<e_mail>Indirizzo E-mail: &lt;a href="mailto:segretario@amaoorchidee.it"&gt;segretario@amaoorchidee.it&lt;/a&gt;</e_mail>
+	</link>
+	<link>
+		<denominazione>ORCHIDANDO</denominazione>
+		<web>Indirizzo Web: &lt;a href="http://www.orchidando.net/"&gt;www.orchidando.net/&lt;/a&gt;</web>
+	</link>
+	<link>
+		<denominazione>LE NOSTRE AMICHE ORCHIDEE</denominazione>
+		<web>Indirizzo Web: &lt;a href="http://www.elicriso.it/it/orchidee/"&gt;www.elicriso.it/it/orchidee/&lt;/a&gt;</web>
+	</link>
+	<link>
+		<denominazione>Internet Orchid Species Photo Encyclopedia</denominazione>
+		<web>Indirizzo Web: &lt;a href="http://www.orchidspecies.com/"&gt;www.orchidspecies.com/&lt;/a&gt;</web>
+	</link>
+	<link>
+		<denominazione>The Endeavour Botanical Illustrations (Illustrazioni botaniche dell'Endeavour)</denominazione>
+		<web>Indirizzo Web: &lt;a href="http://www.nhm.ac.uk/jdsml/nature-online/endeavour-botanical/indexadv.dsml"&gt;http://www.nhm.ac.uk/jdsml/nature-online/endeavour-botanical/indexadv.dsml&lt;/a&gt;</web>
+	</link>
+</elenco_links>

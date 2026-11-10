@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import TestataPagina from '../../components/TestataPagina.astro';
+import Foto from '../../components/Foto.astro';
+import { estratto } from '../../lib/formato';
+
+const generi = (await getCollection('generi')).sort((a, b) => a.data.nome.localeCompare(b.data.nome, 'it'));
+const orchidee = await getCollection('orchidee');
+const quante = (nome: string) => orchidee.filter((o) => o.data.genere.toLowerCase() === nome.toLowerCase()).length;
+---
+<Base titolo="Generi e specie" descrizione="I principali generi di orchidee coltivate in casa e in serra: origine, caratteristiche e come riconoscerli.">
+  <TestataPagina titolo="Generi e specie" sommario="I generi più coltivati, con la loro storia e le caratteristiche che li rendono riconoscibili." />
+  <section class="contenitore">
+    <ul class="elenco" role="list">
+      {generi.map((g) => {
+        const n = quante(g.data.nome);
+        return (
+          <li>
+            <a href={`/generi/${g.id}/`}>
+              <Foto immagine={g.data.foto} alt={g.data.nome} rapporto="1 / 1" sizes="(min-width: 50rem) 12rem, 30vw" larghezze={[240, 360, 480]} />
+              <div>
+                <h2><i>{g.data.nome}</i></h2>
+                <p class="piccolo">{estratto(g.body, 200)}</p>
+                {n > 0 && <p class="piccolo conta">{n} {n === 1 ? 'pianta' : 'piante'} nelle collezioni dei soci</p>}
+              </div>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .elenco { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--radice); }
+  .elenco li { border-bottom: 1px solid var(--radice); }
+  .elenco a { display: grid; grid-template-columns: clamp(6rem, 18vw, 11rem) 1fr; gap: clamp(1rem, 3vw, 2.5rem); align-items: center; padding: 1.25rem 0; color: inherit; text-decoration: none; }
+  h2 { font-size: var(--t-xl); margin: 0 0 0.3rem; }
+  .elenco p { margin: 0; max-width: 40rem; }
+  .elenco .conta { margin-top: 0.4rem; color: var(--labello); }
+  .elenco a:hover h2 { color: var(--labello); }
+</style>
