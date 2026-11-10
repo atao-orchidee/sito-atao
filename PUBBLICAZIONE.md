@@ -3,6 +3,31 @@
 Guida passo passo per pubblicare il sito su Netlify e permettere ai volontari di aggiornarlo dal CMS.
 Il sito e la configurazione sono già pronti: servono solo gli account e qualche clic.
 
+## A che punto siamo (10 novembre 2026)
+
+| Passo | Stato |
+|---|---|
+| Account GitHub `segreteria-atao`, con verifica in due passaggi | fatto |
+| Codice nel repository privato `segreteria-atao/sito-atao` | fatto |
+| App GitHub del CMS "segreteria-atao Keystatic" (chiavi nel file `.env` locale) | creata, **non installata** |
+| Sito su Netlify: <https://sito-atao.netlify.app> (progetto `sito-atao`, team `segreteria-atao`) | **online** |
+| CMS online | in attesa: GitHub ha segnalato l'account e blocca le app esterne |
+| Dominio `orchidee-atao.it` | punta ancora al vecchio sito |
+
+**Per sbloccare GitHub:** con l'account `segreteria-atao` aprire <https://support.github.com/contact/reinstatement>, fare la verifica via SMS e chiedere di rivedere la segnalazione. Dopo lo sblocco restano i passi 3 (installare l'app), 4.3 (chiavi su Netlify), 5 e il collegamento automatico del repository a Netlify.
+
+**Finché il CMS online non c'è,** i contenuti si modificano con il CMS locale (`npm run dev`, poi <http://127.0.0.1:4321/keystatic>) e si pubblicano dal computer:
+
+```sh
+git add -A && git commit -m "Aggiorna i contenuti"
+git push
+npx netlify-cli deploy --build --prod
+```
+
+Il progetto Netlify non è ancora collegato a GitHub: il `git push` salva le modifiche, ma è l'ultimo comando a pubblicarle.
+
+---
+
 **Tempo stimato:** un'ora circa, più l'attesa del cambio di dominio (da pochi minuti a un giorno).
 
 **Cosa serve:**
