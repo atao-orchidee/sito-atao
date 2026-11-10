@@ -12,7 +12,7 @@ Il sito e la configurazione sono già pronti: servono solo gli account e qualche
 | App GitHub del CMS "segreteria-atao Keystatic" (chiavi nel file `.env` locale) | creata, **non installata** |
 | Sito su Netlify: <https://sito-atao.netlify.app> (progetto `sito-atao`, team `segreteria-atao`) | **online** |
 | CMS online | in attesa: GitHub ha segnalato l'account e blocca le app esterne |
-| Dominio `orchidee-atao.it` | punta ancora al vecchio sito |
+| Dominio `orchidee-atao.it` | registrato su Netlify; **da cambiare su TOL** (passo 6) |
 
 **Per sbloccare GitHub:** con l'account `segreteria-atao` aprire <https://support.github.com/contact/reinstatement>, fare la verifica via SMS e chiedere di rivedere la segnalazione. Dopo lo sblocco restano i passi 3 (installare l'app), 4.3 (chiavi su Netlify), 5 e il collegamento automatico del repository a Netlify.
 
@@ -87,12 +87,21 @@ https://www.orchidee-atao.it/api/keystatic/github/oauth/callback
 
 ## 6. Collegare il dominio orchidee-atao.it
 
-1. Su Netlify: **Domain management → Add a domain** e scrivi `www.orchidee-atao.it`. Netlify aggiunge anche `orchidee-atao.it` e indica quali record DNS impostare.
-2. Nel pannello del registrar imposta i record che Netlify ti mostra. Di solito sono:
-   - `www` → record **CNAME** verso l'indirizzo provvisorio (es. `sito-atao.netlify.app`);
-   - dominio senza `www` → record **A** verso l'indirizzo IP indicato da Netlify.
-3. **Non toccare i record MX** (la posta) né altri record che non riguardano il sito.
-4. Quando il dominio risponde, Netlify attiva da solo il certificato HTTPS.
+Su Netlify il dominio è già registrato nel progetto (`www.orchidee-atao.it` principale, `orchidee-atao.it` che rimanda a `www`).
+Il dominio è gestito da **TOL** (server DNS `dns.tol.it` e `dns2.tol.it`): nel loro pannello, gestione DNS di `orchidee-atao.it`, cambiare **solo** questi tre record.
+
+| Nome | Oggi | Dopo |
+|---|---|---|
+| `www` | CNAME → `orchidee-atao.it` | **CNAME → `sito-atao.netlify.app`** |
+| `@` (dominio senza www) | A → `80.88.84.7` | **A → `75.2.60.5`** (Netlify) |
+| `ftp` | CNAME → `orchidee-atao.it` | **A → `80.88.84.7`** (resta sul vecchio spazio web) |
+
+**Non toccare** i record della posta: MX, `mail`, `smtp`, `imap`, `webmail` (puntano a 62.149.157.x e restano come sono).
+Sul dominio senza www deve restare un solo record A; non ci sono record AAAA da togliere.
+
+Il record `ftp` va fissato perché oggi segue il dominio principale: senza questa modifica l'FTP finirebbe su Netlify e si perderebbe l'accesso al vecchio spazio web, dove ci sono le foto originali.
+
+Il cambio si propaga in qualche ora (TTL attuale 4 ore, al massimo un giorno). Quando il dominio risponde, Netlify attiva da solo il certificato HTTPS.
 
 Gli indirizzi del vecchio sito (`Pagina_….html`) vengono reindirizzati alle pagine nuove dal file `public/_redirects`: i link già sparsi in giro e su Google continuano a funzionare.
 
