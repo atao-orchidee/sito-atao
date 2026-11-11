@@ -8,7 +8,8 @@ import Foto from '../components/Foto.astro';
 import sito from '../data/sito.json';
 import logo from '../assets/logo/logo-atao.png';
 import { regolaInParole } from '../lib/incontri';
-import { formattaData, estratto, fineGiorno, nascondiPassati } from '../lib/formato';
+import { formattaData, estratto, fineGiorno, nascondiPassati, dateInParole } from '../lib/formato';
+import { contoEventi } from '../lib/conto-eventi';
 
 const orchidee = (await getCollection('orchidee')).sort((a, b) => a.data.nome.localeCompare(b.data.nome, 'it'));
 
@@ -68,6 +69,38 @@ const comuni = new Intl.ListFormat('it', { type: 'conjunction' }).format(sito.in
     </div>
   </section>
 
+  {eventi.length > 0 && (
+    <section class="in-programma" aria-labelledby="titolo-in-programma" data-in-programma>
+      <h2 id="titolo-in-programma" class="solo-lettori">Mostre in programma</h2>
+      {eventi.map((e, i) => {
+        const d = e.data;
+        const mappa = `https://www.openstreetmap.org/search?query=${encodeURIComponent([d.indirizzo, d.luogo].filter(Boolean).join(', '))}`;
+        return (
+          <article class:list={['contenitore', 'evento-grande', { secondario: i > 0 }]} data-fine={fineGiorno(d.dataFine ?? d.data).toISOString()}>
+            {d.locandina && i === 0 && (
+              <a href="/incontri/#mostre" class="locandina" aria-hidden="true" tabindex="-1">
+                <Image src={d.locandina} alt="" widths={[280, 420, 560]} sizes="(min-width: 52rem) 17rem, 70vw" loading="eager" />
+              </a>
+            )}
+            <div class="dettagli">
+              <p class="conto sans" data-conto data-inizio={d.data.toISOString().slice(0, 10)} data-termine={(d.dataFine ?? d.data).toISOString().slice(0, 10)} hidden></p>
+              <h3>{d.titolo}</h3>
+              <p class="quando">{dateInParole(d.data, d.dataFine)}</p>
+              <p class="dove sans">{d.orario && <>{d.orario}<br /></>}{d.luogo}{d.indirizzo && <>, {d.indirizzo}</>}</p>
+              {d.sommario && i === 0 && <p class="sommario">{d.sommario}</p>}
+              <div class="azioni">
+                <a class="bottone" href="/incontri/#mostre">Programma e dettagli</a>
+                {d.link && <a class="bottone secondario" href={d.link} rel="noopener">Sito dell’evento</a>}
+                <a class="bottone secondario" href={mappa} rel="noopener" target="_blank">Come arrivare<span class="solo-lettori"> (si apre in una nuova scheda)</span></a>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+      <script is:inline set:html={nascondiPassati + contoEventi} />
+    </section>
+  )}
+
   <section class="sezione contenitore attivita" aria-labelledby="titolo-attivita">
     <h2 id="titolo-attivita">Cosa facciamo</h2>
     <ul role="list">
@@ -106,14 +139,6 @@ const comuni = new Intl.ListFormat('it', { type: 'conjunction' }).format(sito.in
       </div>
       <div class="lato">
         <ProssimoIncontro />
-        {eventi[0] && (
-          <a class="evento" href="/incontri/#mostre" data-fine={fineGiorno(eventi[0].data.dataFine ?? eventi[0].data.data).toISOString()}>
-            <span class="piccolo">Prossima mostra</span>
-            <strong>{eventi[0].data.titolo}</strong>
-            <span class="piccolo">{formattaData(eventi[0].data.data)}{eventi[0].data.dataFine && <> – {formattaData(eventi[0].data.dataFine)}</>}, {eventi[0].data.luogo}</span>
-          </a>
-        )}
-        <script is:inline set:html={nascondiPassati} />
       </div>
     </div>
   </section>
@@ -193,6 +218,37 @@ const comuni = new Intl.ListFormat('it', { type: 'conjunction' }).format(sito.in
   @keyframes compari { from { opacity: 0; transform: translateY(6px); } }
   .frontespizio .azioni { justify-content: center; }
 
+  /* ---------- mostre in programma: la notizia più importante, subito dopo il frontespizio ---------- */
+  .in-programma {
+    --su-scuro: color-mix(in oklab, var(--velo) 85%, var(--sfagno));
+    background: var(--sfagno); color: var(--velo);
+    padding-block: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+  }
+  .evento-grande { display: grid; gap: clamp(1.5rem, 4vw, 4rem); grid-template-columns: minmax(0, 17rem) minmax(0, 1fr); align-items: center; }
+  .evento-grande + .evento-grande { margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid color-mix(in oklab, var(--velo) 25%, transparent); }
+  .evento-grande.secondario { grid-template-columns: minmax(0, 1fr); }
+  .locandina { display: block; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 6px rgb(0 0 0 / 0.2), 0 18px 40px rgb(0 0 0 / 0.25); transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1); }
+  .locandina:hover { transform: translateY(-3px); }
+  .locandina img { width: 100%; height: auto; }
+  .conto {
+    display: inline-block; margin: 0 0 1rem; padding: 0.3rem 0.8rem; border-radius: 999px;
+    background: var(--labello); color: var(--carta); font-size: var(--t-s); font-weight: 600;
+  }
+  .evento-grande h3 { font-size: var(--t-2xl); line-height: 1.12; margin: 0 0 0.6rem; color: var(--velo); max-width: 24ch; }
+  .evento-grande.secondario h3 { font-size: var(--t-xl); }
+  .quando { font-size: var(--t-xl); line-height: 1.25; margin: 0 0 0.5rem; }
+  .quando::first-letter { text-transform: uppercase; }
+  .dove { font-size: var(--t-s); line-height: 1.55; color: var(--su-scuro); margin: 0 0 1rem; }
+  .sommario { color: var(--su-scuro); margin: 0; max-width: 40rem; }
+  .in-programma .azioni { margin-top: 1.5rem; }
+  .in-programma .bottone.secondario { color: var(--velo); border-color: color-mix(in oklab, var(--velo) 45%, transparent); }
+  .in-programma .bottone.secondario:hover { border-color: var(--velo); color: var(--velo); }
+  .in-programma :focus-visible { outline-color: var(--velo); }
+  @media (max-width: 52rem) {
+    .evento-grande { grid-template-columns: 1fr; }
+    .locandina { max-width: 15rem; }
+  }
+
   /* ---------- cosa facciamo ---------- */
   .attivita h2 { margin-bottom: 2rem; }
   .attivita ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem clamp(2rem, 4vw, 3.5rem); grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); }
@@ -211,9 +267,6 @@ const comuni = new Intl.ListFormat('it', { type: 'conjunction' }).format(sito.in
   .sedi .piccolo { align-self: center; }
   .sede { margin-top: 1.25rem; }
   .lato { display: grid; gap: 1rem; }
-  .evento { display: grid; gap: 0.15rem; padding: 1rem 1.5rem; border: 1px solid var(--radice); border-radius: 6px; color: inherit; text-decoration: none; background: var(--carta); }
-  .evento strong { font-weight: 500; font-size: var(--t-l); }
-  .evento:hover strong { color: var(--labello); }
 
   /* ---------- cronache e orchidee ---------- */
   .testa-riga { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 2rem; margin-bottom: 1.75rem; }

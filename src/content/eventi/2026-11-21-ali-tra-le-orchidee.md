@@ -8,6 +8,7 @@ indirizzo: "via Salzena"
 tipo: "mostra"
 sommario: "Organizzata dall'ATAO e da Oasi Rossi – Cooperativa sociale Nuovi Orizzonti ONLUS"
 locandina: "../../assets/eventi/ali-tra-le-orchidee-2026.jpg"
+link: "https://www.oasirossi.it/visita"
 ---
 
 Organizzata dall'Associazione Triveneta Amatori Orchidee e da Oasi Rossi – Cooperativa sociale Nuovi Orizzonti ONLUS, con il patrocinio di Regione Veneto, Provincia di Vicenza, Comune di Santorso e Comune di Zanè.
