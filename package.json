@@ -21,7 +21,8 @@
     "@keystatic/core": "^0.6.9",
     "astro": "^7.4.8",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "simple-icons": "^16.37.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",

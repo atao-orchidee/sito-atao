@@ -1,53 +1,65 @@
 ---
 // Collegamenti ai canali social dell'ATAO (dati in src/data/sito.json, modificabili dal CMS).
-// Icone disegnate qui: nessuno script di Facebook, Instagram o YouTube, quindi nessun cookie di terze parti.
+// Simboli ufficiali dei marchi dalla raccolta Simple Icons (CC0), inseriti nella pagina:
+// nessuno script di Facebook, Instagram o YouTube, quindi nessun cookie di terze parti.
+//  - variante "piede": simbolo monocolore, che prende il colore del marchio al passaggio del mouse;
+//  - variante "pagina": pulsanti con i colori originali (sezione "Seguici" in Contatti).
+import { siFacebook, siInstagram, siYoutube } from 'simple-icons';
 import sito from '../data/sito.json';
 
 interface Props { variante?: 'piede' | 'pagina' }
 const { variante = 'piede' } = Astro.props;
-const canali = (sito.social ?? []).filter((c) => c.url);
+const marchi = { facebook: siFacebook, instagram: siInstagram, youtube: siYoutube } as const;
+const canali = (sito.social ?? []).filter((c) => c.url && c.tipo in marchi);
 ---
 {canali.length > 0 && (
   <ul class:list={['social', variante]} role="list">
-    {canali.map((c) => (
-      <li>
-        <a href={c.url} rel="noopener me" target="_blank">
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-            {c.tipo === 'instagram' && (
-              <>
-                <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
-              </>
-            )}
-            {c.tipo === 'facebook' && (
-              <>
-                <rect x="3.5" y="3.5" width="17" height="17" rx="4" />
-                <path d="M15.5 7.5h-1.6c-1.4 0-2.4 1-2.4 2.4V20.5" />
-                <path d="M9 12.5h6" />
-              </>
-            )}
-            {c.tipo === 'youtube' && (
-              <>
-                <rect x="2.5" y="5.5" width="19" height="13" rx="3.5" />
-                <path d="m10.2 9.4 4.6 2.6-4.6 2.6z" fill="currentColor" />
-              </>
-            )}
-          </svg>
-          <span class="nome">{c.nome}</span>
-          <span class="solo-lettori"> (si apre in una nuova scheda)</span>
-        </a>
-      </li>
-    ))}
+    {canali.map((c) => {
+      const m = marchi[c.tipo as keyof typeof marchi];
+      return (
+        <li>
+          <a href={c.url} rel="noopener me" target="_blank" class={c.tipo} style={`--marchio: #${m.hex}`}>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              {variante === 'pagina' && c.tipo === 'instagram' && (
+                <defs>
+                  <radialGradient id="ig-sfumatura" cx="0.3" cy="1.07" r="1.2">
+                    <stop offset="0" stop-color="#fdf497" /><stop offset="0.05" stop-color="#fdf497" />
+                    <stop offset="0.45" stop-color="#fd5949" /><stop offset="0.6" stop-color="#d6249f" /><stop offset="0.9" stop-color="#285aeb" />
+                  </radialGradient>
+                </defs>
+              )}
+              <path d={m.path} fill={variante === 'pagina' && c.tipo === 'instagram' ? 'url(#ig-sfumatura)' : 'currentColor'} />
+            </svg>
+            <span class="nome">{c.nome}</span>
+            <span class="solo-lettori"> (si apre in una nuova scheda)</span>
+          </a>
+        </li>
+      );
+    })}
   </ul>
 )}
 
 <style>
   .social { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
-  .social a { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--sans); font-size: var(--t-s); text-decoration: none; color: var(--labello); }
-  .social a:hover .nome { text-decoration: underline; text-underline-offset: 0.2em; }
-  .social svg { width: 1.3rem; height: 1.3rem; flex: none; }
-  .social.pagina { gap: 0.8rem; }
-  .social.pagina a { font-size: var(--t-m); color: var(--sfagno); }
-  .social.pagina svg { width: 1.6rem; height: 1.6rem; color: var(--labello); }
+  .social a { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--sans); text-decoration: none; }
+  .social svg { flex: none; }
+
+  /* piè di pagina: sobrio, il colore del marchio compare solo al passaggio */
+  .piede a { font-size: var(--t-s); color: var(--labello); }
+  .piede svg { width: 1.15rem; height: 1.15rem; color: var(--sfagno-2); transition: color 0.15s ease; }
+  .piede a:hover svg, .piede a:focus-visible svg { color: var(--marchio); }
+  .piede a.instagram:hover svg, .piede a.instagram:focus-visible svg { color: #d6249f; }
+  .piede a:hover .nome { text-decoration: underline; text-underline-offset: 0.2em; }
+
+  /* pagina Contatti: pulsanti chiari con il simbolo nei colori originali (testo scuro, sempre leggibile) */
+  .pagina { gap: 0.75rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); }
+  .pagina a {
+    width: 100%; height: 100%; padding: 0.8rem 1rem; border-radius: 10px;
+    color: var(--sfagno); background: var(--carta); border: 1px solid var(--radice);
+    font-size: var(--t-s); font-weight: 600; line-height: 1.3;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .pagina a:hover { transform: translateY(-2px); border-color: var(--marchio); box-shadow: 0 4px 12px rgb(0 0 0 / 0.1); }
+  .pagina a.instagram:hover { border-color: #d6249f; }
+  .pagina svg { width: 1.9rem; height: 1.9rem; color: var(--marchio); }
 </style>
