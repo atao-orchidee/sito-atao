@@ -49,7 +49,7 @@ const mappa = (s: (typeof sedi)[number]) =>
             <p class="prossima piccolo">Prossimo incontro: <time data-prossima datetime={s.data.toISOString().slice(0, 10)}>{dataLunga(s.data)}</time></p>
           )}
           {s.indirizzo && <p class="piccolo">{s.indirizzo}</p>}
-          <a class="sans mappa" href={mappa(s)} rel="noopener" target="_blank">Apri la mappa<span class="solo-lettori"> di {s.luogo} (si apre in una nuova scheda)</span></a>
+          {s.indirizzo && <a class="sans mappa" href={mappa(s)} rel="noopener" target="_blank">Apri la mappa<span class="solo-lettori"> di {s.luogo} (si apre in una nuova scheda)</span></a>}
         </li>
       ))}
     </ul>

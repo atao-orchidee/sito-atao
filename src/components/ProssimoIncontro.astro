@@ -14,7 +14,7 @@ const [primo] = prossimiIncontri(sito.incontri);
     <p class="dove" data-dove>
       {primo.luogo} ({primo.provincia}){primo.orario && <>, {primo.orario}</>}
     </p>
-    <p class="indirizzo piccolo" data-indirizzo>{primo.indirizzo}</p>
+    <p class="indirizzo piccolo" data-indirizzo>{primo.indirizzo || primo.nota}</p>
     <a class="sans tutti" href="/incontri/">Tutte le sedi e gli orari</a>
   </div>
 )}
@@ -33,7 +33,7 @@ const [primo] = prossimiIncontri(sito.incontri);
     const dove = box.querySelector('[data-dove]');
     if (dove) dove.textContent = `${primo.luogo} (${primo.provincia})${primo.orario ? `, ${primo.orario}` : ''}`;
     const indirizzo = box.querySelector('[data-indirizzo]');
-    if (indirizzo) indirizzo.textContent = primo.indirizzo ?? '';
+    if (indirizzo) indirizzo.textContent = primo.indirizzo || primo.nota || '';
   }
 </script>
 

@@ -238,25 +238,9 @@ scrivi(join(CONTENT, 'pagine', 'associazione.md'), frontmatter({
   sommario: 'Dal 1988 un gruppo di appassionati del Triveneto che coltiva, studia e fa conoscere le orchidee.',
 }) + '\n' + htmlInMarkdown(contenuti.replace(/<div class="titolo">[\s\S]*?<\/div>/i, '')) + '\n');
 
-// ---------- dati del sito e associazioni amiche (JSON, modificabili dal CMS) ----------
+// ---------- dati del sito (JSON, modificabili dal CMS) ----------
 
-const associazioni = leggiRecord('Elenco_Links.xml').map((r) => {
-  const den = String(r.denominazione ?? '');
-  const sigla = pulisciTesto(den.replace(/<font[\s\S]*<\/font>/i, ''));
-  const esteso = pulisciTesto(den.match(/<font[^>]*>([\s\S]*?)<\/font>/i)?.[1] ?? '');
-  const href = (campo) => String(r[campo] ?? '').match(/href="([^"]+)"/i)?.[1];
-  let email = (href('e_mail') ?? '').replace(/^mailto:/i, '');
-  if (email && !email.includes('@')) email = pulisciTesto(r.e_mail).match(/[\w.+-]+@[\w.-]+/)?.[0] ?? '';
-  return {
-    nome: esteso || maiuscolaIniziale(sigla),
-    sigla: esteso ? sigla : '',
-    referente: pulisciTesto(r.referente).replace(/^Referente:\s*/i, ''),
-    sito: href('web') ?? '',
-    email,
-  };
-});
 mkdirSync(DATA, { recursive: true });
-scrivi(join(DATA, 'associazioni.json'), JSON.stringify({ voci: associazioni }, null, 2) + '\n');
 
 scrivi(join(DATA, 'sito.json'), JSON.stringify({
   nome: 'Associazione Triveneta Amatori Orchidee',

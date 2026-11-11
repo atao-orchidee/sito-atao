@@ -70,7 +70,7 @@ const MAPPA_PAGINE = {
   'pagina_contatti.html': '/contatti/',
   'pagina_present_atao.html': '/associazione/',
   'pagina_appuntamenti.html': '/incontri/',
-  'pagina_links.html': '/associazione/#altre-associazioni',
+  'pagina_links.html': '/associazione/',
 };
 
 function mappaLink(href) {

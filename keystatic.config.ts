@@ -50,7 +50,7 @@ export default config({
       Orchidee: ['orchidee', 'generi'],
       Associazione: ['eventi', 'cronache', 'notizie', 'pagine'],
       Coltivare: ['guide'],
-      Impostazioni: ['sito', 'associazioni'],
+      Impostazioni: ['sito'],
     },
   },
   collections: {
@@ -234,24 +234,6 @@ export default config({
             nota: fields.text({ label: 'Nota', description: 'Facoltativa, es. Incontro con esperto' }),
           }),
           { label: 'Incontri mensili', itemLabel: (p) => p.fields.luogo.value || 'Sede' },
-        ),
-      },
-    }),
-
-    associazioni: singleton({
-      label: 'Altre associazioni',
-      path: 'src/data/associazioni',
-      format: { data: 'json' },
-      schema: {
-        voci: fields.array(
-          fields.object({
-            nome: fields.text({ label: 'Nome' }),
-            sigla: fields.text({ label: 'Sigla' }),
-            referente: fields.text({ label: 'Referente' }),
-            sito: fields.text({ label: 'Sito web' }),
-            email: fields.text({ label: 'Email' }),
-          }),
-          { label: 'Associazioni e siti', itemLabel: (p) => p.fields.nome.value || 'Voce' },
         ),
       },
     }),

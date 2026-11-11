@@ -33,6 +33,14 @@
       "regola": "secondo-sabato",
       "orario": "15:00 – 17:30",
       "nota": ""
+    },
+    {
+      "luogo": "Pescara",
+      "provincia": "PE",
+      "indirizzo": "",
+      "regola": "secondo-sabato",
+      "orario": "15:30 – 17:30",
+      "nota": "Senza sede fissa: il luogo cambia di volta in volta"
     }
   ]
 }

@@ -31,7 +31,6 @@ npm run preview   # mostra la versione generata
 | Notizie e documenti | `src/content/notizie/` | Notizie |
 | Testo "L'associazione" | `src/content/pagine/` | Pagine |
 | Email, annuncio in cima al sito, sedi e regole degli incontri mensili | `src/data/sito.json` | Dati del sito e incontri |
-| Altre associazioni | `src/data/associazioni.json` | Altre associazioni |
 
 La data del prossimo incontro si calcola da sola dalle regole (es. "ultima domenica del mese"), anche nel browser: non serve ripubblicare il sito ogni mese.
 
