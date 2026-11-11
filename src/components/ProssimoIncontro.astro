@@ -1,20 +1,27 @@
 ---
 // Il prossimo incontro mensile, calcolato dalle regole in src/data/sito.json.
+// Se più sedi si incontrano lo stesso giorno (es. Limena e Pescara), le mostra tutte, una per una.
 // La data viene calcolata alla build e ricalcolata nel browser, così resta giusta
 // anche se il sito non viene ripubblicato.
 import sito from '../data/sito.json';
 import { prossimiIncontri, dataLunga } from '../lib/incontri';
 
-const [primo] = prossimiIncontri(sito.incontri);
+const tutti = prossimiIncontri(sito.incontri);
+const stessoGiorno = tutti.filter((i) => tutti[0] && i.data.getTime() === tutti[0].data.getTime());
+const [primo] = stessoGiorno;
 ---
 {primo && (
   <div class="prossimo" data-incontri={JSON.stringify(sito.incontri)}>
-    <p class="intestazione sans">Prossimo incontro</p>
+    <p class="intestazione sans" data-titolo>{stessoGiorno.length > 1 ? 'Prossimi incontri' : 'Prossimo incontro'}</p>
     <p class="quando"><time data-quando datetime={primo.data.toISOString().slice(0, 10)}>{dataLunga(primo.data)}</time></p>
-    <p class="dove" data-dove>
-      {primo.luogo} ({primo.provincia}){primo.orario && <>, {primo.orario}</>}
-    </p>
-    <p class="indirizzo piccolo" data-indirizzo>{primo.indirizzo || primo.nota}</p>
+    <ul class="sedi" role="list" data-sedi>
+      {stessoGiorno.map((i) => (
+        <li>
+          <p class="dove">{i.luogo} ({i.provincia}){i.orario && <>, {i.orario}</>}</p>
+          {(i.indirizzo || i.nota) && <p class="indirizzo piccolo">{i.indirizzo || i.nota}</p>}
+        </li>
+      ))}
+    </ul>
     <a class="sans tutti" href="/incontri/">Tutte le sedi e gli orari</a>
   </div>
 )}
@@ -22,18 +29,37 @@ const [primo] = prossimiIncontri(sito.incontri);
 <script>
   import { prossimiIncontri, dataLunga, type Incontro } from '../lib/incontri';
 
+  const p = (classe: string, testo: string) => {
+    const el = document.createElement('p');
+    el.className = classe;
+    el.textContent = testo;
+    return el;
+  };
+
   for (const box of document.querySelectorAll<HTMLElement>('.prossimo[data-incontri]')) {
-    const [primo] = prossimiIncontri(JSON.parse(box.dataset.incontri ?? '[]') as Incontro[]);
-    if (!primo) continue;
+    const tutti = prossimiIncontri(JSON.parse(box.dataset.incontri ?? '[]') as Incontro[]);
+    if (!tutti.length) continue;
+    const stessoGiorno = tutti.filter((i) => i.data.getTime() === tutti[0].data.getTime());
     const quando = box.querySelector<HTMLTimeElement>('[data-quando]');
     if (quando) {
-      quando.dateTime = primo.data.toISOString().slice(0, 10);
-      quando.textContent = dataLunga(primo.data);
+      const d = stessoGiorno[0].data;
+      quando.dateTime = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+      quando.textContent = dataLunga(d);
     }
-    const dove = box.querySelector('[data-dove]');
-    if (dove) dove.textContent = `${primo.luogo} (${primo.provincia})${primo.orario ? `, ${primo.orario}` : ''}`;
-    const indirizzo = box.querySelector('[data-indirizzo]');
-    if (indirizzo) indirizzo.textContent = primo.indirizzo || primo.nota || '';
+    const titolo = box.querySelector('[data-titolo]');
+    if (titolo) titolo.textContent = stessoGiorno.length > 1 ? 'Prossimi incontri' : 'Prossimo incontro';
+    const sedi = box.querySelector('[data-sedi]');
+    if (sedi) {
+      sedi.replaceChildren(
+        ...stessoGiorno.map((i) => {
+          const li = document.createElement('li');
+          li.append(p('dove', `${i.luogo}${i.provincia ? ` (${i.provincia})` : ''}${i.orario ? `, ${i.orario}` : ''}`));
+          const dettaglio = i.indirizzo || i.nota;
+          if (dettaglio) li.append(p('indirizzo piccolo', dettaglio));
+          return li;
+        }),
+      );
+    }
   }
 </script>
 
@@ -45,9 +71,11 @@ const [primo] = prossimiIncontri(sito.incontri);
     border-radius: 6px;
   }
   .intestazione { font-size: var(--t-s); font-weight: 600; color: var(--labello); margin: 0 0 0.25rem; }
-  .quando { font-size: var(--t-xl); line-height: 1.2; margin: 0 0 0.25rem; }
+  .quando { font-size: var(--t-xl); line-height: 1.2; margin: 0 0 0.5rem; }
   .quando time::first-letter { text-transform: uppercase; }
-  .dove { margin: 0; }
-  .indirizzo { margin: 0.25rem 0 0.75rem; }
+  .sedi { list-style: none; margin: 0 0 0.75rem; padding: 0; display: grid; gap: 0.6rem; }
+  .sedi :global(li + li) { border-top: 1px solid var(--radice); padding-top: 0.6rem; }
+  .sedi :global(.dove) { margin: 0; }
+  .sedi :global(.indirizzo) { margin: 0.2rem 0 0; }
   .tutti { font-size: var(--t-s); }
 </style>

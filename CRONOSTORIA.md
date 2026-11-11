@@ -4,6 +4,7 @@ Registro delle decisioni e delle modifiche al sito, dalla più recente. Le date 
 
 ## 11 novembre 2026
 
+- **Prossimo incontro:** quando più sedi si incontrano lo stesso giorno (es. Limena e Pescara, secondo sabato) il riquadro le mostra tutte, ciascuna con orario e luogo, e il titolo diventa "Prossimi incontri". Segnalato dall'utente: prima si vedeva solo Limena.
 - **Icone social con i simboli ufficiali** (raccolta Simple Icons, licenza CC0): monocolore nel piè di pagina, con il colore del marchio al passaggio del mouse; in Contatti pulsanti chiari con i simboli nei colori originali (Instagram con il suo gradiente). Fondo pieno scartato perché il testo bianco su rosso/giallo non era abbastanza leggibile.
 - **Canali social nel sito:** piè di pagina (tutte le pagine) e sezione "Seguici" in Contatti, con icone disegnate nel sito (nessuno script né cookie di terze parti), modificabili dal CMS. Canali scelti dall'utente: Instagram @atao_la_casa_delle_orchidee, Pagina Facebook "ATAO la casa delle orchidee", Gruppo Facebook "Orchidee ATAO", YouTube "Associazione Triveneta Amatori Orchidee ATAO" (@associazionetrivenetaamato738). Aggiunti anche ai dati per Google (sameAs).
 - **Home: mostre in programma in evidenza.** Fascia a tutta larghezza subito dopo il frontespizio, con locandina, titolo, date in parole, conto alla rovescia ("Tra 10 giorni", "Domani", "In corso, oggi", "Ultimo giorno, oggi"), luogo e pulsanti "Programma e dettagli", "Sito dell'evento", "Come arrivare". Sparisce da sola a fine mostra; tolto il vecchio riquadro "Prossima mostra".
