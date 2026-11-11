@@ -4,6 +4,7 @@ Registro delle decisioni e delle modifiche al sito, dalla più recente. Le date 
 
 ## 11 novembre 2026
 
+- **Nuove cronache dalle foto dell'associazione:** "Mostra a Caldogno 26 - 27 novembre 2022" (15 foto) e "Mostra Asolo 2023" (13 foto e la locandina ritagliata). Testi solo con dati verificati: Caldogno su VicenzaReport e Pro Loco Vicentine (Villa Caldogno, 9-18, ingresso libero); Asolo sulla locandina e su Orchidofilia (Quinta Mostra Mercato Internazionale, La Fornace di Asolo, via Strada Muson 2/c, 11-12 febbraio 2023, 9-18, ingresso libero). Foto senza didascalie, per scelta.
 - **Facebook:** richiesta la pubblicazione automatica degli incontri. Requisiti: un post per ogni sede (anche se due sedi cadono lo stesso giorno), uscita almeno 4 giorni prima, nessun testo inventato. Lavoro rimandato su richiesta dell'utente; da riprendere con le domande aperte (Pagina Facebook, testo del post, incontri sospesi).
 - **Zanè:** gli incontri si tengono alla Biblioteca civica "Carlo Goldoni", via Giuseppe Mazzini 21 (indirizzo verificato sul sito del Comune e sull'Anagrafe delle biblioteche). Aggiornata anche la notizia "ATAO nel Triveneto".
 - **Pescara:** aggiunto l'incontro del secondo sabato del mese, 15:30–17:30, senza sede fissa. I testi che parlano del Triveneto restano invariati, per scelta.
