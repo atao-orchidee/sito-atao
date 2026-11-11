@@ -4,6 +4,7 @@ Registro delle decisioni e delle modifiche al sito, dalla più recente. Le date 
 
 ## 11 novembre 2026
 
+- **Canali social nel sito:** piè di pagina (tutte le pagine) e sezione "Seguici" in Contatti, con icone disegnate nel sito (nessuno script né cookie di terze parti), modificabili dal CMS. Canali scelti dall'utente: Instagram @atao_la_casa_delle_orchidee, Pagina Facebook "ATAO la casa delle orchidee", Gruppo Facebook "Orchidee ATAO", YouTube "Associazione Triveneta Amatori Orchidee ATAO" (@associazionetrivenetaamato738). Aggiunti anche ai dati per Google (sameAs).
 - **Home: mostre in programma in evidenza.** Fascia a tutta larghezza subito dopo il frontespizio, con locandina, titolo, date in parole, conto alla rovescia ("Tra 10 giorni", "Domani", "In corso, oggi", "Ultimo giorno, oggi"), luogo e pulsanti "Programma e dettagli", "Sito dell'evento", "Come arrivare". Sparisce da sola a fine mostra; tolto il vecchio riquadro "Prossima mostra".
 - **Prossima mostra:** "Ali tra le Orchidee – 1ª Mostra Mercato di orchidee e piante particolari", 21-22 novembre 2026, 9:00–18:00, Oasi Rossi, via Salzena, Santorso (VI), organizzata con Oasi Rossi – Cooperativa sociale Nuovi Orizzonti ONLUS. Dati dalla locandina fornita dall'utente (online non c'era). Pubblicata la copertina; il programma è riportato come testo, senza il numero WhatsApp privato. Corretto il sito perché un evento resti visibile fino a sera dell'ultimo giorno e poi sparisca da solo, anche senza ripubblicare.
 - **Orquideas Katias:** confermata dall'utente la data del 23 gennaio 2021.

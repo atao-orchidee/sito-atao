@@ -1,0 +1,53 @@
+---
+// Collegamenti ai canali social dell'ATAO (dati in src/data/sito.json, modificabili dal CMS).
+// Icone disegnate qui: nessuno script di Facebook, Instagram o YouTube, quindi nessun cookie di terze parti.
+import sito from '../data/sito.json';
+
+interface Props { variante?: 'piede' | 'pagina' }
+const { variante = 'piede' } = Astro.props;
+const canali = (sito.social ?? []).filter((c) => c.url);
+---
+{canali.length > 0 && (
+  <ul class:list={['social', variante]} role="list">
+    {canali.map((c) => (
+      <li>
+        <a href={c.url} rel="noopener me" target="_blank">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            {c.tipo === 'instagram' && (
+              <>
+                <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+                <circle cx="12" cy="12" r="4" />
+                <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
+              </>
+            )}
+            {c.tipo === 'facebook' && (
+              <>
+                <rect x="3.5" y="3.5" width="17" height="17" rx="4" />
+                <path d="M15.5 7.5h-1.6c-1.4 0-2.4 1-2.4 2.4V20.5" />
+                <path d="M9 12.5h6" />
+              </>
+            )}
+            {c.tipo === 'youtube' && (
+              <>
+                <rect x="2.5" y="5.5" width="19" height="13" rx="3.5" />
+                <path d="m10.2 9.4 4.6 2.6-4.6 2.6z" fill="currentColor" />
+              </>
+            )}
+          </svg>
+          <span class="nome">{c.nome}</span>
+          <span class="solo-lettori"> (si apre in una nuova scheda)</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+)}
+
+<style>
+  .social { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.55rem; }
+  .social a { display: inline-flex; align-items: center; gap: 0.6rem; font-family: var(--sans); font-size: var(--t-s); text-decoration: none; color: var(--labello); }
+  .social a:hover .nome { text-decoration: underline; text-underline-offset: 0.2em; }
+  .social svg { width: 1.3rem; height: 1.3rem; flex: none; }
+  .social.pagina { gap: 0.8rem; }
+  .social.pagina a { font-size: var(--t-m); color: var(--sfagno); }
+  .social.pagina svg { width: 1.6rem; height: 1.6rem; color: var(--labello); }
+</style>

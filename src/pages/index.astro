@@ -46,6 +46,7 @@ const organizzazione = {
   email: sito.email,
   foundingDate: String(sito.fondazione),
   ...(sito.sede ? { address: sito.sede } : {}),
+  sameAs: (sito.social ?? []).map((c) => c.url).filter(Boolean),
   areaServed: ['Veneto', 'Friuli Venezia Giulia', 'Trentino-Alto Adige'],
 };
 

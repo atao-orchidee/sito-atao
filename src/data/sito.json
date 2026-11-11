@@ -4,6 +4,28 @@
   "fondazione": 1988,
   "email": "segreteria.atao@gmail.com",
   "sede": "Contrà Angelini 2, Schio (VI)",
+  "social": [
+    {
+      "nome": "Instagram – atao_la_casa_delle_orchidee",
+      "tipo": "instagram",
+      "url": "https://www.instagram.com/atao_la_casa_delle_orchidee/"
+    },
+    {
+      "nome": "Pagina Facebook – ATAO la casa delle orchidee",
+      "tipo": "facebook",
+      "url": "https://www.facebook.com/p/ATAO-la-casa-delle-orchidee-61564955037172/"
+    },
+    {
+      "nome": "Gruppo Facebook – Orchidee ATAO",
+      "tipo": "facebook",
+      "url": "https://www.facebook.com/groups/287308615096078/"
+    },
+    {
+      "nome": "YouTube – Associazione Triveneta Amatori Orchidee ATAO",
+      "tipo": "youtube",
+      "url": "https://www.youtube.com/@associazionetrivenetaamato738"
+    }
+  ],
   "annuncio": {
     "attivo": false,
     "testo": "",

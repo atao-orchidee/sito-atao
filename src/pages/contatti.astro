@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import TestataPagina from '../components/TestataPagina.astro';
 import ProssimoIncontro from '../components/ProssimoIncontro.astro';
 import sito from '../data/sito.json';
+import Social from '../components/Social.astro';
 ---
 <Base titolo="Contatti" descrizione="Come contattare l'Associazione Triveneta Amatori Orchidee: email della segreteria e incontri mensili.">
   <TestataPagina titolo="Contatti" sommario="Per informazioni sull’associazione, sulle iscrizioni o sulle mostre, scrivi alla presidenza e segreteria." />
@@ -18,6 +19,12 @@ import sito from '../data/sito.json';
             {sito.sede}<br />
             <a class="piccolo" href={`https://www.openstreetmap.org/search?query=${encodeURIComponent(sito.sede)}`}>Vedi sulla mappa</a>
           </address>
+        </>
+      )}
+      {(sito.social ?? []).length > 0 && (
+        <>
+          <h2 class="titoletto sans">Seguici</h2>
+          <Social variante="pagina" />
         </>
       )}
     </section>

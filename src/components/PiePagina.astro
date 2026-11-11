@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import sito from '../data/sito.json';
 import logo from '../assets/logo/logo-atao.png';
 import { regolaInParole } from '../lib/incontri';
+import Social from './Social.astro';
 const anno = new Date().getFullYear();
 ---
 <footer class="piede">
@@ -26,6 +27,7 @@ const anno = new Date().getFullYear();
       {sito.sede && <address class="piccolo">Sede: {sito.sede}</address>}
       <p class="piccolo"><a href={`mailto:${sito.email}`}>{sito.email}</a></p>
       <p class="piccolo"><a href="/associazione/#diventa-socio">Come diventare socio</a></p>
+      <Social />
     </div>
   </div>
   <div class="contenitore fondo piccolo">

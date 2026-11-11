@@ -215,6 +215,14 @@ export default config({
         sigla: fields.text({ label: 'Sigla' }),
         fondazione: fields.integer({ label: 'Anno di fondazione' }),
         email: fields.text({ label: 'Email della segreteria' }),
+        social: fields.array(
+          fields.object({
+            nome: fields.text({ label: 'Nome mostrato', description: 'Es. Instagram – atao_la_casa_delle_orchidee' }),
+            tipo: fields.select({ label: 'Tipo', options: [{ label: 'Instagram', value: 'instagram' }, { label: 'Facebook', value: 'facebook' }, { label: 'YouTube', value: 'youtube' }], defaultValue: 'facebook' }),
+            url: fields.url({ label: 'Indirizzo' }),
+          }),
+          { label: 'Canali social', itemLabel: (p) => p.fields.nome.value || 'Canale' },
+        ),
         sede: fields.text({ label: 'Sede dell’associazione', description: 'Indirizzo completo, es. Contrà Angelini 2, Schio (VI)' }),
         annuncio: fields.object(
           {
