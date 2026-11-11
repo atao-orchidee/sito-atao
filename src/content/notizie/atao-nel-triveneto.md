@@ -13,6 +13,6 @@ Gli appuntamenti possono subire variazioni; gli orari verranno pubblicati nel pr
 
 Naturalmente i Soci possono liberamente organizzare incontri nel proprio territorio previa comunicazione al direttivo.
 
-Attualmente sono attivi, il primo sabato di ogni mese (escluso agosto 2011) dalle 15,00 alle 17,30, gli incontri presso il Centro Socio Culturale - aula 7 -, piazza Aldo Moro a Zanè (Vi).
+Attualmente sono attivi, il primo sabato di ogni mese (escluso agosto 2011) dalle 15,00 alle 17,30, gli incontri presso la Biblioteca civica "Carlo Goldoni", via Giuseppe Mazzini 21 a Zanè (Vi).
 
 Il secondo sabato di ogni mese, dalle 15,00 alle 17,30, gli incontri presso la sede del comune di Limena (Pd)
