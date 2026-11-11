@@ -18,6 +18,13 @@ foto:
   - immagine: "../../assets/cronache/caldogno2022-13.jpg"
   - immagine: "../../assets/cronache/caldogno2022-14.jpg"
   - immagine: "../../assets/cronache/caldogno2022-15.jpg"
+  - immagine: "../../assets/cronache/caldogno2022-16.jpg"
+  - immagine: "../../assets/cronache/caldogno2022-17.jpg"
+  - immagine: "../../assets/cronache/caldogno2022-18.jpg"
+  - immagine: "../../assets/cronache/caldogno2022-19.jpg"
+  - immagine: "../../assets/cronache/caldogno2022-20.jpg"
+  - immagine: "../../assets/cronache/caldogno2022-21.jpg"
+  - immagine: "../../assets/cronache/caldogno2022-22.jpg"
 ---
 
-Mostra mercato di orchidee e piante tropicali a Villa Caldogno, Caldogno (VI), sabato 26 e domenica 27 novembre 2022, dalle 9.00 alle 18.00, con ingresso libero.
+Mostra mercato di orchidee e piante tropicali a Villa Caldogno, via G. Zanella 3, Caldogno (VI), sabato 26 e domenica 27 novembre 2022, dalle 9.00 alle 18.00, con ingresso libero.

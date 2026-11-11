@@ -1,0 +1,32 @@
+---
+titolo: "Mostra Mercato 26 giugno 2021 - Villa Cordellina"
+data: "2021-06-26"
+sommario: "3ª Mostra Mercato Internazionale di orchidee botaniche ed ibride e piante particolari"
+foto:
+  - immagine: "../../assets/cronache/cordellina2021-locandina.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-01.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-02.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-03.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-04.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-05.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-06.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-07.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-08.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-09.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-10.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-11.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-12.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-13.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-14.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-15.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-16.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-17.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-18.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-19.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-20.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-21.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-22.jpg"
+  - immagine: "../../assets/cronache/cordellina2021-23.jpg"
+---
+
+"Villa Cordellina in fiore": 3ª Mostra Mercato Internazionale di orchidee botaniche ed ibride e piante particolari, ATAO 2021. Sabato 26 giugno (9:00–19:00) e domenica 27 giugno (9:00–18:00), via Lombardi, Montecchio Maggiore (VI), ingresso libero. Organizzata dall'ATAO in collaborazione con la Città di Montecchio Maggiore.
