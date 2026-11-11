@@ -4,6 +4,8 @@ Registro delle decisioni e delle modifiche al sito, dalla più recente. Le date 
 
 ## 11 novembre 2026
 
+- **Prossima mostra:** "Ali tra le Orchidee – 1ª Mostra Mercato di orchidee e piante particolari", 21-22 novembre 2026, 9:00–18:00, Oasi Rossi, via Salzena, Santorso (VI), organizzata con Oasi Rossi – Cooperativa sociale Nuovi Orizzonti ONLUS. Dati dalla locandina fornita dall'utente (online non c'era). Pubblicata la copertina; il programma è riportato come testo, senza il numero WhatsApp privato. Corretto il sito perché un evento resti visibile fino a sera dell'ultimo giorno e poi sparisca da solo, anche senza ripubblicare.
+- **Orquideas Katias:** confermata dall'utente la data del 23 gennaio 2021.
 - **Altre 7 cronache dalle foto dell'associazione** (controllo doppioni per contenuto, non per nome):
   - "Video Conferenza Orquideas Katias Colombia 23 gennaio 2021 in pieno Covid" (locandina + 9 immagini; titolo corretto da "rquideas", su indicazione dell'utente);
   - "Mostra Mercato 26 giugno 2021 - Villa Cordellina" (locandina + 23 foto; esclusi 2 doppioni e un ritaglio di giornale, protetto da diritto d'autore);

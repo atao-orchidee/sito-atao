@@ -8,7 +8,7 @@ import Foto from '../components/Foto.astro';
 import sito from '../data/sito.json';
 import logo from '../assets/logo/logo-atao.png';
 import { regolaInParole } from '../lib/incontri';
-import { formattaData, estratto } from '../lib/formato';
+import { formattaData, estratto, fineGiorno, nascondiPassati } from '../lib/formato';
 
 const orchidee = (await getCollection('orchidee')).sort((a, b) => a.data.nome.localeCompare(b.data.nome, 'it'));
 
@@ -31,7 +31,7 @@ const primoAnno = cronache.at(-1)?.data.data.getFullYear();
 
 const oggi = new Date();
 const eventi = (await getCollection('eventi'))
-  .filter((e) => (e.data.dataFine ?? e.data.data) >= oggi)
+  .filter((e) => fineGiorno(e.data.dataFine ?? e.data.data) >= oggi)
   .sort((a, b) => a.data.data.getTime() - b.data.data.getTime());
 
 // Scheda dell'associazione per i motori di ricerca (schema.org), invisibile sulla pagina.
@@ -107,12 +107,13 @@ const comuni = new Intl.ListFormat('it', { type: 'conjunction' }).format(sito.in
       <div class="lato">
         <ProssimoIncontro />
         {eventi[0] && (
-          <a class="evento" href="/incontri/#mostre">
+          <a class="evento" href="/incontri/#mostre" data-fine={fineGiorno(eventi[0].data.dataFine ?? eventi[0].data.data).toISOString()}>
             <span class="piccolo">Prossima mostra</span>
             <strong>{eventi[0].data.titolo}</strong>
-            <span class="piccolo">{formattaData(eventi[0].data.data)}, {eventi[0].data.luogo}</span>
+            <span class="piccolo">{formattaData(eventi[0].data.data)}{eventi[0].data.dataFine && <> – {formattaData(eventi[0].data.dataFine)}</>}, {eventi[0].data.luogo}</span>
           </a>
         )}
+        <script is:inline set:html={nascondiPassati} />
       </div>
     </div>
   </section>

@@ -5,13 +5,13 @@ import TestataPagina from '../components/TestataPagina.astro';
 import Foto from '../components/Foto.astro';
 import sito from '../data/sito.json';
 import { prossimaData, regolaInParole, dataLunga } from '../lib/incontri';
-import { formattaData } from '../lib/formato';
+import { formattaData, fineGiorno, nascondiPassati } from '../lib/formato';
 
 const sedi = sito.incontri.map((i) => ({ ...i, data: prossimaData(i.regola) }));
 const oggi = new Date();
 const eventi = await Promise.all(
   (await getCollection('eventi'))
-    .filter((e) => (e.data.dataFine ?? e.data.data) >= oggi)
+    .filter((e) => fineGiorno(e.data.dataFine ?? e.data.data) >= oggi)
     .sort((a, b) => a.data.data.getTime() - b.data.data.getTime())
     .map(async (e) => ({ ...e, Content: (await render(e)).Content })),
 );
@@ -58,15 +58,14 @@ const mappa = (s: (typeof sedi)[number]) =>
 
   <section class="contenitore sezione" id="mostre" aria-labelledby="titolo-mostre">
     <h2 id="titolo-mostre">Mostre ed eventi</h2>
-    {eventi.length === 0 ? (
-      <div class="vuoto">
+    <div class="vuoto" data-vuoto hidden={eventi.length > 0}>
         <p>Non ci sono mostre in calendario in questo momento. Le prossime date verranno pubblicate qui.</p>
         <p><a href="/cronache/">Guarda le cronache delle mostre passate</a></p>
-      </div>
-    ) : (
+    </div>
+    {eventi.length > 0 && (
       <ul class="eventi" role="list">
         {eventi.map((e) => (
-          <li>
+          <li data-fine={fineGiorno(e.data.dataFine ?? e.data.data).toISOString()}>
             <Foto immagine={e.data.locandina} alt={`Locandina: ${e.data.titolo}`} rapporto="3 / 4" sizes="(min-width: 50rem) 14rem, 40vw" larghezze={[240, 360, 480]} />
             <div>
               <p class="piccolo">
@@ -83,6 +82,9 @@ const mappa = (s: (typeof sedi)[number]) =>
         ))}
       </ul>
     )}
+    <script is:inline set:html={nascondiPassati + `
+      const lista = document.querySelector('.eventi');
+      if (lista && !lista.querySelector('li:not([hidden])')) { lista.hidden = true; document.querySelector('[data-vuoto]').hidden = false; }`} />
   </section>
 </Base>
 
