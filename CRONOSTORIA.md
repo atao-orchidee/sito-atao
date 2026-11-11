@@ -4,7 +4,7 @@ Registro delle decisioni e delle modifiche al sito, dalla più recente. Le date 
 
 ## 11 novembre 2026
 
-- **Facebook:** richiesta la pubblicazione automatica degli incontri. Requisiti: un post per ogni sede (anche se due sedi cadono lo stesso giorno), uscita almeno 4 giorni prima, nessun testo inventato. In attesa di sapere se esiste una Pagina Facebook e chi la amministra.
+- **Facebook:** richiesta la pubblicazione automatica degli incontri. Requisiti: un post per ogni sede (anche se due sedi cadono lo stesso giorno), uscita almeno 4 giorni prima, nessun testo inventato. Lavoro rimandato su richiesta dell'utente; da riprendere con le domande aperte (Pagina Facebook, testo del post, incontri sospesi).
 - **Zanè:** gli incontri si tengono alla Biblioteca civica "Carlo Goldoni", via Giuseppe Mazzini 21 (indirizzo verificato sul sito del Comune e sull'Anagrafe delle biblioteche). Aggiornata anche la notizia "ATAO nel Triveneto".
 - **Pescara:** aggiunto l'incontro del secondo sabato del mese, 15:30–17:30, senza sede fissa. I testi che parlano del Triveneto restano invariati, per scelta.
 - **Altre associazioni:** tolta la sezione "Altre associazioni e siti utili", i suoi dati e la voce del CMS. Restano le cronache storiche che le citano.
