@@ -84,7 +84,7 @@ const mappa = (s: (typeof sedi)[number]) =>
     )}
     <script is:inline set:html={nascondiPassati + `
       const lista = document.querySelector('.eventi');
-      if (lista && !lista.querySelector('li:not([hidden])')) { lista.hidden = true; document.querySelector('[data-vuoto]').hidden = false; }`} />
+      if (lista && !lista.querySelector(':scope > li:not([hidden])')) { lista.hidden = true; document.querySelector('[data-vuoto]').hidden = false; }`} />
   </section>
 </Base>
 
