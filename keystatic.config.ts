@@ -6,7 +6,7 @@
 import { config, collection, singleton, fields } from '@keystatic/core';
 
 // Repository GitHub del sito, nella forma "account/nome".
-const REPOSITORY = 'segreteria-atao/sito-atao' as const;
+const REPOSITORY = 'atao-orchidee/sito-atao' as const;
 
 const MESI = ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic'];
 
