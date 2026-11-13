@@ -3,8 +3,8 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 export const MESI = ['gen', 'feb', 'mar', 'apr', 'mag', 'giu', 'lug', 'ago', 'set', 'ott', 'nov', 'dic'] as const;
-export const TEMPERATURE = ['fresca', 'intermedia', 'calda'] as const;
-export const LUCI = ['bassa', 'media', 'alta'] as const;
+import { TEMPERATURE, LUCI } from './lib/coltivazione';
+export { TEMPERATURE, LUCI };
 
 // Il CMS salva i campi vuoti come "" o null: per gli schemi equivalgono a "non indicato".
 const facoltativo = <T extends z.ZodType>(schema: T) =>

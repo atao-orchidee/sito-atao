@@ -3,10 +3,10 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import keystatic from '@keystatic/astro';
-import netlify from '@astrojs/netlify';
+import cloudflare from '@astrojs/cloudflare';
 
 // Tutte le pagine del sito sono generate in anticipo (statiche). Solo il pannello del CMS
-// (/keystatic e /api/keystatic) gira come funzione su Netlify, per l'accesso dei volontari con GitHub.
+// (/keystatic e /api/keystatic) gira come Worker su Cloudflare, per l'accesso dei volontari con GitHub.
 
 export default defineConfig({
   site: 'https://www.orchidee-atao.it',
@@ -16,7 +16,8 @@ export default defineConfig({
     sitemap({ filter: (pagina) => !pagina.includes('/keystatic') }),
     keystatic(),
   ],
-  adapter: netlify(),
+  // Le foto sono ottimizzate durante la build (come prima): nessun servizio immagini a pagamento.
+  adapter: cloudflare({ imageService: 'compile' }),
   // I redirect dagli indirizzi del vecchio sito sono in public/_redirects
-  // (301 veri, gestiti da Netlify).
+  // (301 veri, gestiti da Cloudflare per i file statici).
 });

@@ -36,3 +36,7 @@ legacy/cache/
 # strumenti di sviluppo locali (skill di Claude installate da GitHub, impostazioni personali)
 .claude/skills/
 .claude/settings.local.json
+
+# Cloudflare (stato locale e segreti di sviluppo)
+.wrangler/
+.dev.vars*

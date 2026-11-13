@@ -4,7 +4,7 @@ import Base from '../../layouts/Base.astro';
 import TestataPagina from '../../components/TestataPagina.astro';
 import Scheda from '../../components/Scheda.astro';
 import IndiceNomi from '../../components/IndiceNomi.astro';
-import { TEMPERATURE, LUCI } from '../../content.config';
+import { TEMPERATURE, LUCI } from '../../lib/coltivazione';
 
 const orchidee = (await getCollection('orchidee')).sort((a, b) => a.data.nome.localeCompare(b.data.nome, 'it'));
 const conta = (valori: (string | undefined)[]) =>

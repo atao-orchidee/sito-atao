@@ -148,7 +148,6 @@ Per i video riferirsi alla sezione “Cronache”.
 - [Ottobre 2009 (n. 120)](/documenti/n120-ott09.pdf)
 - [Novembre 2009 (n. 121)](/documenti/n121-nov09.pdf)
 - [Dicembre 2009 (n. 122)](/documenti/n122-dic09.pdf)
-- [Tutta l'annata 2009 in un unico file zip](/documenti/anno2009.zip)
 
 ### Articoli pubblicati in “ViaVai” annata 2008
 
