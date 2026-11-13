@@ -2,6 +2,11 @@
 
 Registro delle decisioni e delle modifiche al sito, dalla più recente. Le date dei lavori pubblicati coincidono con lo storico dei commit (`git log`).
 
+## 13 novembre 2026
+
+- **CMS online, account GitHub:** l'account segreteria-atao resta segnalato (verifica SMS non riuscita). Creata l'organizzazione atao-orchidee con l'account personale dell'utente; il sito è ora nel repository pubblico atao-orchidee/sito-atao (il vecchio repository resta come copia). App del CMS "atao-orchidee Keystatic" creata e installata: funziona.
+- **Hosting:** Netlify Free è a crediti (300 al mese; 15 per ogni pubblicazione, 20 per GB di traffico; a crediti finiti il sito va in pausa). Durante la messa a punto ne sono stati consumati circa 250. Collegamento automatico GitHub → Netlify sospeso in attesa della scelta dell'hosting.
+
 ## 11 novembre 2026
 
 - **Prossimo incontro:** quando più sedi si incontrano lo stesso giorno (es. Limena e Pescara, secondo sabato) il riquadro le mostra tutte, ciascuna con orario e luogo, e il titolo diventa "Prossimi incontri". Segnalato dall'utente: prima si vedeva solo Limena.
