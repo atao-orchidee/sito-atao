@@ -7,7 +7,9 @@
   "assets": {
     "binding": "ASSETS",
     "directory": "./dist",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    // Le pagine del CMS non sono file: senza questa riga i browser ricevono la pagina "non trovata".
+    "run_worker_first": ["/keystatic", "/keystatic/*", "/api/*"]
   },
   "observability": { "enabled": true }
 }
